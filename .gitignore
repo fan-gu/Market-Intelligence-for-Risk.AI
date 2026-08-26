@@ -1,0 +1,17 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python build artefacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local investigation records may contain user questions and risk observations.
+market_risk_investigation_audit.jsonl
+
+# Risk-engine extracts are local data, not source code.
+*.csv
+
