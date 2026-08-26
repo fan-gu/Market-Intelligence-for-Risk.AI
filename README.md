@@ -1,11 +1,11 @@
-# Market Risk AI
+# Market Risk AI Agent
 
 Market Risk AI is a Python assistant for market-risk managers. It accepts a
 risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V9
+## Current version: V10
 
 `market_risk_agent_v9.py` builds on V8's investigation flow:
 
@@ -18,6 +18,10 @@ recorded locally and the agent can retrieve recent context only when it matches
 the same risk-engine data snapshot. Prior answers are never treated as current
 financial evidence.
 
+
+V10 adds a Streamlit dashboard with current risk metrics, VaR and P&L trends,
+risk-factor attribution, stress testing, limit and backtesting controls, and
+the V9 risk-agent question panel.
 ## Setup
 
 1. Install Python 3.10 or later.

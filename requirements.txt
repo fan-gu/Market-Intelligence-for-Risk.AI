@@ -2,3 +2,4 @@ google-genai
 pandas
 python-dotenv
 
+streamlit
