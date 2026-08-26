@@ -5,9 +5,9 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V10
+## Current version: V11
 
-`market_risk_agent_v9.py` builds on V8's investigation flow:
+`market_risk_agent_v11.py` builds on V8's investigation flow:
 
 ```text
 PLAN → EXECUTION → OBSERVATION → SYNTHESIS
@@ -22,6 +22,10 @@ financial evidence.
 V10 adds a Streamlit dashboard with current risk metrics, VaR and P&L trends,
 risk-factor attribution, stress testing, limit and backtesting controls, and
 the V9 risk-agent question panel.
+
+V11 adds transparent, rules-based risk alerts for limits, VaR movements,
+backtesting exceptions, data-quality issues, and adverse stress scenarios. It
+also refines the dashboard's risk-agent experience and visual hierarchy.
 ## Setup
 
 1. Install Python 3.10 or later.
@@ -41,6 +45,11 @@ the V9 risk-agent question panel.
    python market_risk_agent_v9.py
    ```
 
+Or start the V11 dashboard:
+
+```powershell
+python -m streamlit run .\market_risk_dashboard_v11.py --server.port 8503
+```
 Type `exit` at the `You:` prompt to close the assistant.
 
 ## Data and security
@@ -55,6 +64,9 @@ synthetic data if you want to share a runnable example publicly.
 - `market_risk_agent_v8.py` — V8 baseline with deterministic analytics and an
   explicit LLM investigation workflow.
 - `market_risk_agent_v9.py` — V9 memory and local audit-log enhancement.
+- `market_risk_agent_v11.py` — V11 risk-alert enhancement.
+- `market_risk_dashboard_v10.py` — V10 Streamlit risk-manager dashboard.
+- `market_risk_dashboard_v11.py` — V11 alerts and refined agent dashboard.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
