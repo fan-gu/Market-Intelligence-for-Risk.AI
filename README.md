@@ -5,7 +5,7 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V12
+## Current version: V14
 
 `market_risk_agent_v11.py` builds on V8's investigation flow:
 
@@ -52,10 +52,10 @@ validation is never treated as business approval.
    python market_risk_agent_v9.py
    ```
 
-Or start the V12 dashboard:
+Or start the V14 dashboard:
 
 ```powershell
-python -m streamlit run .\market_risk_dashboard_v12.py --server.port 8504
+python -m streamlit run .\market_risk_dashboard_v14.py --server.port 8504
 ```
 Type `exit` at the `You:` prompt to close the assistant.
 
@@ -73,10 +73,14 @@ synthetic data if you want to share a runnable example publicly.
 - `market_risk_agent_v9.py` — V9 memory and local audit-log enhancement.
 - `market_risk_agent_v11.py` — V11 risk-alert enhancement.
 - `market_risk_ingestion_v12.py` — generic CSV risk-run ingestion and validation.
-- `market_risk_agent_v12.py` — V12 run-lineage enhancement.
+- market_risk_agent_v12.py — V12 run-lineage enhancement.
+- market_risk_agent_v13.py — V13 stress-scenario evolution.
+- market_risk_agent_v14.py — V14 portfolio-scope enhancement.
 - `market_risk_dashboard_v10.py` — V10 Streamlit risk-manager dashboard.
 - `market_risk_dashboard_v11.py` — V11 alerts and refined agent dashboard.
-- `market_risk_dashboard_v12.py` — V12 dashboard with risk-run lineage controls.
+- market_risk_dashboard_v12.py — V12 dashboard with risk-run lineage controls.
+- market_risk_dashboard_v13.py — V13 focused risk-manager dashboard.
+- market_risk_dashboard_v14.py — V14 dashboard with top navigation and portfolio filtering.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
