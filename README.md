@@ -33,6 +33,13 @@ and a deterministic demo run ID. As the existing demo CSV does not provide
 production lineage fields, generated metadata is labelled demo-only and
 validation is never treated as business approval.
 
+V13 adds stress-scenario evolution and distinguishes risk-engine supplied
+scenarios from transparent, illustrative proxy scenarios.
+
+V14 adds top navigation, portfolio filtering, unambiguous DD/MM date labels,
+and business-date controls. The current demo extract contains weekday
+observations only.
+
 ## Setup
 
 1. Install Python 3.10 or later.
