@@ -5,7 +5,7 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V11
+## Current version: V12
 
 `market_risk_agent_v11.py` builds on V8's investigation flow:
 
@@ -26,6 +26,13 @@ the V9 risk-agent question panel.
 V11 adds transparent, rules-based risk alerts for limits, VaR movements,
 backtesting exceptions, data-quality issues, and adverse stress scenarios. It
 also refines the dashboard's risk-agent experience and visual hierarchy.
+
+V12 adds a generic risk-run ingestion adapter. It validates a downstream CSV
+schema and presents data lineage, validation status, data fingerprint, scope,
+and a deterministic demo run ID. As the existing demo CSV does not provide
+production lineage fields, generated metadata is labelled demo-only and
+validation is never treated as business approval.
+
 ## Setup
 
 1. Install Python 3.10 or later.
@@ -45,10 +52,10 @@ also refines the dashboard's risk-agent experience and visual hierarchy.
    python market_risk_agent_v9.py
    ```
 
-Or start the V11 dashboard:
+Or start the V12 dashboard:
 
 ```powershell
-python -m streamlit run .\market_risk_dashboard_v11.py --server.port 8503
+python -m streamlit run .\market_risk_dashboard_v12.py --server.port 8504
 ```
 Type `exit` at the `You:` prompt to close the assistant.
 
@@ -65,8 +72,11 @@ synthetic data if you want to share a runnable example publicly.
   explicit LLM investigation workflow.
 - `market_risk_agent_v9.py` — V9 memory and local audit-log enhancement.
 - `market_risk_agent_v11.py` — V11 risk-alert enhancement.
+- `market_risk_ingestion_v12.py` — generic CSV risk-run ingestion and validation.
+- `market_risk_agent_v12.py` — V12 run-lineage enhancement.
 - `market_risk_dashboard_v10.py` — V10 Streamlit risk-manager dashboard.
 - `market_risk_dashboard_v11.py` — V11 alerts and refined agent dashboard.
+- `market_risk_dashboard_v12.py` — V12 dashboard with risk-run lineage controls.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
