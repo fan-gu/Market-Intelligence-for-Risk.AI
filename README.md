@@ -5,7 +5,7 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V14
+## Current version: V18
 
 `market_risk_agent_v11.py` builds on V8's investigation flow:
 
@@ -40,6 +40,22 @@ V14 adds top navigation, portfolio filtering, unambiguous DD/MM date labels,
 and business-date controls. The current demo extract contains weekday
 observations only.
 
+V15 adds a synthetic Trade → Book → Trading desk → Business line hierarchy and
+transparent allocation filters while preserving all risk-manager pages.
+
+V16 adds a sensitivity page. V17 corrects the data semantics: P&L-explain
+contributions are no longer presented as Greek exposures. Instead, V17 uses a
+separate, unit-aware synthetic sensitivity feed (for example, rate Delta as
+DV01 in EUR per basis point). V17 also removes all illustrative stress proxies,
+shows only risk-engine-supplied scenario revaluation P&L, and adds governed VaR
+limit evaluation with warning and critical thresholds, ownership, and
+escalation status.
+
+V18 generalises limit governance across VaR, SVaR, supplied stress loss,
+DV01, Gamma, FX Delta, Vega, daily P&L, unexplained P&L, and backtesting.
+Consumption below 80% is OK, 80% to below 100% is WARNING, and 100% or
+above is BREACH. Thresholds and owners remain configurable demo values.
+
 ## Setup
 
 1. Install Python 3.10 or later.
@@ -59,10 +75,10 @@ observations only.
    python market_risk_agent_v9.py
    ```
 
-Or start the V14 dashboard:
+Or start the current dashboard:
 
 ```powershell
-python -m streamlit run .\market_risk_dashboard_v14.py --server.port 8504
+python -m streamlit run .\market_risk_dashboard_v18.py --server.port 8501
 ```
 Type `exit` at the `You:` prompt to close the assistant.
 
@@ -88,6 +104,15 @@ synthetic data if you want to share a runnable example publicly.
 - `market_risk_dashboard_v12.py` — V12 dashboard with risk-run lineage controls.
 - `market_risk_dashboard_v13.py` — V13 focused risk-manager dashboard.
 - `market_risk_dashboard_v14.py` — V14 dashboard with top navigation and portfolio filtering.
+- `market_risk_hierarchy_v15.py` — synthetic four-level market-risk hierarchy.
+- `market_risk_agent_v15.py` — V15 hierarchy enhancement.
+- `market_risk_dashboard_v15.py` — V15 hierarchy-filtered dashboard.
+- `market_risk_agent_v16.py` — V16 sensitivity prototype retained for version history.
+- `market_risk_dashboard_v16.py` — V16 sensitivity dashboard retained for version history.
+- `market_risk_agent_v17.py` — corrected stress/sensitivity semantics and limit governance.
+- `market_risk_dashboard_v17.py` — V17 dashboard with the compact header and governed controls.
+- `market_risk_agent_v18.py` — V18 multi-metric limit evaluation.
+- `market_risk_dashboard_v18.py` — V18 dashboard with general governance in Controls.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
