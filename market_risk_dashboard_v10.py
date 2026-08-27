@@ -3,7 +3,7 @@
 import pandas as pd
 import streamlit as st
 
-st.set_page_config(page_title="Market Risk AI | V10", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Market Risk AI Dashboard | V10", page_icon="📈", layout="wide")
 
 try:
     import market_risk_agent_v8 as v8
@@ -31,7 +31,7 @@ trend = v8.get_var_trend()
 limit = v8.get_limit_analysis()
 backtesting = v8.get_backtesting_analysis()
 
-st.title("Market Risk AI")
+st.title(" Market Risk AI Dashboard")
 st.caption(f"V10 risk-manager dashboard · Risk-engine data as of {current_risk['date']}")
 
 overview_tab, drivers_tab, controls_tab, agent_tab = st.tabs(
