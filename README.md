@@ -5,7 +5,7 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V21
+## Current version: V25
 
 `market_risk_agent_v11.py` builds on V8's investigation flow:
 
@@ -74,6 +74,39 @@ currency colors. Stress defaults to curves selected by current magnitude or late
 jump and labels their endpoints. Scenarios use Historical, Hypothetical, Adverse
 and Extreme governance categories. Extreme shock parameters are twice the related
 Adverse parameters, but remain unpriced until a risk-engine revaluation.
+V22 combines P&L levels and residuals in one layered chart, replaces the driver
+bar/table with a labelled lollipop contribution view, adds Inflation curves to
+the EUR, USD, JPY and GBP sensitivity feed, and expands the governed Adverse and
+Extreme scenario catalogue. Ask MR Agent now renders completed answers outside
+the collapsed progress panel. Its core function is `get_var_change_summary(as_of_date)`, which shows
+daily, weekly and monthly Historical VaR changes in the VaR tab. It reports
+insufficient history when a comparison horizon is unavailable.
+V23 replaces the P&L lollipop with a waterfall that separates risk-factor
+contributions, the explained subtotal, unexplained reconciliation and RTPL. The
+same governed waterfall explains Daily, Weekly or Monthly Historical VaR
+movements through `get_var_change_attribution(as_of_date, horizon,
+hierarchy_level)`. Rates sensitivities are split across 1Y, 2Y, 5Y, 10Y and 30Y
+tenors, and HKD curves, USD/HKD Delta and HKD Theta are included. The enlarged
+title, hierarchy selectors, as-of date and navigation remain visible in a sticky
+header while the dashboard scrolls.
+V24 simplifies the P&L and VaR movement waterfalls by removing intermediate
+subtotal and reconciliation bars. Rates sensitivity charts now show one net bar
+per currency, followed immediately by a curve-family, curve and tenor matrix.
+Stress result tables include scenario loss limits, consumption and OK/WARNING/
+BREACH status. The theme-aware header keeps the title, hierarchy, as-of date and
+navigation together while scrolling. Its core function,
+`detect_material_risk_movements(as_of_date)`, consolidates deterministic VaR,
+P&L, sensitivity, stress and limit observations into one prioritised Controls
+queue; the LLM may explain these findings but cannot change their values or
+severity.
+V25 removes synthetic hierarchy-scope messaging and surfaces the current
+calculated breaches and warnings directly below the global header. The P&L page
+now follows the global business-line, desk and book perimeter without a second
+desk selector. Rate sensitivities add 1M, 3M and 6M buckets, and each curve/tenor
+matrix ends with gross exposure, limit, consumption and status. The core
+`generate_daily_risk_brief(as_of_date)` function creates a deterministic status,
+evidence-backed action queue and pending sign-off record for the Controls page.
+It is a workflow aid rather than a persisted approval record.
 ## Setup
 
 1. Install Python 3.10 or later.
@@ -96,7 +129,7 @@ Adverse parameters, but remain unpriced until a risk-engine revaluation.
 Or start the current dashboard:
 
 ```powershell
-python -m streamlit run .\market_risk_dashboard_v21.py --server.port 8501
+python -m streamlit run .\market_risk_dashboard_v25.py --server.port 8501
 ```
 Type `exit` at the `You:` prompt to close the assistant.
 
@@ -137,6 +170,14 @@ synthetic data if you want to share a runnable example publicly.
 - `market_risk_dashboard_v20.py` — V20 consolidated dashboard and highlighted agent entry.
 - `market_risk_agent_v21.py` — V21 material-stress selection and scenario taxonomy.
 - `market_risk_dashboard_v21.py` — V21 dedicated sensitivity charts and labelled stress curves.
+- `market_risk_agent_v22.py` — V22 deterministic risk-run comparison and expanded governed scenarios.
+- `market_risk_dashboard_v22.py` — V22 layered P&L, lollipop explain and automatic chat-result display.
+- `market_risk_agent_v23.py` — V23 tenor sensitivities and VaR movement attribution.
+- `market_risk_dashboard_v23.py` — V23 sticky header and governed P&L/VaR waterfalls.
+- `market_risk_agent_v24.py` — V24 stress-limit monitoring and material-movement detection.
+- `market_risk_dashboard_v24.py` — V24 streamlined waterfalls, sensitivity matrices and governed stress tables.
+- `market_risk_agent_v25.py` — V25 short-tenor sensitivity limits and deterministic daily risk brief.
+- `market_risk_dashboard_v25.py` — V25 global-perimeter P&L, current limit alerts and action workflow.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
