@@ -5,7 +5,7 @@ risk-engine data extract, exposes deterministic analytics tools for VaR, P&L,
 stress testing, limits, backtesting, and attribution, and uses Gemini to plan
 and explain an evidence-led investigation.
 
-## Current version: V18
+## Current version: V21
 
 `market_risk_agent_v11.py` builds on V8's investigation flow:
 
@@ -56,6 +56,24 @@ DV01, Gamma, FX Delta, Vega, daily P&L, unexplained P&L, and backtesting.
 Consumption below 80% is OK, 80% to below 100% is WARNING, and 100% or
 above is BREACH. Thresholds and owners remain configurable demo values.
 
+V19 adds official FRTB Actual P&L (APL), Hypothetical P&L (HPL), and
+Risk-theoretical P&L (RTPL) terminology; desk-level P&L explain; and a
+Basel-style 250-day PLA test using Spearman rank correlation and the empirical
+Kolmogorov-Smirnov statistic. The desk histories are deterministic synthetic
+demo data and do not constitute regulatory IMA eligibility decisions.
+
+V20 replaces overlapping P&L level lines with grouped comparison bars, residual
+bars and an HPL-versus-RTPL scatter; adds a 20% unexplained-to-|APL| alert;
+expands synthetic sensitivities across EUR, USD, JPY and GBP OIS/BOR curves
+and USD FX pairs; shortens stress display names without changing scenario values;
+merges alerts into Controls; and gives Ask MR Agent a distinct primary action.
+
+V21 makes the P&L bars explicit and readable, gives IR Delta, IR Gamma, IR Vega,
+FX Delta and Theta separate charts, and groups rate curves by OIS/BOR family with
+currency colors. Stress defaults to curves selected by current magnitude or latest
+jump and labels their endpoints. Scenarios use Historical, Hypothetical, Adverse
+and Extreme governance categories. Extreme shock parameters are twice the related
+Adverse parameters, but remain unpriced until a risk-engine revaluation.
 ## Setup
 
 1. Install Python 3.10 or later.
@@ -78,7 +96,7 @@ above is BREACH. Thresholds and owners remain configurable demo values.
 Or start the current dashboard:
 
 ```powershell
-python -m streamlit run .\market_risk_dashboard_v18.py --server.port 8501
+python -m streamlit run .\market_risk_dashboard_v21.py --server.port 8501
 ```
 Type `exit` at the `You:` prompt to close the assistant.
 
@@ -113,6 +131,12 @@ synthetic data if you want to share a runnable example publicly.
 - `market_risk_dashboard_v17.py` — V17 dashboard with the compact header and governed controls.
 - `market_risk_agent_v18.py` — V18 multi-metric limit evaluation.
 - `market_risk_dashboard_v18.py` — V18 dashboard with general governance in Controls.
+- `market_risk_agent_v19.py` — V19 FRTB P&L attribution and PLA evaluation.
+- `market_risk_dashboard_v19.py` — V19 dashboard with desk-level P&L explain and PLA.
+- `market_risk_agent_v20.py` — V20 curve sensitivities, stress labels and P&L alerts.
+- `market_risk_dashboard_v20.py` — V20 consolidated dashboard and highlighted agent entry.
+- `market_risk_agent_v21.py` — V21 material-stress selection and scenario taxonomy.
+- `market_risk_dashboard_v21.py` — V21 dedicated sensitivity charts and labelled stress curves.
 - `requirements.txt` — Python dependencies.
 - `.env.example` — safe environment-variable template.
 
