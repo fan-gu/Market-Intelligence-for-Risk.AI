@@ -9,7 +9,7 @@ import streamlit as st
 st.set_page_config(page_title="M.R. AI Agent | V29", page_icon=":material/monitoring:", layout="wide")
 
 try:
-    import market_risk_agent_v29 as v29
+    import market_risk_runtime as v29
 except Exception as error:
     st.error(f"The risk dashboard could not load its data or configuration: {error}")
     st.stop()
@@ -44,6 +44,31 @@ def select_scenario_agent_page(scenario_context):
 def clear_scenario_agent_context():
     st.session_state.pop("v29_scenario_context", None)
     st.session_state.pop("v29_pending_scenario_question", None)
+
+
+@st.cache_data(show_spinner=False)
+def cached_risk_data():
+    return v8.df.copy()
+
+
+@st.cache_data(show_spinner=False)
+def cached_market_sensitivities():
+    return v29.get_market_sensitivities()
+
+
+@st.cache_data(show_spinner=False)
+def cached_stress_evolution():
+    return v29.get_stress_evolution()
+
+
+@st.cache_data(show_spinner=False)
+def cached_limit_evaluation():
+    return v29.evaluate_all_limits()
+
+
+@st.cache_data(show_spinner=False)
+def cached_pla_history():
+    return v29.build_pla_demo_history()
 
 
 def amount(value):
@@ -154,17 +179,20 @@ def build_waterfall_chart(
     )
     return (zero + bars + positive_labels + negative_labels).properties(height=390)
 
-df = v8.df.copy()
-current_risk = v8.get_current_risk()
-trend = v8.get_var_trend()
-limit = v8.get_limit_analysis()
-backtesting = v8.get_backtesting_analysis()
-alert_summary = v11.get_risk_alerts()
-risk_run = v12.get_risk_run_lineage()
-lineage = risk_run["lineage"]
-stress_evolution = v29.get_stress_evolution()
+with st.spinner("Loading risk dashboard…"):
+    df = cached_risk_data()
+    current_risk = v8.get_current_risk()
+    trend = v8.get_var_trend()
+    limit = v8.get_limit_analysis()
+    backtesting = v8.get_backtesting_analysis()
+    alert_summary = v11.get_risk_alerts()
+    risk_run = v12.get_risk_run_lineage()
+    stress_evolution = cached_stress_evolution()
+    portfolio_scope = v29.v14.get_portfolio_scope()
+    books, _ = v29.v15.build_hierarchy()
 
-portfolio_scope = v29.v14.get_portfolio_scope()
+lineage = risk_run["lineage"]
+
 portfolio_ids = [row["portfolio_id"] for row in portfolio_scope["portfolios"]]
 
 available_as_of_dates = sorted(df["cob_date"].dt.date.unique(), reverse=True)
@@ -286,7 +314,7 @@ scope_label = " / ".join(
     ]
     if value
 ) or "Whole portfolio"
-header_limit_rows = v29.evaluate_all_limits()["limits"]
+header_limit_rows = cached_limit_evaluation()["limits"]
 header_stress_rows = v29.get_stress_limit_monitor(selected_as_of_date)["scenarios"]
 header_breaches = (
     [row["metric"] for row in header_limit_rows if row["status"] == "BREACH"]
@@ -431,7 +459,7 @@ elif page == "P&L":
     st.header("P&L attribution")
     st.caption("Official FRTB terminology: Actual P&L (APL), Hypothetical P&L (HPL), and Risk-theoretical P&L (RTPL).")
 
-    pla_history = v29.build_pla_demo_history()
+    pla_history = cached_pla_history()
     pla_history = pla_history.loc[pla_history["cob_date"] <= pd.Timestamp(selected_as_of_date)].copy()
     pnl_value_columns = [
         "actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl",
@@ -693,7 +721,7 @@ elif page == "P&L":
 
 elif page == "Sensitivities":
     st.header("Sensitivities")
-    sensitivities = v29.get_market_sensitivities()
+    sensitivities = cached_market_sensitivities()
     sensitivity_frame = pd.DataFrame(sensitivities["sensitivities"])
     sensitivity_frame["value"] = sensitivity_frame["value"] * allocation_weight
 
@@ -1424,7 +1452,7 @@ elif page == "Stress":
         )
 elif page == "Controls":
     st.header("Controls")
-    limit_evaluation = v29.evaluate_all_limits()
+    limit_evaluation = cached_limit_evaluation()
     limit_frame = pd.DataFrame(limit_evaluation["limits"])
     status_rank = {"BREACH": 0, "WARNING": 1, "OK": 2}
     limit_frame["status_rank"] = limit_frame["status"].map(status_rank)
@@ -1657,6 +1685,7 @@ else:
                 st.caption(f"{record['timestamp_utc']} · tools: {', '.join(record['tools_used'])}")
         else:
             st.info("No completed investigations have been recorded for this data snapshot yet.", icon=":material/info:")
+
 
 
 
