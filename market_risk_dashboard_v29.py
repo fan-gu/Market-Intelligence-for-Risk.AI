@@ -9,7 +9,7 @@ import streamlit as st
 st.set_page_config(page_title="M.R. AI Agent | V29", page_icon=":material/monitoring:", layout="wide")
 
 try:
-    import market_risk_runtime as v29
+    import market_risk_agent_v29 as v29
 except Exception as error:
     st.error(f"The risk dashboard could not load its data or configuration: {error}")
     st.stop()
