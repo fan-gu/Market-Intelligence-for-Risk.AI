@@ -179,23 +179,14 @@ st.html(
         background: #0F172A !important;
         color-scheme: dark;
     }}
-    [data-testid="stMainBlockContainer"] {{
-        overflow: visible !important;
-    }}
-    div[data-testid="stElementContainer"]:has(.st-key-sticky_header),
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-sticky_header),
     .st-key-sticky_header {{
         position: sticky !important;
-        top: 2.875rem !important;
-        z-index: 9999 !important;
-        overflow: visible !important;
+        top: 0 !important;
+        z-index: 100 !important;
         background: {header_background} !important;
-    }}
-    .st-key-sticky_header {{
         padding: 0.35rem 0 0.45rem 0;
         border-bottom: 1px solid {header_border};
         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
-        isolation: isolate;
     }}
     .st-key-sticky_header > div {{
         background: {header_background} !important;
