@@ -18,6 +18,9 @@ v28.v9.VERSION = VERSION
 v8 = v28.v8
 v9 = v28.v9
 DRIVER_COLUMNS = v28.DRIVER_COLUMNS
+# Explicitly expose the shared SVaR governance convention at the V29 API
+# boundary; relying on star-import inheritance is fragile across reruns.
+SVAR_LIMIT_MULTIPLIER = getattr(v28, "SVAR_LIMIT_MULTIPLIER", 1.5)
 
 BASE_SCENARIO_LOSS_LIMIT = 15_000_000.0
 SCENARIO_WARNING_THRESHOLD_PCT = 80.0

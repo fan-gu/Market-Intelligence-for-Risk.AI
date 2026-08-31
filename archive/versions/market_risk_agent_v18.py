@@ -20,6 +20,9 @@ get_stress_evolution = v17.get_stress_evolution
 
 WARNING_THRESHOLD_PCT = 80.0
 BREACH_THRESHOLD_PCT = 100.0
+# Prototype governance convention: SVaR receives a 1.5x multiplier over
+# the approved Historical VaR limit for the same perimeter.
+SVAR_LIMIT_MULTIPLIER = 1.5
 
 
 def _limit_record(family, metric, exposure, limit, unit, owner, basis):
@@ -64,7 +67,15 @@ def evaluate_all_limits():
 
     limits = [
         _limit_record("VaR", "Historical VaR (1 day, 99%)", current["var_hist"], current["var_limit"], "EUR", "Market Risk", "Current exposure"),
-        _limit_record("VaR", "Stressed VaR (1 day, 99%)", current["stressed_var"], 10_000_000, "EUR", "Market Risk", "Current exposure"),
+        _limit_record(
+            "VaR",
+            "Stressed VaR (SVaR, 1 day, 99%)",
+            current["stressed_var"],
+            current["var_limit"] * SVAR_LIMIT_MULTIPLIER,
+            "EUR",
+            "Market Risk",
+            "Current exposure; 1.5x Historical VaR limit",
+        ),
         _limit_record("Stress", "Worst supplied scenario loss", worst_stress_loss, 15_000_000, "EUR loss", "Stress Testing", "Absolute loss"),
         _limit_record("Sensitivity", "Gross IR Delta (DV01)", gross_ir_dv01, 250_000, "EUR / bp", "Rates Risk", "Gross absolute sensitivity"),
         _limit_record("Sensitivity", "IR Gamma", ir_gamma, 5_000, "EUR / bp²", "Rates Risk", "Absolute sensitivity"),

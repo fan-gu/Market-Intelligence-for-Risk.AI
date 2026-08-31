@@ -28,6 +28,7 @@ v12 = v25.v12
 v11 = v25.v11
 v9 = v25.v9
 v8 = v25.v8
+SVAR_LIMIT_MULTIPLIER = v18.SVAR_LIMIT_MULTIPLIER
 
 build_pla_demo_history = v25.build_pla_demo_history
 evaluate_pla_test = v25.evaluate_pla_test
@@ -238,8 +239,8 @@ def evaluate_all_limits():
             "ok": sum(row["status"] == "OK" for row in rows),
         },
         "usage_note": (
-            "V26 separates governed Net and Gross Delta. IR Gamma remains an informational "
-            "second-order sensitivity without a limit in this prototype."
+            "V26 separates governed Net and Gross Delta. SVaR is governed at 1.5x the "
+            "approved Historical VaR limit; IR Gamma remains informational without a limit."
         ),
     }
 
