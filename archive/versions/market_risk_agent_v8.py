@@ -40,10 +40,8 @@ if not api_key:
         api_key = st.secrets.get("GEMINI_API_KEY")
     except Exception:
         api_key = None
-if not api_key:
-    raise ValueError("GEMINI_API_KEY not found in .env")
-
-client = genai.Client(api_key=api_key)
+GEMINI_AVAILABLE = bool(api_key)
+client = genai.Client(api_key=api_key) if api_key else None
 
 
 def load_data():
@@ -262,6 +260,8 @@ def parse_plan(response_text):
 
 
 def create_investigation_plan(question):
+    if client is None:
+        raise RuntimeError("Gemini is not configured. Add GEMINI_API_KEY under Streamlit Cloud → App settings → Secrets.")
     available_tools = "\n".join(
         f"- {name}: {description}" for name, description in TOOL_DESCRIPTIONS.items()
     )
@@ -331,6 +331,8 @@ assessment.
 
 
 def ask_risk_agent(question):
+    if client is None:
+        raise RuntimeError("Gemini is not configured. Add GEMINI_API_KEY under Streamlit Cloud → App settings → Secrets.")
     plan = create_investigation_plan(question)
     print_plan(plan)
     results = execute_plan(plan)

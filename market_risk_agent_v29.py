@@ -284,6 +284,8 @@ def run_interactive_scenario(
 
 def ask_scenario_agent(question: str, scenario_context: dict) -> str:
     """Explain one deterministic V29 Scenario Lab result with Gemini."""
+    if v8.client is None:
+        raise RuntimeError("Gemini is not configured. Add GEMINI_API_KEY under Streamlit Cloud → App settings → Secrets.")
     system_instruction = v9.SYSTEM_INSTRUCTION + """
 
 V29 Scenario Lab control:
