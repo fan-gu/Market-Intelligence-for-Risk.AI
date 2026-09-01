@@ -4,7 +4,7 @@ An open, synthetic-data prototype of a market-risk manager cockpit. MIRAI treats
 
 ## See it in action
 
-Run the app locally, or deploy the repository free on [Streamlit Community Cloud](https://streamlit.io/cloud).
+Run the app locally, or try the live demo on [Streamlit Community Cloud](https://market-intelligence-risk-ai.streamlit.app/).
 
 ![Risk cockpit overview](docs/screenshots/overview.png)
 
