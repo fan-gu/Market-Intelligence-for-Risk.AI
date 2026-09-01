@@ -1,4 +1,4 @@
-# MIRAI — Market Intelligence for Risk AI
+# M.I.R.A.I. — Market Intelligence for Risk AI
 
 An open, synthetic-data prototype of a market-risk manager cockpit. MIRAI treats validated risk runs as the source of truth, then adds hierarchy drill-down, explainable charts, scenario analysis, controls, and an auditable Gemini-powered assistant.
 
