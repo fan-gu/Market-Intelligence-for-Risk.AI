@@ -38,6 +38,9 @@ DRIVER_COLUMNS = [
     "Vega",
     "Theta",
     "Gamma and cross-gamma",
+    "New trades",
+    "Expired trades",
+    "Modified trades",
 ]
 
 
@@ -112,9 +115,13 @@ def build_pla_demo_history():
             driver_weights = np.array([0.06, 0.08, 0.05, 0.43, 0.23, 0.05, 0.10])
 
         driver_weights = driver_weights * 0.94
+        lifecycle_weights = np.array([0.03, -0.02, 0.05])
 
         for observation, cob_date in enumerate(dates):
-            driver_values = rtpl[observation] * driver_weights
+            driver_values = np.concatenate([
+                rtpl[observation] * driver_weights,
+                rtpl[observation] * lifecycle_weights,
+            ])
             row = {
                 "cob_date": cob_date,
                 "business_line": desk["business_line"],

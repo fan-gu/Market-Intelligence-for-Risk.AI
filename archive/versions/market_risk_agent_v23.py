@@ -49,6 +49,13 @@ HKD_RATE_CURVES = [
     ("Inflation", "HK CPI", 2_800, 40, 900),
 ]
 
+CNY_RATE_CURVES = [
+    ("OIS", "CNY OIS", 20_000, 280, 5_400),
+    ("BOR", "SHIBOR 3M", 10_500, 145, 2_900),
+    ("BOR", "SHIBOR 6M", 6_000, 85, 1_700),
+    ("Inflation", "CNY CPI", 3_000, 45, 1_000),
+]
+
 VAR_ATTRIBUTION_GROUPS = {
     "FX": ["contrib_var_fx_spot", "contrib_var_fx_vol_implied", "contrib_var_fx_basis"],
     "Rates": [
@@ -63,48 +70,52 @@ VAR_ATTRIBUTION_GROUPS = {
     "Equity": ["contrib_var_equity_spot", "contrib_var_equity_vol"],
     "Commodity": ["contrib_var_commodity_energy", "contrib_var_commodity_metals"],
     "Inflation": ["contrib_var_inflation_breakeven"],
+    "New trades": ["contrib_var_new_trades"],
+    "Expired trades": ["contrib_var_expired_trades"],
+    "Modified trades": ["contrib_var_modified_trades"],
     "Diversification": ["diversification_effect"],
 }
 
 
 def get_market_sensitivities():
-    """Return V22 sensitivities split by tenor and expanded to HKD."""
+    """Return V22 sensitivities split by tenor and expanded to HKD and CNY."""
     source = v22.get_market_sensitivities()
     source_rows = list(source["sensitivities"])
 
-    for curve_type, curve, delta, gamma, vega in HKD_RATE_CURVES:
-        source_rows.extend([
+    for currency, rate_curves in [("HKD", HKD_RATE_CURVES), ("CNY", CNY_RATE_CURVES)]:
+        for curve_type, curve, delta, gamma, vega in rate_curves:
+            source_rows.extend([
             {
                 "risk_class": "Rates",
                 "measure": "IR Delta (DV01)",
-                "currency": "HKD",
+                "currency": currency,
                 "curve_type": curve_type,
                 "curve": curve,
                 "value": float(delta),
                 "unit": "EUR / bp",
-                "definition": "P&L change for a +1 bp move in the named HKD curve.",
+                "definition": f"P&L change for a +1 bp move in the named {currency} curve.",
             },
             {
                 "risk_class": "Rates",
                 "measure": "IR Gamma",
-                "currency": "HKD",
+                "currency": currency,
                 "curve_type": curve_type,
                 "curve": curve,
                 "value": float(gamma),
                 "unit": "EUR / bp²",
-                "definition": "Change in HKD curve DV01 for a +1 bp move.",
+                "definition": f"Change in {currency} curve DV01 for a +1 bp move.",
             },
             {
                 "risk_class": "Rates",
                 "measure": "Vega",
-                "currency": "HKD",
+                "currency": currency,
                 "curve_type": curve_type,
                 "curve": curve,
                 "value": float(vega),
                 "unit": "EUR / vol point",
                 "definition": "P&L change for a +1 percentage-point volatility move.",
             },
-        ])
+            ])
 
     expanded_rows = []
     for row in source_rows:
@@ -132,6 +143,17 @@ def get_market_sensitivities():
             "definition": "P&L change for a +1% move in USD/HKD.",
         },
         {
+            "risk_class": "FX",
+            "measure": "FX Delta",
+            "currency": "USD/CNY",
+            "curve_type": "Spot",
+            "curve": "USD/CNY",
+            "tenor": "N/A",
+            "value": 165_000.0,
+            "unit": "EUR / 1% spot",
+            "definition": "P&L change for a +1% move in USD/CNY.",
+        },
+        {
             "risk_class": "Time",
             "measure": "Theta",
             "currency": "HKD",
@@ -142,15 +164,26 @@ def get_market_sensitivities():
             "unit": "EUR / day",
             "definition": "Expected one-business-day P&L from HKD time decay.",
         },
+        {
+            "risk_class": "Time",
+            "measure": "Theta",
+            "currency": "CNY",
+            "curve_type": "Portfolio",
+            "curve": "CNY portfolio",
+            "tenor": "N/A",
+            "value": -1_700.0,
+            "unit": "EUR / day",
+            "definition": "Expected one-business-day P&L from CNY time decay.",
+        },
     ])
 
     return {
         **source,
-        "currencies": ["EUR", "USD", "JPY", "GBP", "HKD"],
+        "currencies": ["EUR", "USD", "JPY", "GBP", "HKD", "CNY"],
         "tenors": list(TENOR_WEIGHTS),
         "sensitivities": expanded_rows,
         "usage_note": (
-            "Deterministic synthetic V23 feed across EUR, USD, JPY, GBP and HKD. "
+            "Deterministic synthetic V23 feed across EUR, USD, JPY, GBP, HKD and CNY. "
             "OIS, BOR and Inflation sensitivities are split into 1Y, 2Y, 5Y, 10Y and 30Y buckets. "
             "Tenor allocation preserves each curve-level total."
         ),
@@ -219,13 +252,14 @@ def get_var_change_attribution(as_of_date=None, horizon="Daily", hierarchy_level
         "factor_changes": factor_changes,
         "usage_note": (
             "Movement attribution is calculated from changes in supplied VaR contributions. "
-            "Reconciliation is total Historical VaR change minus the sum of attributed factor changes."
+            "New, expired and modified trade effects are included when supplied. Reconciliation "
+            "is total Historical VaR change minus the sum of attributed factor changes."
         ),
     }
 
 
 v8.TOOL_FUNCTIONS["get_market_sensitivities"] = get_market_sensitivities
-v8.TOOL_DESCRIPTIONS["get_market_sensitivities"] = "Tenor-split OIS, BOR and Inflation sensitivities across EUR, USD, JPY, GBP and HKD, plus FX Delta and Theta."
+v8.TOOL_DESCRIPTIONS["get_market_sensitivities"] = "Tenor-split OIS, BOR and Inflation sensitivities across EUR, USD, JPY, GBP, HKD and CNY, plus FX Delta and Theta."
 v8.TOOL_FUNCTIONS["get_var_change_attribution"] = get_var_change_attribution
 v8.TOOL_DESCRIPTIONS["get_var_change_attribution"] = "Historical VaR movement attribution by risk factor for a Daily, Weekly or Monthly horizon."
 

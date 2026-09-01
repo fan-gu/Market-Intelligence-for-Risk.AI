@@ -148,12 +148,12 @@ def build_waterfall_chart(
     ).encode(y="zero:Q")
     positive_labels = (
         base.transform_filter(alt.datum.display_value >= 0)
-        .mark_text(dy=-9, fontWeight="bold")
+        .mark_text(dy=-9, fontWeight="bold", color="#E2E8F0")
         .encode(y="high:Q", text=alt.Text("display_value:Q", format=",.0f"))
     )
     negative_labels = (
         base.transform_filter(alt.datum.display_value < 0)
-        .mark_text(dy=13, fontWeight="bold")
+        .mark_text(dy=13, fontWeight="bold", color="#E2E8F0")
         .encode(y="low:Q", text=alt.Text("display_value:Q", format=",.0f"))
     )
     return (zero + bars + positive_labels + negative_labels).properties(height=390)
@@ -215,10 +215,10 @@ st.html(
 )
 
 with st.container(key="sticky_header"):
-    header_controls = st.columns([2.35, 1.75, 1.75, 1.75, 1.15], vertical_alignment="bottom")
+    header_controls = st.columns([1.25, 1.05, 1.05, 1.05, 0.42, 0.95], vertical_alignment="bottom")
     with header_controls[0]:
         st.button(
-            "Ask MIRAI",
+            "M.I.R.A.I.",
             icon=":material/auto_awesome:",
             type="primary",
             width="stretch",
@@ -259,10 +259,13 @@ with st.container(key="sticky_header"):
     if selected_book != "All books":
         scoped_books = scoped_books.loc[scoped_books["book_id"] == selected_book]
     with header_controls[4]:
+        st.markdown("**AsOf**")
+    with header_controls[5]:
         selected_as_of_date = st.selectbox(
             "As-of date",
             available_as_of_dates,
             format_func=lambda value: value.strftime("%d/%m"),
+            label_visibility="collapsed",
             key="v29_as_of_date",
         )
 
@@ -321,10 +324,6 @@ stress_frame[stress_numeric] = stress_frame[stress_numeric] * allocation_weight
 
 if page == "Dashboard":
     st.header("Dashboard")
-    st.caption(
-        f"Bank-wide risk cockpit · as of {selected_as_of_date.strftime('%d/%m')} · "
-        f"{lineage.get('run_id', 'run unavailable')}"
-    )
 
     # The landing page is intentionally a summary: detailed attribution remains
     # in the VaR, P&L, Sensitivities, Stress and Controls pages.
@@ -340,8 +339,22 @@ if page == "Dashboard":
         st.metric("Expected shortfall", amount(selected_es), border=True)
         st.metric("Actual P&L", amount(selected_apl), border=True)
 
-    dashboard_chart_row = st.columns(1)
+    dashboard_chart_row = st.columns(2, gap="large")
     with dashboard_chart_row[0]:
+        with st.container(border=True):
+            st.subheader("P&L levels")
+            pnl_history = v29.build_pla_demo_history()
+            pnl_history = pnl_history.loc[pnl_history["cob_date"] <= pd.Timestamp(selected_as_of_date)].tail(20).copy()
+            pnl_history[["actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]] *= allocation_weight
+            pnl_long = pnl_history[["cob_date", "actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]].melt("cob_date", var_name="series", value_name="amount")
+            pnl_chart = alt.Chart(pnl_long).mark_line(point=True).encode(
+                x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%d/%m")),
+                y=alt.Y("amount:Q", title="EUR", scale=alt.Scale(zero=False)),
+                color=alt.Color("series:N", title="P&L series"),
+                tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", format=",.0f")],
+            ).properties(height=300)
+            st.altair_chart(pnl_chart)
+    with dashboard_chart_row[1]:
         with st.container(border=True):
             st.subheader("VaR and SVaR evolution")
             var_history = portfolio_df[["cob_date", "var_1d_99_hist", "stressed_var_1d_99", "var_limit_amount"]].copy()
@@ -361,22 +374,28 @@ if page == "Dashboard":
                 tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", title="EUR", format=",.0f")],
             ).properties(height=300)
             st.altair_chart(var_chart)
-    pnl_chart_row = st.columns(2, gap="large")
-    with pnl_chart_row[0]:
+
+    risk_chart_row = st.columns(2, gap="large")
+    with risk_chart_row[0]:
         with st.container(border=True):
-            st.subheader("P&L levels")
-            pnl_history = v29.build_pla_demo_history()
-            pnl_history = pnl_history.loc[pnl_history["cob_date"] <= pd.Timestamp(selected_as_of_date)].tail(20).copy()
-            pnl_history[["actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]] *= allocation_weight
-            pnl_long = pnl_history[["cob_date", "actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]].melt("cob_date", var_name="series", value_name="amount")
-            pnl_chart = alt.Chart(pnl_long).mark_line(point=True).encode(
-                x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%d/%m")),
-                y=alt.Y("amount:Q", title="EUR", scale=alt.Scale(zero=False)),
-                color=alt.Color("series:N", title="P&L series"),
-                tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", format=",.0f")],
+            st.subheader("Major sensitivities")
+            dashboard_sensitivities = pd.DataFrame(v29.get_market_sensitivities()["sensitivities"])
+            dashboard_sensitivities["absolute_value"] = dashboard_sensitivities["value"].abs() * allocation_weight
+            major_sensitivities = (
+                dashboard_sensitivities.groupby("measure", as_index=False)["absolute_value"]
+                .sum()
+                .rename(columns={"absolute_value": "Exposure"})
+                .sort_values("Exposure", ascending=False)
+            )
+            sensi_chart = alt.Chart(major_sensitivities).mark_bar().encode(
+                x=alt.X("Exposure:Q", title="Absolute sensitivity (EUR)", axis=alt.Axis(format=",.0f")),
+                y=alt.Y("measure:N", sort="-x", title=None),
+                color=alt.Color("measure:N", legend=None),
+                tooltip=[alt.Tooltip("measure:N", title="Sensitivity"), alt.Tooltip("Exposure:Q", title="Absolute exposure", format=",.0f")],
             ).properties(height=300)
-            st.altair_chart(pnl_chart)
-    with pnl_chart_row[1]:
+            st.altair_chart(sensi_chart)
+
+    with risk_chart_row[1]:
         with st.container(border=True):
             st.subheader("Largest current stress losses")
             latest_stress = stress_frame.sort_values("cob_date").iloc[-1]
@@ -403,7 +422,11 @@ if page == "Dashboard":
             for row in stress_monitor["scenarios"] if row["status"] in {"WARNING", "BREACH"}
         )
         if attention:
-            st.dataframe(pd.DataFrame(attention), hide_index=True, width="stretch")
+            severity_order = {"BREACH": 0, "CRITICAL": 0, "WARNING": 1, "HIGH": 1, "MEDIUM": 2, "INFO": 3}
+            attention_frame = pd.DataFrame(attention)
+            attention_frame["_severity_order"] = attention_frame["Severity"].map(severity_order).fillna(9)
+            attention_frame = attention_frame.sort_values(["_severity_order", "Source", "Finding"]).drop(columns="_severity_order")
+            st.dataframe(attention_frame, hide_index=True, width="stretch")
         else:
             st.success("No current attention points are above configured thresholds.", icon=":material/check_circle:")
 
@@ -455,6 +478,11 @@ elif page == "VaR":
         st.caption(var_change_summary["usage_note"])
 
     with st.container(border=True):
+        st.subheader("Historical VaR evolution")
+        var_chart = date_labels(portfolio_df).set_index("display_date")[["var_1d_99_hist"]].rename(columns={"var_1d_99_hist": "Historical VaR"})
+        st.line_chart(var_chart)
+
+    with st.container(border=True):
         st.subheader("VaR movement attribution")
         attribution_horizon = st.segmented_control(
             "Attribution horizon",
@@ -496,10 +524,6 @@ elif page == "VaR":
                 f"Insufficient history for {attribution_horizon.lower()} VaR movement attribution.",
                 icon=":material/info:",
             )
-    with st.container(border=True):
-        st.subheader("Historical VaR evolution")
-        var_chart = date_labels(portfolio_df).set_index("display_date")[["var_1d_99_hist"]].rename(columns={"var_1d_99_hist": "Historical VaR"})
-        st.line_chart(var_chart)
     with st.container(border=True):
         st.subheader("Historical VaR attribution")
         attribution = (pd.Series(v8.get_var_attribution(), name="VaR contribution") * allocation_weight).sort_values(ascending=False)
@@ -806,8 +830,8 @@ elif page == "Sensitivities":
         st.metric("FX Delta (EUR / 1% spot)", amount(fx_frame["value"].abs().sum()), border=True)
         st.metric("Theta (EUR / day)", amount(theta_frame["value"].sum()), border=True)
 
-    currency_domain = ["EUR", "USD", "JPY", "GBP", "HKD"]
-    currency_range = ["#2F6BFF", "#E07A5F", "#22A06B", "#8B5CF6", "#F59E0B"]
+    currency_domain = ["EUR", "USD", "JPY", "GBP", "HKD", "CNY"]
+    currency_range = ["#2F6BFF", "#E07A5F", "#22A06B", "#8B5CF6", "#F59E0B", "#14B8A6"]
 
     with st.container(border=True):
         st.subheader("IR Delta by curve and tenor (EUR / bp)")
@@ -1208,47 +1232,51 @@ elif page == "Scenario Lab":
         as_of_date=selected_as_of_date.isoformat(),
     )
     scenario = scenario_result["scenario"]
+    scenario_baseline_apl = float(portfolio_df.sort_values("cob_date").iloc[-1]["actual_pnl"])
+    scenario_total_pnl = scenario_baseline_apl + float(scenario["estimated_pnl"])
 
     with scenario_layout[1]:
         with st.container(border=True):
             st.subheader("Today versus your scenario")
             with st.container(horizontal=True):
                 st.metric(
-                    "Estimated scenario P&L",
+                    "Current Actual P&L (APL)",
+                    f"EUR {amount(scenario_baseline_apl)}",
+                    border=True,
+                )
+                st.metric(
+                    "Estimated scenario impact",
                     f"EUR {amount(scenario['estimated_pnl'])}",
-                    delta=f"EUR {amount(scenario['estimated_pnl'])} versus baseline",
+                    delta="Sensitivity-based estimate",
                     border=True,
                 )
                 st.metric(
-                    "Loss-limit consumption",
-                    percentage(scenario["limit_consumption_pct"]),
-                    delta=f"EUR {amount(scenario['loss_amount'])} estimated loss",
-                    delta_color="inverse",
-                    border=True,
-                )
-                st.metric(
-                    "Illustrative loss limit",
-                    f"EUR {amount(scenario['loss_limit'])}",
+                    "Scenario P&L (APL + impact)",
+                    f"EUR {amount(scenario_total_pnl)}",
                     border=True,
                 )
 
-            if scenario["status"] == "BREACH":
-                st.error("The estimated loss breaches the illustrative Scenario Lab limit.", icon=":material/error:")
-            elif scenario["status"] == "WARNING":
-                st.warning("The estimated loss exceeds the 80% warning threshold.", icon=":material/warning:")
-            else:
-                st.success("The estimated loss remains below the 80% warning threshold.", icon=":material/check_circle:")
+            st.info(
+                "Scenario Lab shows an estimated P&L impact added to the current Actual P&L (APL). "
+                "It is separate from official risk-engine limit governance.",
+                icon=":material/info:",
+            )
 
             scenario_comparison = pd.DataFrame([
                 {
-                    "Metric": "Estimated scenario P&L",
+                    "Metric": "Current Actual P&L (APL)",
+                    "Today": scenario_baseline_apl,
+                    "Under your scenario": scenario_baseline_apl,
+                },
+                {
+                    "Metric": "Estimated scenario impact",
                     "Today": 0.0,
                     "Under your scenario": scenario["estimated_pnl"],
                 },
                 {
-                    "Metric": "Loss-limit consumption",
-                    "Today": 0.0,
-                    "Under your scenario": scenario["limit_consumption_pct"],
+                    "Metric": "Scenario P&L (APL + impact)",
+                    "Today": scenario_baseline_apl,
+                    "Under your scenario": scenario_total_pnl,
                 },
             ])
             st.dataframe(
@@ -1256,8 +1284,8 @@ elif page == "Scenario Lab":
                 hide_index=True,
                 column_config={
                     "Metric": st.column_config.TextColumn(pinned=True),
-                    "Today": st.column_config.NumberColumn(format="%,.1f"),
-                    "Under your scenario": st.column_config.NumberColumn(format="%,.1f"),
+                    "Today": st.column_config.NumberColumn(format="%,.0f"),
+                    "Under your scenario": st.column_config.NumberColumn(format="%,.0f"),
                 },
             )
             effective = scenario_result["effective_shocks"]
@@ -1679,8 +1707,12 @@ elif page == "Controls":
         st.caption(pnl_alert_evaluation["usage_note"])
 
 else:
-    st.header("Ask MR Agent")
-    st.caption("The agent investigates deterministic risk results, stress evolution, run lineage and portfolio scope.")
+    st.header("Ask MIRAI")
+    st.caption(
+        "Security note: this public demo uses synthetic risk data. Do not enter confidential, "
+        "client, trade, personal, or other restricted information. In production, connect MIRAI "
+        "only to your organisation's approved model endpoint and data controls."
+    )
     scenario_context = st.session_state.get("v29_scenario_context")
     pending_scenario_question = st.session_state.pop("v29_pending_scenario_question", None)
     if scenario_context:
