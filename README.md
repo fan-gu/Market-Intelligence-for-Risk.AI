@@ -1,6 +1,6 @@
-# M.R. AI Agent
+# MIRAI — Market Intelligence for Risk AI
 
-An open, synthetic-data prototype of a market-risk manager cockpit. It treats validated risk runs as the source of truth, then adds hierarchy drill-down, explainable charts, scenario analysis, controls, and an auditable Gemini-powered assistant.
+An open, synthetic-data prototype of a market-risk manager cockpit. MIRAI treats validated risk runs as the source of truth, then adds hierarchy drill-down, explainable charts, scenario analysis, controls, and an auditable Gemini-powered assistant.
 
 ## See it in action
 
@@ -8,15 +8,13 @@ Run the app locally, or deploy the repository free on [Streamlit Community Cloud
 
 ![Risk cockpit overview](docs/screenshots/overview.png)
 
-![Wide dashboard view](docs/screenshots/risk-cockpit.png)
-
 ## Main functions
 
 - **Risk cockpit:** portfolio, trading-desk, book, and business-line hierarchy with date and run controls.
 - **VaR, P&L and sensitivities:** historical VaR/SVaR, P&L attribution, PLA indicators, and IR/FX risk-factor views.
 - **Stress and controls:** historical, hypothetical, adverse, and extreme scenarios with limits, consumption, warnings, and breaches.
 - **Scenario Lab:** change a shock and see the deterministic stressed P&L/risk response immediately.
-- **Ask M.R. AI Agent:** ask questions over the selected risk run; answers cite the underlying deterministic tools and can be audited.
+- **Ask MIRAI:** ask questions over the selected risk run; answers cite the underlying deterministic tools and can be audited.
 
 ## Run locally
 
@@ -36,7 +34,7 @@ The app opens at `http://localhost:8501`. For Streamlit Cloud, select `streamlit
 
 ```text
 streamlit_app.py                 tiny deployment entrypoint
-market_risk_dashboard_v29.py     current Streamlit dashboard
+market_risk_dashboard_v30.py     current Streamlit dashboard
 market_risk_agent_v29.py         current agent API
 data/                             synthetic risk-run data
 archive/versions/                 earlier versions, retained for history
@@ -50,6 +48,7 @@ The included data is synthetic and intentionally small. This is a demonstrator, 
 ## Version update log
 
 - **V29:** Scenario Lab with deterministic what-if shocks and audit trail; deployment-ready entrypoint.
+- **V30:** bank-wide Dashboard summary, project-wide SVaR governance, and MIRAI branding.
 - **V28:** compact curve sensitivity tables, IR Vega surfaces, and cleaner Stress/Ask-agent presentation.
 - **V27:** VaR movement attribution and improved P&L explain visualisation.
 - **V26:** hierarchy filters, governance controls, and risk-factor limits.
@@ -65,4 +64,3 @@ The included data is synthetic and intentionally small. This is a demonstrator, 
 - **V16:** sensitivities tab (IR Delta/Gamma/Vega, FX Delta, Theta).
 - **V15:** trade → book → trading desk → business-line hierarchy.
 - **V14 and earlier:** ingestion, deterministic analytics, memory, and initial dashboard iterations (see `archive/versions/`).
-

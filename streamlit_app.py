@@ -1,4 +1,4 @@
-"""Streamlit entry point for the M.R. AI Agent demo."""
+"""Streamlit entry point for the MIRAI demo."""
 
 from pathlib import Path
 import runpy

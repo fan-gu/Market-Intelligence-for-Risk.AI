@@ -1,4 +1,4 @@
-"""M.R. AI Agent V30: bank-wide dashboard with risk-factor summaries."""
+"""MIRAI V30: Market Intelligence for Risk AI bank-wide dashboard."""
 
 from html import escape
 
@@ -6,7 +6,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-st.set_page_config(page_title="M.R. AI Agent | V30", page_icon=":material/monitoring:", layout="wide")
+st.set_page_config(page_title="MIRAI | Market Intelligence for Risk AI | V30", page_icon=":material/monitoring:", layout="wide")
 
 try:
     import market_risk_agent_v29 as v29
@@ -218,7 +218,7 @@ with st.container(key="sticky_header"):
     header_controls = st.columns([2.35, 1.75, 1.75, 1.75, 1.15], vertical_alignment="bottom")
     with header_controls[0]:
         st.button(
-            "Ask M.R. AI Agent",
+            "Ask MIRAI",
             icon=":material/auto_awesome:",
             type="primary",
             width="stretch",
@@ -1344,7 +1344,7 @@ elif page == "Scenario Lab":
         st.warning(scenario_result["governance_note"], icon=":material/warning:")
 
     st.button(
-        "Ask M.R. AI Agent about this scenario",
+        "Ask MIRAI about this scenario",
         icon=":material/auto_awesome:",
         type="primary",
         width="stretch",

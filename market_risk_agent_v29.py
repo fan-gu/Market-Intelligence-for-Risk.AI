@@ -1,4 +1,4 @@
-"""M.R. AI Agent V29: interactive sensitivity-based Scenario Lab."""
+"""MIRAI V29: Market Intelligence for Risk AI interactive Scenario Lab."""
 
 from __future__ import annotations
 

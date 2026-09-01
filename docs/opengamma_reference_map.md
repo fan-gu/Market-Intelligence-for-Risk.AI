@@ -4,7 +4,7 @@ Last reviewed: 2026-08-30
 
 ## Purpose and scope
 
-This is a living map of OpenGamma's public material that is relevant to M.R. AI Agent. It is not a claim that every public webpage, source line, or historical paper has been permanently absorbed. OpenGamma's public corpus changes over time, and some material describes commercial margin services rather than market-risk management.
+This is a living map of OpenGamma's public material that is relevant to MIRAI (Market Intelligence for Risk AI). It is not a claim that every public webpage, source line, or historical paper has been permanently absorbed. OpenGamma's public corpus changes over time, and some material describes commercial margin services rather than market-risk management.
 
 The preferred source order is:
 
@@ -69,7 +69,7 @@ Strata separates:
 - calculation result grids;
 - report transformation for user-facing tables or files.
 
-For M.R. AI Agent, this implies that ingestion, validation, risk results, controls, presentation, and LLM explanation should be separate layers.
+For MIRAI, this implies that ingestion, validation, risk results, controls, presentation, and LLM explanation should be separate layers.
 
 ### Calculation flow
 
