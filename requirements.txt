@@ -1,5 +1,6 @@
 google-genai
 pandas
 python-dotenv
+plotly
 
 streamlit

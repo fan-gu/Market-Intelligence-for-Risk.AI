@@ -4,6 +4,7 @@ from html import escape
 
 import altair as alt
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
 st.set_page_config(page_title="MIRAI | Market Intelligence for Risk AI | V30", page_icon=":material/monitoring:", layout="wide")
@@ -324,14 +325,11 @@ stress_frame[stress_numeric] = stress_frame[stress_numeric] * allocation_weight
 
 if page == "Dashboard":
     st.header("Dashboard")
-
-    # The landing page is intentionally a summary: detailed attribution remains
-    # in the VaR, P&L, Sensitivities, Stress and Controls pages.
     selected_row = portfolio_df.sort_values("cob_date").iloc[-1]
-    selected_var = float(selected_row["var_1d_99_hist"]) * allocation_weight
-    selected_svar = float(selected_row["stressed_var_1d_99"]) * allocation_weight
-    selected_es = float(selected_row["expected_shortfall_97_5"]) * allocation_weight
-    selected_apl = float(selected_row["actual_pnl"]) * allocation_weight
+    selected_var = float(selected_row["var_1d_99_hist"])
+    selected_svar = float(selected_row["stressed_var_1d_99"])
+    selected_es = float(selected_row["expected_shortfall_97_5"])
+    selected_apl = float(selected_row["actual_pnl"])
 
     with st.container(horizontal=True):
         st.metric("Historical VaR", amount(selected_var), border=True)
@@ -342,193 +340,129 @@ if page == "Dashboard":
     dashboard_chart_row = st.columns(2, gap="large")
     with dashboard_chart_row[0]:
         with st.container(border=True):
-            st.subheader("P&L levels")
-            pnl_history = v29.build_pla_demo_history()
-            pnl_history = pnl_history.loc[pnl_history["cob_date"] <= pd.Timestamp(selected_as_of_date)].tail(20).copy()
-            pnl_history[["actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]] *= allocation_weight
-            pnl_long = pnl_history[["cob_date", "actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]].melt("cob_date", var_name="series", value_name="amount")
-            pnl_chart = alt.Chart(pnl_long).mark_line(point=True).encode(
-                x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%d/%m")),
-                y=alt.Y("amount:Q", title="EUR", scale=alt.Scale(zero=False)),
-                color=alt.Color("series:N", title="P&L series"),
-                tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", format=",.0f")],
-            ).properties(height=300)
-            st.altair_chart(pnl_chart)
+            st.subheader("Daily P&L attribution")
+            pnl_factors = {
+                "Rates": "pnl_driver_ir_dv01", "FX": "pnl_driver_fx_delta",
+                "Vega": "pnl_driver_vega", "Gamma": "pnl_driver_gamma",
+                "Theta": "pnl_driver_theta", "Credit": "pnl_driver_cs01",
+                "Cross-gamma": "pnl_driver_cross_gamma",
+            }
+            pnl_attribution = pd.DataFrame({"Factor": list(pnl_factors), "P&L": [float(selected_row[column]) for column in pnl_factors.values()]})
+            pnl_attribution = pnl_attribution.sort_values("P&L")
+            st.altair_chart(
+                alt.Chart(pnl_attribution).mark_bar().encode(
+                    x=alt.X("P&L:Q", title="Daily P&L (EUR)", axis=alt.Axis(format=",.0f")),
+                    y=alt.Y("Factor:N", sort=None, title=None),
+                    color=alt.condition(alt.datum["P&L"] < 0, alt.value("#F87171"), alt.value("#34D399")),
+                    tooltip=[alt.Tooltip("Factor:N"), alt.Tooltip("P&L:Q", format=",.0f")],
+                ).properties(height=300),
+                key="dashboard_daily_pnl_attribution",
+            )
     with dashboard_chart_row[1]:
         with st.container(border=True):
             st.subheader("VaR and SVaR evolution")
             var_history = portfolio_df[["cob_date", "var_1d_99_hist", "stressed_var_1d_99", "var_limit_amount"]].copy()
             var_history["svar_limit_amount"] = var_history["var_limit_amount"] * SVAR_LIMIT_MULTIPLIER
-            var_history[["var_1d_99_hist", "stressed_var_1d_99", "var_limit_amount", "svar_limit_amount"]] *= allocation_weight
             var_history = var_history.melt("cob_date", var_name="series", value_name="amount")
-            var_history["series"] = var_history["series"].replace({
-                "var_1d_99_hist": "Historical VaR",
-                "stressed_var_1d_99": "SVaR",
-                "var_limit_amount": "VaR limit",
-                "svar_limit_amount": "SVaR limit",
-            })
-            var_chart = alt.Chart(var_history).mark_line(point=True).encode(
-                x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%d/%m")),
-                y=alt.Y("amount:Q", title="EUR", scale=alt.Scale(zero=False)),
-                color=alt.Color("series:N", title="Series"),
-                tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", title="EUR", format=",.0f")],
-            ).properties(height=300)
-            st.altair_chart(var_chart)
+            var_history["series"] = var_history["series"].replace({"var_1d_99_hist":"Historical VaR", "stressed_var_1d_99":"SVaR", "var_limit_amount":"VaR limit", "svar_limit_amount":"SVaR limit"})
+            st.altair_chart(
+                alt.Chart(var_history).mark_line().encode(
+                    x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%b", tickCount=12)),
+                    y=alt.Y("amount:Q", title="EUR", scale=alt.Scale(zero=False)), color=alt.Color("series:N", title="Series"),
+                    tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("series:N"), alt.Tooltip("amount:Q", title="EUR", format=",.0f")],
+                ).properties(height=300), key="dashboard_var_evolution",
+            )
 
     risk_chart_row = st.columns(2, gap="large")
     with risk_chart_row[0]:
         with st.container(border=True):
-            st.subheader("Major sensitivities")
-            dashboard_sensitivities = pd.DataFrame(v29.get_market_sensitivities()["sensitivities"])
-            dashboard_sensitivities["absolute_value"] = dashboard_sensitivities["value"].abs() * allocation_weight
-            major_sensitivities = (
-                dashboard_sensitivities.groupby("measure", as_index=False)["absolute_value"]
-                .sum()
-                .rename(columns={"absolute_value": "Exposure"})
-                .sort_values("Exposure", ascending=False)
-            )
-            sensi_chart = alt.Chart(major_sensitivities).mark_bar().encode(
-                x=alt.X("Exposure:Q", title="Absolute sensitivity (EUR)", axis=alt.Axis(format=",.0f")),
-                y=alt.Y("measure:N", sort="-x", title=None),
-                color=alt.Color("measure:N", legend=None),
-                tooltip=[alt.Tooltip("measure:N", title="Sensitivity"), alt.Tooltip("Exposure:Q", title="Absolute exposure", format=",.0f")],
-            ).properties(height=300)
-            st.altair_chart(sensi_chart)
-
+            st.subheader("EUR IR volatility surface")
+            vega_surface = pd.DataFrame(v29.get_ir_vega_surface(["EUR"])["surface"])
+            vega_surface = vega_surface.groupby(["option_expiry", "underlying_tenor"], as_index=False)["value"].sum()
+            expiries, underlyings = ["1Y", "5Y"], ["2Y", "10Y"]
+            surface_grid = vega_surface.pivot(index="option_expiry", columns="underlying_tenor", values="value").reindex(index=expiries, columns=underlyings).fillna(0.0)
+            surface_figure = go.Figure(data=[go.Surface(z=surface_grid.values, x=underlyings, y=expiries, colorscale="Blues", colorbar={"title":"EUR / vol point"}, hovertemplate="Option expiry: %{y}<br>Underlying tenor: %{x}<br>Vega: %{z:,.0f}<extra></extra>")])
+            surface_figure.update_layout(height=330, margin={"l":0,"r":0,"t":10,"b":0}, scene={"xaxis_title":"Underlying swap tenor", "yaxis_title":"Option expiry", "zaxis_title":"IR Vega", "bgcolor":"#0F172A", "xaxis":{"backgroundcolor":"#0F172A"}, "yaxis":{"backgroundcolor":"#0F172A"}, "zaxis":{"backgroundcolor":"#0F172A"}}, paper_bgcolor="#0F172A", font={"color":"#E5E7EB"})
+            st.plotly_chart(surface_figure, width="stretch", key="dashboard_eur_ir_vol_surface")
     with risk_chart_row[1]:
         with st.container(border=True):
             st.subheader("Largest current stress losses")
             latest_stress = stress_frame.sort_values("cob_date").iloc[-1]
-            stress_summary = pd.DataFrame({"Scenario": stress_numeric, "Stressed P&L": [float(latest_stress[s]) for s in stress_numeric]})
-            stress_summary = stress_summary.sort_values("Stressed P&L").head(6)
-            stress_chart = alt.Chart(stress_summary).mark_bar().encode(
-                x=alt.X("Stressed P&L:Q", title="EUR", axis=alt.Axis(format=",.0f")),
-                y=alt.Y("Scenario:N", sort=None, title=None),
-                color=alt.condition(alt.datum["Stressed P&L"] < 0, alt.value("#F87171"), alt.value("#34D399")),
-                tooltip=[alt.Tooltip("Scenario:N"), alt.Tooltip("Stressed P&L:Q", format=",.0f")],
-            ).properties(height=300)
-            st.altair_chart(stress_chart)
+            stress_summary = pd.DataFrame({"Scenario": stress_numeric, "Stressed P&L": [float(latest_stress[item]) for item in stress_numeric]}).sort_values("Stressed P&L").head(6)
+            st.altair_chart(alt.Chart(stress_summary).mark_bar().encode(x=alt.X("Stressed P&L:Q", title="EUR", axis=alt.Axis(format=",.0f")), y=alt.Y("Scenario:N", sort=None, title=None), color=alt.condition(alt.datum["Stressed P&L"] < 0, alt.value("#F87171"), alt.value("#34D399")), tooltip=[alt.Tooltip("Scenario:N"), alt.Tooltip("Stressed P&L:Q", format=",.0f")]).properties(height=300), key="dashboard_stress_losses")
 
     with st.container(border=True):
         st.subheader("Attention points")
         attention = []
-        attention.extend(
-            {"Severity": row["severity"], "Source": "Risk alerts", "Finding": f"{row['title']}: {row['summary']}"}
-            for row in alert_summary.get("alerts", [])
-        )
+        attention.extend({"Severity": row["severity"], "Source": "Risk alerts", "Finding": f"{row['title']}: {row['summary']}"} for row in alert_summary.get("alerts", []))
         stress_monitor = v29.get_stress_limit_monitor(selected_as_of_date)
-        attention.extend(
-            {"Severity": row["status"], "Source": "Stress limits", "Finding": f"{row['scenario']}: {row['consumption_pct']:.1f}% consumed"}
-            for row in stress_monitor["scenarios"] if row["status"] in {"WARNING", "BREACH"}
-        )
+        attention.extend({"Severity": row["status"], "Source": "Stress limits", "Finding": f"{row['scenario']}: {row['consumption_pct']:.1f}% consumed"} for row in stress_monitor["scenarios"] if row["status"] in {"WARNING", "BREACH"})
         if attention:
-            severity_order = {"BREACH": 0, "CRITICAL": 0, "WARNING": 1, "HIGH": 1, "MEDIUM": 2, "INFO": 3}
-            attention_frame = pd.DataFrame(attention)
-            attention_frame["_severity_order"] = attention_frame["Severity"].map(severity_order).fillna(9)
-            attention_frame = attention_frame.sort_values(["_severity_order", "Source", "Finding"]).drop(columns="_severity_order")
-            st.dataframe(attention_frame, hide_index=True, width="stretch")
+            severity_order = {"BREACH":0,"CRITICAL":0,"WARNING":1,"HIGH":1,"MEDIUM":2,"INFO":3}
+            attention_frame = pd.DataFrame(attention); attention_frame["_severity_order"] = attention_frame["Severity"].map(severity_order).fillna(9)
+            st.dataframe(attention_frame.sort_values(["_severity_order","Source","Finding"]).drop(columns="_severity_order"), hide_index=True, width="stretch")
         else:
             st.success("No current attention points are above configured thresholds.", icon=":material/check_circle:")
 
 elif page == "VaR":
     st.header("VaR")
-    var_change_summary = v29.get_var_change_summary(selected_as_of_date)
-    selected_raw_risk = v8.df.loc[
-        v8.df["cob_date"] <= pd.Timestamp(selected_as_of_date)
-    ].sort_values("cob_date").iloc[-1]
+    selected_raw_risk = v8.df.loc[v8.df["cob_date"] <= pd.Timestamp(selected_as_of_date)].sort_values("cob_date").iloc[-1]
     selected_hist_var = float(selected_raw_risk["var_1d_99_hist"]) * allocation_weight
     selected_stressed_var = float(selected_raw_risk["stressed_var_1d_99"]) * allocation_weight
     selected_var_limit = float(selected_raw_risk["var_limit_amount"]) * allocation_weight
-    selected_utilisation = 0.0 if selected_var_limit == 0 else selected_hist_var / selected_var_limit * 100.0
+    selected_svar_limit = selected_var_limit * SVAR_LIMIT_MULTIPLIER
+    var_blocks = st.columns(2, gap="large")
+    for block, label, value, limit_value in [(var_blocks[0], "HVaR", selected_hist_var, selected_var_limit), (var_blocks[1], "SVaR", selected_stressed_var, selected_svar_limit)]:
+        with block.container(border=True):
+            st.subheader(label)
+            with st.container(horizontal=True):
+                st.metric("Current", amount(value), border=True)
+                st.metric("Limit", amount(limit_value), border=True)
+                st.metric("Consumption", percentage(0 if limit_value == 0 else value / limit_value * 100), border=True)
 
-    with st.container(horizontal=True):
-        st.metric("Historical VaR (1 day, 99%)", amount(selected_hist_var), border=True)
-        st.metric("Stressed VaR (SVaR)", amount(selected_stressed_var), border=True)
-        st.metric("Approved VaR limit", amount(selected_var_limit), border=True)
-        st.metric("Limit utilisation", percentage(selected_utilisation), border=True)
+    history = v8.df.loc[v8.df["cob_date"] <= pd.Timestamp(selected_as_of_date)].sort_values("cob_date").copy()
+    def movement(column, days):
+        latest = history.iloc[-1]
+        prior = history.loc[history["cob_date"] <= latest["cob_date"] - pd.Timedelta(days=days)]
+        if prior.empty: return None
+        reference = prior.iloc[-1]
+        value = 0.0 if float(reference[column]) == 0 else (float(latest[column]) / float(reference[column]) - 1.0) * 100.0
+        return value, pd.Timestamp(reference["cob_date"]).strftime("%d/%m")
+    with st.container(border=True):
+        st.subheader("VaR movement")
+        movement_blocks = st.columns(2, gap="large")
+        for block, label, column, periods in [(movement_blocks[0], "HVaR change", "var_1d_99_hist", [("Daily",1),("Weekly",7),("Monthly",30)]), (movement_blocks[1], "SVaR change", "stressed_var_1d_99", [("Weekly",7),("Monthly",30)])]:
+            with block.container(border=True):
+                st.markdown(f"**{label}**")
+                with st.container(horizontal=True):
+                    for period, days in periods:
+                        result = movement(column, days)
+                        if result is None: st.metric(period, "N/A", border=True)
+                        else: st.metric(period, f"{result[0]:+.1f}%", f"vs {result[1]}", border=True)
 
     with st.container(border=True):
-        st.subheader("Historical VaR changes")
-        comparison_by_period = {
-            item["period"]: item for item in var_change_summary["comparisons"]
-        }
-        with st.container(horizontal=True):
-            for period in ("Daily", "Weekly", "Monthly"):
-                comparison = comparison_by_period[period]
-                if comparison["available"]:
-                    scaled_change = comparison["change"] * allocation_weight
-                    reference_date = pd.Timestamp(comparison["reference_date"]).strftime("%d/%m")
-                    delta_text = (
-                        "N/A"
-                        if comparison["change_pct"] is None
-                        else f"{comparison['change_pct']:+.1f}% vs {reference_date}"
-                    )
-                    st.metric(
-                        f"{period} change",
-                        amount(scaled_change),
-                        delta_text,
-                        border=True,
-                    )
-                else:
-                    st.metric(
-                        f"{period} change",
-                        "Insufficient history",
-                        border=True,
-                    )
-        st.caption(var_change_summary["usage_note"])
-
-    with st.container(border=True):
-        st.subheader("Historical VaR evolution")
-        var_chart = date_labels(portfolio_df).set_index("display_date")[["var_1d_99_hist"]].rename(columns={"var_1d_99_hist": "Historical VaR"})
-        st.line_chart(var_chart)
+        st.subheader("HVaR evolution")
+        hvar_history = history[["cob_date", "var_1d_99_hist", "var_limit_amount"]].copy()
+        hvar_history[["var_1d_99_hist", "var_limit_amount"]] *= allocation_weight
+        hvar_line = alt.Chart(hvar_history).mark_line(color="#60A5FA", strokeWidth=2.4).encode(x=alt.X("cob_date:T", title="Month", axis=alt.Axis(format="%b", tickCount=12)), y=alt.Y("var_1d_99_hist:Q", title="HVaR (EUR)", scale=alt.Scale(zero=False)), tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("var_1d_99_hist:Q", title="HVaR", format=",.0f")])
+        hvar_limit = alt.Chart(hvar_history).mark_rule(color="#F59E0B", strokeDash=[6,4], strokeWidth=2).encode(y=alt.Y("var_limit_amount:Q"), tooltip=[alt.Tooltip("var_limit_amount:Q", title="HVaR limit", format=",.0f")])
+        st.altair_chart((hvar_line + hvar_limit).properties(height=340), key="hvar_evolution")
 
     with st.container(border=True):
         st.subheader("VaR movement attribution")
-        attribution_horizon = st.segmented_control(
-            "Attribution horizon",
-            ["Daily", "Weekly", "Monthly"],
-            default="Daily",
-            required=True,
-            key="v29_var_attribution_horizon",
-        )
-        var_attribution = v29.get_var_change_attribution(
-            selected_as_of_date,
-            horizon=attribution_horizon,
-            hierarchy_level=scope_label,
-        )
+        attribution_horizon = st.segmented_control("Attribution horizon", ["Daily","Weekly","Monthly"], default="Daily", required=True, key="v29_var_attribution_horizon")
+        var_attribution = v29.get_var_change_attribution(selected_as_of_date, horizon=attribution_horizon, hierarchy_level=scope_label)
         if var_attribution["status"] == "AVAILABLE":
-            factor_movements = [
-                (
-                    "Diversification effect" if item["factor"] == "Diversification" else item["factor"],
-                    item["change"] * allocation_weight,
-                    "Diversification" if item["factor"] == "Diversification" else "Risk factor",
-                )
-                for item in var_attribution["factor_changes"]
-            ]
-            st.altair_chart(
-                build_waterfall_chart(
-                    factor_movements,
-                    total_label="Total VaR change",
-                    total_value=var_attribution["total_change"] * allocation_weight,
-                )
-            )
-            st.caption(
-                f"{attribution_horizon} movement from "
-                f"{pd.Timestamp(var_attribution['reference_date']).strftime('%d/%m')} to "
-                f"{pd.Timestamp(var_attribution['as_of_date']).strftime('%d/%m')}. "
-                "Factor movements, including diversification, build directly to the total VaR change. "
-                + var_attribution["usage_note"]
-            )
-        else:
-            st.info(
-                f"Insufficient history for {attribution_horizon.lower()} VaR movement attribution.",
-                icon=":material/info:",
-            )
+            factors = [("Diversification effect" if item["factor"] == "Diversification" else item["factor"], item["change"] * allocation_weight, "Diversification" if item["factor"] == "Diversification" else "Risk factor") for item in var_attribution["factor_changes"]]
+            st.altair_chart(build_waterfall_chart(factors, total_label="Total VaR change", total_value=var_attribution["total_change"] * allocation_weight), key="var_movement_attribution")
+            st.caption(f"{attribution_horizon} movement from {pd.Timestamp(var_attribution['reference_date']).strftime('%d/%m')} to {pd.Timestamp(var_attribution['as_of_date']).strftime('%d/%m')}. {var_attribution['usage_note']}")
+        else: st.info(f"Insufficient history for {attribution_horizon.lower()} VaR movement attribution.", icon=":material/info:")
+
     with st.container(border=True):
         st.subheader("Historical VaR attribution")
-        attribution = (pd.Series(v8.get_var_attribution(), name="VaR contribution") * allocation_weight).sort_values(ascending=False)
-        st.bar_chart(attribution)
-        display_amount_table(attribution.rename_axis("Risk factor").reset_index(), ["VaR contribution"])
+        attribution = (pd.Series(v8.get_var_attribution(), name="VaR contribution") * allocation_weight).sort_values(ascending=False).rename_axis("Risk factor").reset_index()
+        st.altair_chart(alt.Chart(attribution).mark_bar().encode(x=alt.X("VaR contribution:Q", title="VaR contribution (EUR)", axis=alt.Axis(format=",.0f")), y=alt.Y("Risk factor:N", sort="-x", title=None), color=alt.Color("Risk factor:N", legend=None), tooltip=[alt.Tooltip("Risk factor:N"), alt.Tooltip("VaR contribution:Q", format=",.0f")]).properties(height=360), key="historical_var_attribution")
+
 elif page == "P&L":
     st.header("P&L attribution")
     st.caption("Official FRTB terminology: Actual P&L (APL), Hypothetical P&L (HPL), and Risk-theoretical P&L (RTPL).")
@@ -589,11 +523,6 @@ elif page == "P&L":
         "status": "ALERT" if unexplained_ratio > 20.0 else "OK",
     }
     st.caption(f"All P&L and PLA charts follow the top hierarchy perimeter: {scope_label}.")
-    st.info(
-        "The 250-day desk history is deterministic synthetic V29 demo data. "
-        "It demonstrates the Basel PLA workflow but is not a regulatory submission.",
-        icon=":material/info:",
-    )
 
     with st.container(horizontal=True):
         st.metric("Actual P&L (APL)", amount(latest_pnl["actual_pnl"]), border=True)
@@ -604,9 +533,9 @@ elif page == "P&L":
 
     with st.container(border=True):
         st.subheader("P&L levels and residuals")
-        recent_window = desk_history.tail(20).copy()
-        recent_window["Business date"] = recent_window["cob_date"].dt.strftime("%d/%m")
-        date_order = recent_window["Business date"].tolist()
+        recent_window = desk_history.copy()
+        recent_window["Business date"] = recent_window["cob_date"]
+        date_order = None
 
         level_data = recent_window[
             ["Business date", "actual_pnl", "hypothetical_pnl", "risk_theoretical_pnl"]
@@ -623,18 +552,11 @@ elif page == "P&L":
             "apl_hpl_difference": "APL − HPL",
             "hpl_rtpl_difference": "HPL − RTPL",
         })
-        date_rules = pd.DataFrame({"Business date": date_order})
-
-        vertical_separators = (
-            alt.Chart(date_rules)
-            .mark_rule(color="#98A2B3", strokeDash=[2, 4], opacity=0.45)
-            .encode(x=alt.X("Business date:N", sort=date_order))
-        )
         residual_bars = (
             alt.Chart(residual_data)
             .mark_bar(opacity=0.32, size=9)
             .encode(
-                x=alt.X("Business date:N", title="Business date", sort=date_order, axis=alt.Axis(labelAngle=-45)),
+                x=alt.X("Business date:T", title="Month", axis=alt.Axis(format="%b", tickCount=12)),
                 xOffset=alt.XOffset("series:N", sort=["APL − HPL", "HPL − RTPL"]),
                 y=alt.Y("value:Q", title="Residual (EUR)", axis=alt.Axis(orient="right"), scale=alt.Scale(zero=True)),
                 color=alt.Color(
@@ -653,7 +575,7 @@ elif page == "P&L":
             alt.Chart(level_data)
             .mark_line(strokeWidth=2.5)
             .encode(
-                x=alt.X("Business date:N", sort=date_order),
+                x=alt.X("Business date:T", title="Month", axis=alt.Axis(format="%b", tickCount=12)),
                 y=alt.Y("value:Q", title="P&L level (EUR)", scale=alt.Scale(zero=False)),
                 color=alt.Color(
                     "series:N",
@@ -667,16 +589,15 @@ elif page == "P&L":
                 ],
             )
         )
-        pnl_points = pnl_lines.mark_point(filled=True, size=42)
         combined_pnl_chart = (
-            alt.layer(vertical_separators, residual_bars, pnl_lines, pnl_points)
+            alt.layer(residual_bars, pnl_lines)
             .resolve_scale(y="independent", color="independent")
             .properties(height=430)
         )
         st.altair_chart(combined_pnl_chart)
         st.caption(
             "APL, HPL and RTPL are lines on the left axis. APL − HPL and HPL − RTPL are translucent bars "
-            "on the right axis. Dotted vertical rules separate business dates."
+            "on the right axis. The full 260-business-day history is shown with monthly labels."
         )
     with st.container(border=True):
         st.subheader("Risk-model P&L explain")
@@ -692,23 +613,21 @@ elif page == "P&L":
             )
         else:
             st.success("Unexplained P&L is within the 20% of |APL| threshold.", icon=":material/check_circle:")
-        driver_contributions = [
-            (column, float(latest_pnl[column]))
-            for column in v29.DRIVER_COLUMNS
-        ]
-        st.altair_chart(
-            build_waterfall_chart(
-                driver_contributions,
-                total_label="RTPL",
-                total_value=float(latest_pnl["risk_theoretical_pnl"]),
-                bridge_label="Unexplained P&L",
-                bridge_value=float(latest_pnl["unexplained_pnl"]),
-            )
+        explain_rows = pd.DataFrame(
+            [{"Factor": column, "P&L": float(latest_pnl[column])} for column in v29.DRIVER_COLUMNS]
+            + [{"Factor": "Unexplained P&L", "P&L": float(latest_pnl["unexplained_pnl"])}]
         )
-        st.caption(
-            "Risk factors accumulate directly into an unexplained P&L bridge and then RTPL. "
-            "Unexplained P&L is not presented as a risk factor or subtotal. PLA residual remains HPL minus RTPL."
+        explain_rows["Factor"] = explain_rows["Factor"].replace({"Gamma and cross-gamma": "Gamma / cross-gamma"})
+        explain_rows = explain_rows.sort_values("P&L")
+        explain_bars = alt.Chart(explain_rows).mark_bar().encode(
+            x=alt.X("P&L:Q", title="P&L contribution (EUR)", axis=alt.Axis(format=",.0f")),
+            y=alt.Y("Factor:N", sort=None, title=None),
+            color=alt.Color("Factor:N", title="P&L factor", legend=alt.Legend(orient="bottom")),
+            tooltip=[alt.Tooltip("Factor:N"), alt.Tooltip("P&L:Q", format=",.0f")],
         )
+        explain_labels = explain_bars.mark_text(align="left", dx=4, color="#E5E7EB").encode(text=alt.Text("P&L:Q", format=",.0f"))
+        st.altair_chart((explain_bars + explain_labels).properties(height=380), key="risk_model_pnl_explain")
+        st.caption("Each driver, including lifecycle effects and unexplained P&L, is shown separately. HPL minus RTPL remains the PLA residual above.")
     with st.container(border=True):
         st.subheader("FRTB P&L Attribution test")
         st.caption(
@@ -830,8 +749,8 @@ elif page == "Sensitivities":
         st.metric("FX Delta (EUR / 1% spot)", amount(fx_frame["value"].abs().sum()), border=True)
         st.metric("Theta (EUR / day)", amount(theta_frame["value"].sum()), border=True)
 
-    currency_domain = ["EUR", "USD", "JPY", "GBP", "HKD", "CNY"]
-    currency_range = ["#2F6BFF", "#E07A5F", "#22A06B", "#8B5CF6", "#F59E0B", "#14B8A6"]
+    currency_domain = ["EUR", "USD", "JPY", "GBP", "CHF", "AUD", "HKD", "CNY"]
+    currency_range = ["#2F6BFF", "#E07A5F", "#22A06B", "#8B5CF6", "#60A5FA", "#FB7185", "#F59E0B", "#14B8A6"]
 
     with st.container(border=True):
         st.subheader("IR Delta by curve and tenor (EUR / bp)")
@@ -853,8 +772,17 @@ elif page == "Sensitivities":
             * 100.0
         )
 
+        delta_table["curve_display"] = delta_table.apply(
+            lambda row: (
+                str(row["curve"])
+                if row["row_type"] == "Currency subtotal"
+                else f'{row["curve_type"]} | {row["curve"]}'
+            ),
+            axis=1,
+        )
+
         delta_display_columns = (
-            ["currency", "curve_type", "curve"]
+            ["currency", "curve_display"]
             + tenor_order
             + [
                 "net_delta", "net_limit", "net_pct",
@@ -863,8 +791,7 @@ elif page == "Sensitivities":
         )
         delta_headers = {
             "currency": "Currency",
-            "curve_type": "Curve family",
-            "curve": "Curve",
+            "curve_display": "Curve",
             **{tenor: tenor for tenor in tenor_order},
             "net_delta": "Net Delta",
             "net_limit": "Limit",
@@ -874,7 +801,7 @@ elif page == "Sensitivities":
             "gross_pct": "%",
         }
         percentage_columns = {"net_pct", "gross_pct"}
-        text_columns = {"currency", "curve_type", "curve"}
+        text_columns = {"currency", "curve_display"}
 
         def format_delta_cell(column, value):
             if pd.isna(value) or value == "":
@@ -906,38 +833,46 @@ elif page == "Sensitivities":
         <style>
             .delta-risk-wrap {{
                 max-height: 610px;
-                overflow: auto;
+                overflow-y: auto;
+                overflow-x: hidden;
                 border: 1px solid #334155;
                 border-radius: 7px;
             }}
             .delta-risk-table {{
                 width: 100%;
-                min-width: 1480px;
+                min-width: 0;
+                table-layout: fixed;
                 border-collapse: separate;
                 border-spacing: 0;
                 color: #E5E7EB;
                 font-family: Inter, Arial, sans-serif;
-                font-size: 0.82rem;
+                font-size: 0.67rem;
             }}
             .delta-risk-table th {{
                 position: sticky;
                 top: 0;
                 z-index: 2;
-                padding: 8px 9px;
+                padding: 5px 3px;
                 background: #1E293B;
                 border-bottom: 1px solid #475569;
                 text-align: right;
                 white-space: nowrap;
             }}
             .delta-risk-table td {{
-                padding: 7px 9px;
+                padding: 5px 3px;
                 border-bottom: 1px solid #263449;
                 background: #111827;
                 text-align: right;
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }}
-            .delta-risk-table th:nth-child(-n+3),
-            .delta-risk-table td:nth-child(-n+3) {{ text-align: left; }}
+            .delta-risk-table th:nth-child(-n+2),
+            .delta-risk-table td:nth-child(-n+2) {{ text-align: left; }}
+            .delta-risk-table th:nth-child(1),
+            .delta-risk-table td:nth-child(1) {{ width: 4%; }}
+            .delta-risk-table th:nth-child(2),
+            .delta-risk-table td:nth-child(2) {{ width: 10%; }}
             .delta-risk-table tr.currency-subtotal td {{
                 background: #24324A;
                 border-top: 1px solid #60A5FA;
@@ -1384,24 +1319,26 @@ elif page == "Scenario Lab":
 elif page == "Stress":
     st.header("Stress")
     st.caption("Risk-engine-supplied scenario revaluation P&L only. Negative values represent losses versus the base valuation.")
-    st.info(stress_evolution["usage_note"], icon=":material/info:")
+    st.info("The supplied demo extract contains historical, hypothetical, adverse and extreme full-revaluation scenario results.", icon=":material/info:")
 
-    latest_stress = stress_frame.iloc[-1].drop(labels="cob_date").sort_values()
     scenario_names = [column for column in stress_frame.columns if column != "cob_date"]
-    material_evaluation = v29.get_material_stress_scenarios(selected_as_of_date)
     stress_limit_monitor = v29.get_stress_limit_monitor(selected_as_of_date)
     stress_limit_table = pd.DataFrame(stress_limit_monitor["scenarios"])
-    material_defaults = material_evaluation["selected_scenarios"]
+    stress_movements = pd.DataFrame(v29.get_stress_movement_table(selected_as_of_date)["scenarios"])
+
+    movement_scores = stress_movements.copy()
+    movement_scores["magnitude_score"] = movement_scores["latest_impact"].abs() / max(movement_scores["latest_impact"].abs().max(), 1.0)
+    movement_scores["move_score"] = movement_scores["daily_move"].abs() / max(movement_scores["daily_move"].abs().max(), 1.0)
+    material_defaults = movement_scores.assign(attention_score=movement_scores["magnitude_score"] + movement_scores["move_score"]).nlargest(10, "attention_score")["scenario"].tolist()
 
     with st.container(border=True):
-        st.subheader("Material stress evolution")
+        st.subheader("Top 10 stress evolutions")
         selected_scenarios = st.multiselect(
             "Priced scenarios to display",
             scenario_names,
             default=material_defaults,
-            key="v29_stress_scenarios",
+            key="v30_stress_scenarios",
         )
-        st.caption(material_evaluation["rule"])
         if selected_scenarios:
             chart_wide = stress_frame[["cob_date"] + selected_scenarios].copy()
             chart_long = chart_wide.melt("cob_date", var_name="scenario", value_name="impact")
@@ -1410,10 +1347,10 @@ elif page == "Stress":
                 alt.Chart(chart_long)
                 .mark_line(strokeWidth=2)
                 .encode(
-                    x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%d/%m")),
+                    x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%b", tickCount=12)),
                     y=alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(zero=False)),
                     color=alt.Color("scenario:N", title="Scenario"),
-                    strokeDash=alt.StrokeDash("category:N", title="Category"),
+                    strokeDash=alt.StrokeDash("category:N", title="Category", legend=alt.Legend(orient="bottom")),
                     tooltip=[
                         alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"),
                         alt.Tooltip("scenario:N", title="Scenario"),
@@ -1443,53 +1380,22 @@ elif page == "Stress":
                     color=alt.Color("scenario:N", legend=None),
                 )
             )
-            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=410))
+            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=430))
         else:
             st.info("Select at least one priced scenario.", icon=":material/info:")
-
-    material_table = pd.DataFrame(material_evaluation["scenario_metrics"])
-    if not material_table.empty:
-        material_table[["latest_impact", "latest_jump"]] = material_table[["latest_impact", "latest_jump"]] * allocation_weight
-        material_table = material_table.merge(
-            stress_limit_table[["scenario", "limit", "consumption_pct", "status"]],
-            on="scenario",
-            how="left",
-        )
-        material_table["limit"] = material_table["limit"] * allocation_weight
-        with st.container(border=True):
-            st.subheader("Why these curves are material")
-            st.dataframe(
-                material_table,
-                hide_index=True,
-                column_order=["scenario", "category", "latest_impact", "latest_jump", "limit", "consumption_pct", "status", "selection_reason"],
-                column_config={
-                    "scenario": "Scenario",
-                    "category": "Category",
-                    "latest_impact": st.column_config.NumberColumn("Stressed P&L", format="%,.0f"),
-                    "latest_jump": st.column_config.NumberColumn("Daily move", format="%,.0f"),
-                    "limit": st.column_config.NumberColumn("Limit", format="%,.0f"),
-                    "consumption_pct": st.column_config.ProgressColumn("Consumption", format="%.1f%%", min_value=0, max_value=120),
-                    "status": "Status",
-                    "selection_reason": "Attention points",
-                },
-            )
-
-    worst_scenario, worst_impact = latest_stress.index[0], latest_stress.iloc[0]
-    previous_stress = stress_frame.iloc[-2].drop(labels="cob_date") if len(stress_frame) > 1 else latest_stress
-    deterioration = (latest_stress - previous_stress).sort_values().iloc[0]
-    with st.container(horizontal=True):
-        st.metric("Most adverse scenario", worst_scenario, amount(worst_impact), border=True)
-        st.metric("Largest day-on-day deterioration", amount(deterioration), border=True)
-        st.metric("Priced scenarios", len(latest_stress), border=True)
-        st.metric("Governed categories", 4, border=True)
 
     with st.container(border=True):
         st.subheader("Scenario definitions and current impacts")
         limit_lookup = stress_limit_table.set_index("scenario")
+        movement_lookup = stress_movements.set_index("scenario")
+        latest_stress = stress_frame.iloc[-1].drop(labels="cob_date").sort_values()
         stress_table = pd.DataFrame({
             "Scenario": latest_stress.index,
             "Category": [stress_metadata[name]["type"] for name in latest_stress.index],
-            "Stressed P&L": latest_stress.values,
+            "Stressed P&L": latest_stress.values * allocation_weight,
+            "Daily move": [movement_lookup.loc[name, "daily_move"] * allocation_weight for name in latest_stress.index],
+            "Weekly move": [movement_lookup.loc[name, "weekly_move"] * allocation_weight for name in latest_stress.index],
+            "Monthly move": [movement_lookup.loc[name, "monthly_move"] * allocation_weight for name in latest_stress.index],
             "Limit": [limit_lookup.loc[name, "limit"] * allocation_weight for name in latest_stress.index],
             "Consumption": [limit_lookup.loc[name, "consumption_pct"] for name in latest_stress.index],
             "Status": [limit_lookup.loc[name, "status"] for name in latest_stress.index],
@@ -1500,12 +1406,15 @@ elif page == "Stress":
             hide_index=True,
             column_config={
                 "Stressed P&L": st.column_config.NumberColumn(format="%,.0f"),
+                "Daily move": st.column_config.NumberColumn(format="%,.0f"),
+                "Weekly move": st.column_config.NumberColumn(format="%,.0f"),
+                "Monthly move": st.column_config.NumberColumn(format="%,.0f"),
                 "Limit": st.column_config.NumberColumn(format="%,.0f"),
                 "Consumption": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=120),
             },
         )
 
-    with st.expander("Scenario catalogue, including Extreme configurations", icon=":material/assignment:"):
+    with st.expander("Scenario catalogue", icon=":material/assignment:"):
         scenario_catalog = pd.DataFrame(v29.get_stress_scenario_catalog())
         scenario_catalog["limit"] = scenario_catalog["limit"] * allocation_weight
         st.dataframe(
@@ -1523,11 +1432,7 @@ elif page == "Stress":
             },
         )
         st.caption(stress_limit_monitor["usage_note"])
-        st.warning(
-            "Extreme shock parameters are exactly 2× the corresponding adverse parameters. "
-            "Their P&L is intentionally blank until the risk engine performs a full nonlinear revaluation.",
-            icon=":material/warning:",
-        )
+
 elif page == "Controls":
     st.header("Controls")
     limit_evaluation = v29.evaluate_all_limits()
@@ -1536,12 +1441,6 @@ elif page == "Controls":
     limit_frame["status_rank"] = limit_frame["status"].map(status_rank)
     limit_frame = limit_frame.sort_values(["status_rank", "consumption_pct"], ascending=[True, False]).drop(columns="status_rank")
     limit_summary = limit_evaluation["summary"]
-
-    with st.container(horizontal=True):
-        st.metric("Breaches", limit_summary["breaches"], border=True)
-        st.metric("Warnings", limit_summary["warnings"], border=True)
-        st.metric("Within limit", limit_summary["ok"], border=True)
-        st.metric("Rules evaluated", len(limit_frame), border=True)
 
     with st.container(border=True):
         st.subheader("Limit governance")
@@ -1707,7 +1606,7 @@ elif page == "Controls":
         st.caption(pnl_alert_evaluation["usage_note"])
 
 else:
-    st.header("Ask MIRAI")
+    st.header("ask M.I.R.A.I.")
     st.caption(
         "Security note: this public demo uses synthetic risk data. Do not enter confidential, "
         "client, trade, personal, or other restricted information. In production, connect MIRAI "
@@ -1730,6 +1629,14 @@ else:
             )
     with st.container(border=True):
         selected_question = pending_scenario_question
+        answer_detail = st.segmented_control(
+            "Answer detail",
+            ["Succinct", "Moderate", "Detailed"],
+            default="Moderate",
+            selection_mode="single",
+            key="v30_answer_detail",
+            width="stretch",
+        )
         if not st.session_state.risk_agent_messages and selected_question is None:
             selected_question = st.pills("Suggested questions", ["How has stress evolved across scenarios?", "Which portfolios are included in this risk run?", "What are the main VaR and P&L risks today?"], label_visibility="collapsed")
         for message in st.session_state.risk_agent_messages:
@@ -1739,6 +1646,12 @@ else:
         typed_question = st.chat_input("Ask about the current market-risk position", submit_mode="disable")
         question = typed_question or selected_question
         if question:
+            detail_instruction = {
+                "Succinct": "Answer format: succinct. Give an executive conclusion and at most three evidence-based bullets.",
+                "Moderate": "Answer format: moderate. Give a concise conclusion, evidence and recommended actions.",
+                "Detailed": "Answer format: detailed. Explain the conclusion, quantified evidence, drivers, caveats and recommended actions.",
+            }[answer_detail]
+            agent_question = f"{question}\n\n{detail_instruction}"
             st.session_state.risk_agent_messages.append({"role": "user", "content": question})
             with st.chat_message("user"):
                 st.markdown(question)
@@ -1746,9 +1659,9 @@ else:
             with st.status("Running the risk investigation...", expanded=True) as status:
                 try:
                     if scenario_context:
-                        answer = v29.ask_scenario_agent(question, scenario_context)
+                        answer = v29.ask_scenario_agent(agent_question, scenario_context)
                     else:
-                        answer = v29.ask_risk_agent(question)
+                        answer = v29.ask_risk_agent(agent_question)
                 except Exception as error:
                     status.update(label="Investigation could not be completed", state="error")
                     st.error(str(error), icon=":material/error:")
