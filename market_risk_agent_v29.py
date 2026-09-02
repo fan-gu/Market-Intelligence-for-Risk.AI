@@ -334,6 +334,21 @@ def build_pla_demo_history():
     return pd.concat([pd.DataFrame(extra), base], ignore_index=True).sort_values(["cob_date","trading_desk"]).reset_index(drop=True)
 
 
+def get_dashboard_ir_volatility_surface(currency="EUR"):
+    """Return an aggregated short-expiry, long-tenor IR volatility surface for the Dashboard only."""
+    frame = pd.DataFrame(get_market_sensitivities()["sensitivities"])
+    gross_total = float(frame.loc[(frame["measure"] == "Vega") & (frame["currency"] == currency), "value"].abs().sum())
+    option_expiries = ["1M", "3M", "6M", "1Y", "2Y", "5Y"]
+    underlying_tenors = ["1Y", "2Y", "5Y", "10Y", "30Y"]
+    expiry_weights = [0.08, 0.12, 0.16, 0.20, 0.20, 0.24]
+    tenor_weights = [0.08, 0.12, 0.21, 0.29, 0.30]
+    rows = []
+    for expiry, expiry_weight in zip(option_expiries, expiry_weights):
+        for tenor, tenor_weight in zip(underlying_tenors, tenor_weights):
+            rows.append({"currency": currency, "option_expiry": expiry, "underlying_tenor": tenor, "value": gross_total * expiry_weight * tenor_weight})
+    return {"currency": currency, "option_expiries": option_expiries, "underlying_tenors": underlying_tenors, "surface": rows, "usage_note": "Dashboard-only gross IR-volatility aggregation. The Sensitivities tab retains its unchanged 2 x 2 native-zone matrix."}
+
+
 def get_scenario_lab_specification():
     """Return available shock dimensions and the V29 approximation methodology."""
     frame = pd.DataFrame(v28.get_market_sensitivities()["sensitivities"])
@@ -625,6 +640,8 @@ v8.TOOL_FUNCTIONS["get_ir_vega_surface"] = get_ir_vega_surface
 v8.TOOL_DESCRIPTIONS["get_ir_vega_surface"] = "IR Vega 2 x 2 expiry-by-underlying-tenor surface."
 v8.TOOL_FUNCTIONS["build_pla_demo_history"] = build_pla_demo_history
 v8.TOOL_DESCRIPTIONS["build_pla_demo_history"] = "260-business-day deterministic synthetic desk-level PLA history."
+v8.TOOL_FUNCTIONS["get_dashboard_ir_volatility_surface"] = get_dashboard_ir_volatility_surface
+v8.TOOL_DESCRIPTIONS["get_dashboard_ir_volatility_surface"] = "Aggregated short-expiry, long-tenor Dashboard IR volatility surface."
 v8.TOOL_FUNCTIONS["get_scenario_lab_specification"] = get_scenario_lab_specification
 v8.TOOL_DESCRIPTIONS["get_scenario_lab_specification"] = (
     "V29 interactive scenario dimensions, sensitivity approximation formula and governance caveat."

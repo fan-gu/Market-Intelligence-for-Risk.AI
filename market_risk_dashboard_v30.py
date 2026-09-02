@@ -159,6 +159,24 @@ def build_waterfall_chart(
     )
     return (zero + bars + positive_labels + negative_labels).properties(height=390)
 
+
+def build_horizontal_waterfall_chart(factor_contributions, total_label, total_value):
+    """Build a horizontal cumulative VaR-movement bridge."""
+    rows, running = [], 0.0
+    for label, value, *rest in factor_contributions:
+        item_type = rest[0] if rest else "Risk factor"
+        start = running
+        running += float(value)
+        rows.append({"Step": label, "start": start, "end": running, "low": min(start, running), "high": max(start, running), "display_value": float(value), "Type": item_type})
+    rows.append({"Step": total_label, "start": 0.0, "end": float(total_value), "low": min(0.0, float(total_value)), "high": max(0.0, float(total_value)), "display_value": float(total_value), "Type": "Total"})
+    waterfall = pd.DataFrame(rows)
+    order = waterfall["Step"].tolist()
+    base = alt.Chart(waterfall).encode(y=alt.Y("Step:N", sort=order, title=None), tooltip=[alt.Tooltip("Step:N"), alt.Tooltip("display_value:Q", title="Contribution", format=",.0f"), alt.Tooltip("end:Q", title="Running total", format=",.0f"), alt.Tooltip("Type:N")])
+    bars = base.mark_bar(size=32).encode(x=alt.X("low:Q", title="VaR change (EUR)"), x2="high:Q", color=alt.Color("Type:N", title=None, scale=alt.Scale(domain=["Risk factor","Diversification","Total"], range=["#60A5FA","#FBBF24","#34D399"])))
+    labels = base.mark_text(align="left", dx=5, color="#E2E8F0").encode(x="high:Q", text=alt.Text("display_value:Q", format=",.0f"))
+    zero = alt.Chart(pd.DataFrame({"zero":[0]})).mark_rule(color="#94A3B8").encode(x="zero:Q")
+    return (zero + bars + labels).properties(height=390)
+
 df = v8.df.copy()
 current_risk = v8.get_current_risk()
 trend = v8.get_var_trend()
@@ -216,7 +234,7 @@ st.html(
 )
 
 with st.container(key="sticky_header"):
-    header_controls = st.columns([1.25, 1.05, 1.05, 1.05, 0.42, 0.95], vertical_alignment="bottom")
+    header_controls = st.columns([1.25, 1.05, 1.05, 1.05, 1.35], vertical_alignment="bottom")
     with header_controls[0]:
         st.button(
             "M.I.R.A.I.",
@@ -260,15 +278,14 @@ with st.container(key="sticky_header"):
     if selected_book != "All books":
         scoped_books = scoped_books.loc[scoped_books["book_id"] == selected_book]
     with header_controls[4]:
-        st.markdown("**AsOf**")
-    with header_controls[5]:
-        selected_as_of_date = st.selectbox(
-            "As-of date",
-            available_as_of_dates,
-            format_func=lambda value: value.strftime("%d/%m"),
-            label_visibility="collapsed",
-            key="v29_as_of_date",
-        )
+        selected_as_of_date = pd.Timestamp(st.date_input(
+            "AsOf",
+            value=pd.Timestamp(max(available_as_of_dates)).date(),
+            min_value=pd.Timestamp(min(available_as_of_dates)).date(),
+            max_value=pd.Timestamp(max(available_as_of_dates)).date(),
+            format="DD/MM/YYYY",
+            key="v30_as_of_calendar",
+        ))
 
     st.segmented_control(
         "Navigate",
@@ -377,9 +394,9 @@ if page == "Dashboard":
     with risk_chart_row[0]:
         with st.container(border=True):
             st.subheader("EUR IR volatility surface")
-            vega_surface = pd.DataFrame(v29.get_ir_vega_surface(["EUR"])["surface"])
-            vega_surface = vega_surface.groupby(["option_expiry", "underlying_tenor"], as_index=False)["value"].sum()
-            expiries, underlyings = ["1Y", "5Y"], ["2Y", "10Y"]
+            dashboard_surface = v29.get_dashboard_ir_volatility_surface("EUR")
+            vega_surface = pd.DataFrame(dashboard_surface["surface"])
+            expiries, underlyings = dashboard_surface["option_expiries"], dashboard_surface["underlying_tenors"]
             surface_grid = vega_surface.pivot(index="option_expiry", columns="underlying_tenor", values="value").reindex(index=expiries, columns=underlyings).fillna(0.0)
             surface_figure = go.Figure(data=[go.Surface(z=surface_grid.values, x=underlyings, y=expiries, colorscale="Blues", colorbar={"title":"EUR / vol point"}, hovertemplate="Option expiry: %{y}<br>Underlying tenor: %{x}<br>Vega: %{z:,.0f}<extra></extra>")])
             surface_figure.update_layout(height=330, margin={"l":0,"r":0,"t":10,"b":0}, scene={"xaxis_title":"Underlying swap tenor", "yaxis_title":"Option expiry", "zaxis_title":"IR Vega", "bgcolor":"#0F172A", "xaxis":{"backgroundcolor":"#0F172A"}, "yaxis":{"backgroundcolor":"#0F172A"}, "zaxis":{"backgroundcolor":"#0F172A"}}, paper_bgcolor="#0F172A", font={"color":"#E5E7EB"})
@@ -411,14 +428,18 @@ elif page == "VaR":
     selected_stressed_var = float(selected_raw_risk["stressed_var_1d_99"]) * allocation_weight
     selected_var_limit = float(selected_raw_risk["var_limit_amount"]) * allocation_weight
     selected_svar_limit = selected_var_limit * SVAR_LIMIT_MULTIPLIER
-    var_blocks = st.columns(2, gap="large")
-    for block, label, value, limit_value in [(var_blocks[0], "HVaR", selected_hist_var, selected_var_limit), (var_blocks[1], "SVaR", selected_stressed_var, selected_svar_limit)]:
-        with block.container(border=True):
-            st.subheader(label)
-            with st.container(horizontal=True):
-                st.metric("Current", amount(value), border=True)
-                st.metric("Limit", amount(limit_value), border=True)
-                st.metric("Consumption", percentage(0 if limit_value == 0 else value / limit_value * 100), border=True)
+    var_metrics = st.columns(6, gap="small")
+    metric_values = [
+        ("HVaR", amount(selected_hist_var)),
+        ("HVaR limit", amount(selected_var_limit)),
+        ("HVaR consumption", percentage(0 if selected_var_limit == 0 else selected_hist_var / selected_var_limit * 100)),
+        ("SVaR", amount(selected_stressed_var)),
+        ("SVaR limit", amount(selected_svar_limit)),
+        ("SVaR consumption", percentage(0 if selected_svar_limit == 0 else selected_stressed_var / selected_svar_limit * 100)),
+    ]
+    for block, (label, value) in zip(var_metrics, metric_values):
+        with block:
+            st.metric(label, value, border=True)
 
     history = v8.df.loc[v8.df["cob_date"] <= pd.Timestamp(selected_as_of_date)].sort_values("cob_date").copy()
     def movement(column, days):
@@ -454,7 +475,7 @@ elif page == "VaR":
         var_attribution = v29.get_var_change_attribution(selected_as_of_date, horizon=attribution_horizon, hierarchy_level=scope_label)
         if var_attribution["status"] == "AVAILABLE":
             factors = [("Diversification effect" if item["factor"] == "Diversification" else item["factor"], item["change"] * allocation_weight, "Diversification" if item["factor"] == "Diversification" else "Risk factor") for item in var_attribution["factor_changes"]]
-            st.altair_chart(build_waterfall_chart(factors, total_label="Total VaR change", total_value=var_attribution["total_change"] * allocation_weight), key="var_movement_attribution")
+            st.altair_chart(build_horizontal_waterfall_chart(factors, total_label="Total VaR change", total_value=var_attribution["total_change"] * allocation_weight), key="var_movement_attribution")
             st.caption(f"{attribution_horizon} movement from {pd.Timestamp(var_attribution['reference_date']).strftime('%d/%m')} to {pd.Timestamp(var_attribution['as_of_date']).strftime('%d/%m')}. {var_attribution['usage_note']}")
         else: st.info(f"Insufficient history for {attribution_horizon.lower()} VaR movement attribution.", icon=":material/info:")
 
@@ -533,7 +554,7 @@ elif page == "P&L":
 
     with st.container(border=True):
         st.subheader("P&L levels and residuals")
-        recent_window = desk_history.copy()
+        recent_window = desk_history.tail(22).copy()
         recent_window["Business date"] = recent_window["cob_date"]
         date_order = None
 
@@ -1351,36 +1372,14 @@ elif page == "Stress":
                     y=alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(zero=False)),
                     color=alt.Color("scenario:N", title="Scenario"),
                     strokeDash=alt.StrokeDash("category:N", title="Category", legend=alt.Legend(orient="bottom")),
-                    tooltip=[
-                        alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"),
-                        alt.Tooltip("scenario:N", title="Scenario"),
-                        alt.Tooltip("category:N", title="Category"),
-                        alt.Tooltip("impact:Q", title="P&L impact", format=",.0f"),
-                    ],
+                    tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("scenario:N", title="Scenario"), alt.Tooltip("category:N", title="Category"), alt.Tooltip("impact:Q", title="P&L impact", format=",.0f")],
                 )
             )
             last_date = chart_long["cob_date"].max()
             endpoints = chart_long.loc[chart_long["cob_date"] == last_date]
-            endpoint_points = (
-                alt.Chart(endpoints)
-                .mark_point(filled=True, size=65)
-                .encode(
-                    x="cob_date:T",
-                    y="impact:Q",
-                    color=alt.Color("scenario:N", legend=None),
-                )
-            )
-            endpoint_labels = (
-                alt.Chart(endpoints)
-                .mark_text(align="left", dx=7, fontSize=11)
-                .encode(
-                    x="cob_date:T",
-                    y="impact:Q",
-                    text=alt.Text("scenario:N"),
-                    color=alt.Color("scenario:N", legend=None),
-                )
-            )
-            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=430))
+            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("scenario:N", legend=None))
+            endpoint_labels = alt.Chart(endpoints).mark_text(align="left", dx=7, fontSize=11).encode(x="cob_date:T", y="impact:Q", text=alt.Text("scenario:N"), color=alt.Color("scenario:N", legend=None))
+            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=430), key="stress_evolution")
         else:
             st.info("Select at least one priced scenario.", icon=":material/info:")
 
