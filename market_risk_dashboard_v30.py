@@ -229,6 +229,17 @@ st.html(
         letter-spacing: -0.04em !important;
         white-space: nowrap;
     }}
+    .st-key-var_summary_cards [data-testid="stMetricLabel"] {{
+        font-size: 0.70rem !important;
+        white-space: nowrap !important;
+    }}
+    .st-key-var_summary_cards [data-testid="stMetricValue"] {{
+        font-size: 1.18rem !important;
+        white-space: nowrap !important;
+    }}
+    .st-key-var_summary_cards [data-testid="stMetricValue"] > div {{
+        font-size: 1.18rem !important;
+    }}
     </style>
     """
 )
@@ -428,7 +439,7 @@ if page == "Dashboard":
             st.plotly_chart(surface_figure, width="stretch", key="dashboard_eur_ir_vol_surface")
     with risk_chart_row[1]:
         with st.container(border=True):
-            st.subheader("Largest current stress losses")
+            st.subheader("Largest Stress Lost")
             latest_stress = stress_frame.sort_values("cob_date").iloc[-1]
             stress_summary = pd.DataFrame({"Scenario": stress_numeric, "Stressed P&L": [float(latest_stress[item]) for item in stress_numeric]}).sort_values("Stressed P&L").head(6)
             st.altair_chart(alt.Chart(stress_summary).mark_bar().encode(x=alt.X("Stressed P&L:Q", title="EUR", axis=alt.Axis(format=",.0f")), y=alt.Y("Scenario:N", sort=None, title=None), color=alt.condition(alt.datum["Stressed P&L"] < 0, alt.value("#F87171"), alt.value("#34D399")), tooltip=[alt.Tooltip("Scenario:N"), alt.Tooltip("Stressed P&L:Q", format=",.0f")]).properties(height=300), key="dashboard_stress_losses")
@@ -453,18 +464,20 @@ elif page == "VaR":
     selected_stressed_var = float(selected_raw_risk["stressed_var_1d_99"]) * allocation_weight
     selected_var_limit = float(selected_raw_risk["var_limit_amount"]) * allocation_weight
     selected_svar_limit = selected_var_limit * SVAR_LIMIT_MULTIPLIER
-    var_metrics = st.columns(6, gap="small")
-    metric_values = [
-        ("HVaR", amount(selected_hist_var)),
-        ("HVaR limit", amount(selected_var_limit)),
-        ("HVaR consumption", percentage(0 if selected_var_limit == 0 else selected_hist_var / selected_var_limit * 100)),
-        ("SVaR", amount(selected_stressed_var)),
-        ("SVaR limit", amount(selected_svar_limit)),
-        ("SVaR consumption", percentage(0 if selected_svar_limit == 0 else selected_stressed_var / selected_svar_limit * 100)),
-    ]
-    for block, (label, value) in zip(var_metrics, metric_values):
-        with block:
-            st.metric(label, value, border=True)
+    # Six compact native metric cards preserve the complete risk summary on one row.
+    with st.container(key="var_summary_cards"):
+        var_metrics = st.columns(6, gap="small")
+        metric_values = [
+            ("HVaR", amount(selected_hist_var)),
+            ("HVaR limit", amount(selected_var_limit)),
+            ("HVaR consumption", percentage(0 if selected_var_limit == 0 else selected_hist_var / selected_var_limit * 100)),
+            ("SVaR", amount(selected_stressed_var)),
+            ("SVaR limit", amount(selected_svar_limit)),
+            ("SVaR consumption", percentage(0 if selected_svar_limit == 0 else selected_stressed_var / selected_svar_limit * 100)),
+        ]
+        for block, (label, value) in zip(var_metrics, metric_values):
+            with block:
+                st.metric(label, value, border=True)
 
     history = v8.df.loc[v8.df["cob_date"] <= pd.Timestamp(selected_as_of_date)].sort_values("cob_date").copy()
     def movement(column, days):
@@ -1395,15 +1408,23 @@ elif page == "Stress":
                 .encode(
                     x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%b", tickCount=12)),
                     y=alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(zero=False)),
-                    color=alt.Color("scenario:N", title="Scenario"),
-                    strokeDash=alt.StrokeDash("category:N", title="Category", legend=alt.Legend(orient="bottom")),
+                    color=alt.Color(
+                        "category:N",
+                        title="Category",
+                        scale=alt.Scale(
+                            domain=["Historical", "Hypothetical", "Adverse", "Extreme"],
+                            range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"],
+                        ),
+                        legend=alt.Legend(orient="bottom"),
+                    ),
+                    strokeDash=alt.StrokeDash("scenario:N", title=None, legend=None),
                     tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("scenario:N", title="Scenario"), alt.Tooltip("category:N", title="Category"), alt.Tooltip("impact:Q", title="P&L impact", format=",.0f")],
                 )
             )
             last_date = chart_long["cob_date"].max()
             endpoints = chart_long.loc[chart_long["cob_date"] == last_date]
-            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("scenario:N", legend=None))
-            endpoint_labels = alt.Chart(endpoints).mark_text(align="left", dx=7, fontSize=11).encode(x="cob_date:T", y="impact:Q", text=alt.Text("scenario:N"), color=alt.Color("scenario:N", legend=None))
+            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("category:N", scale=alt.Scale(domain=["Historical", "Hypothetical", "Adverse", "Extreme"], range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"]), legend=None))
+            endpoint_labels = alt.Chart(endpoints).mark_text(align="left", dx=7, fontSize=11).encode(x="cob_date:T", y="impact:Q", text=alt.Text("scenario:N"), color=alt.Color("category:N", scale=alt.Scale(domain=["Historical", "Hypothetical", "Adverse", "Extreme"], range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"]), legend=None))
             st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=430), key="stress_evolution")
         else:
             st.info("Select at least one priced scenario.", icon=":material/info:")
