@@ -1,6 +1,7 @@
 """MIRAI V31: full dashboard with a separate tested risk-run API foundation."""
 
 from html import escape
+import re
 
 import altair as alt
 import pandas as pd
@@ -57,6 +58,11 @@ def amount(value):
 
 def percentage(value):
     return f"{value:.1f}%"
+
+
+def normalize_agent_answer(answer):
+    """Keep rendered monetary amounts in MIRAI's EUR reporting currency."""
+    return re.sub(r"\$(?=\s*[-+]?\d)", "EUR ", str(answer))
 
 
 def date_labels(frame):
@@ -290,7 +296,7 @@ with st.container(key="sticky_header"):
         scoped_books = scoped_books.loc[scoped_books["book_id"] == selected_book]
     with header_controls[4]:
         selected_as_of_date = pd.Timestamp(st.date_input(
-            "AsOf",
+            "As of",
             value=pd.Timestamp(max(available_as_of_dates)).date(),
             min_value=pd.Timestamp(min(available_as_of_dates)).date(),
             max_value=pd.Timestamp(max(available_as_of_dates)).date(),
@@ -300,7 +306,16 @@ with st.container(key="sticky_header"):
 
     st.segmented_control(
         "Navigate",
-        ["Dashboard", "VaR", "P&L", "Sensitivities", "Stress", "Scenario Lab", "Controls"],
+        [
+            "Dashboard",
+            "VaR",
+            "P&L",
+            "Sensitivities",
+            "Stress",
+            "Scenario Lab",
+            "Controls",
+            "Architecture & Governance",
+        ],
         default="Dashboard",
         required=True,
         width="stretch",
@@ -439,7 +454,7 @@ if page == "Dashboard":
             st.plotly_chart(surface_figure, width="stretch", key="dashboard_eur_ir_vol_surface")
     with risk_chart_row[1]:
         with st.container(border=True):
-            st.subheader("Largest Stress Lost")
+            st.subheader("Largest Stress Loss")
             latest_stress = stress_frame.sort_values("cob_date").iloc[-1]
             stress_summary = pd.DataFrame({"Scenario": stress_numeric, "Stressed P&L": [float(latest_stress[item]) for item in stress_numeric]}).sort_values("Stressed P&L").head(6)
             st.altair_chart(alt.Chart(stress_summary).mark_bar().encode(x=alt.X("Stressed P&L:Q", title="EUR", axis=alt.Axis(format=",.0f")), y=alt.Y("Scenario:N", sort=None, title=None), color=alt.condition(alt.datum["Stressed P&L"] < 0, alt.value("#F87171"), alt.value("#34D399")), tooltip=[alt.Tooltip("Scenario:N"), alt.Tooltip("Stressed P&L:Q", format=",.0f")]).properties(height=300), key="dashboard_stress_losses")
@@ -1226,8 +1241,19 @@ elif page == "Scenario Lab":
         as_of_date=selected_as_of_date.isoformat(),
     )
     scenario = scenario_result["scenario"]
-    scenario_baseline_apl = float(portfolio_df.sort_values("cob_date").iloc[-1]["actual_pnl"])
+    latest_scenario_row = portfolio_df.sort_values("cob_date").iloc[-1]
+    scenario_baseline_apl = float(latest_scenario_row["actual_pnl"])
     scenario_total_pnl = scenario_baseline_apl + float(scenario["estimated_pnl"])
+    scenario_agent_context = {
+        **scenario_result,
+        "reporting_currency": str(latest_scenario_row["reporting_currency"]),
+        "current_actual_pnl": scenario_baseline_apl,
+        "scenario_total_pnl": scenario_total_pnl,
+        "baseline_explanation": (
+            "A zero no-shock scenario impact is not Actual P&L. Current APL is supplied "
+            "separately and scenario total P&L equals current APL plus estimated impact."
+        ),
+    }
 
     with scenario_layout[1]:
         with st.container(border=True):
@@ -1371,7 +1397,7 @@ elif page == "Scenario Lab":
         type="primary",
         width="stretch",
         on_click=select_scenario_agent_page,
-        args=(scenario_result,),
+        args=(scenario_agent_context,),
         key="v29_scenario_agent_button",
     )
 
@@ -1477,6 +1503,74 @@ elif page == "Stress":
             },
         )
         st.caption(stress_limit_monitor["usage_note"])
+
+elif page == "Architecture & Governance":
+    st.header("Architecture & Governance")
+    st.caption(
+        "How MIRAI separates the interface, deterministic risk evidence, AI analysis, "
+        "controls and human accountability. All public-demo data are synthetic."
+    )
+
+    with st.container(border=True):
+        st.subheader("Target operating architecture")
+        st.code(
+            """Approved risk-engine outputs
+        |
+        v
+FastAPI risk-run boundary [implemented V31]
+        |
+        +--> Deterministic risk analytics and controls [implemented]
+        |          |
+        |          +--> SQLite audit trail and run lineage [implemented V31]
+        |
+        +--> Agent workflow [current: governed Python tools]
+                   |
+                   +--> LangGraph orchestration [planned]
+                   +--> FRTB and policy RAG [planned]
+                   +--> Gemini synthesis [implemented]
+                              |
+                              v
+                    Human review and approval""",
+            language="text",
+        )
+
+    capability_rows = pd.DataFrame([
+        {"Capability": "Streamlit risk-manager interface", "Status": "Implemented", "Governance purpose": "Controlled visual investigation of approved synthetic runs"},
+        {"Capability": "FastAPI risk-run service", "Status": "Implemented in V31", "Governance purpose": "Typed API boundary and validation; public hosting deferred"},
+        {"Capability": "Deterministic risk tools and controls", "Status": "Implemented", "Governance purpose": "Numbers remain traceable to supplied data and rules"},
+        {"Capability": "Audit trail and run lineage", "Status": "Implemented in V31", "Governance purpose": "Reconstruct requests, tools, evidence and responses"},
+        {"Capability": "Gemini synthesis", "Status": "Implemented", "Governance purpose": "Narrative interpretation; never the numerical source of truth"},
+        {"Capability": "LangGraph workflow", "Status": "Planned", "Governance purpose": "Explicit branching, retries and approval gates"},
+        {"Capability": "FRTB / policy RAG", "Status": "Planned", "Governance purpose": "Ground rule interpretations in cited approved documents"},
+        {"Capability": "Human approval workflow", "Status": "Policy defined; UI planned", "Governance purpose": "Risk decisions and escalations remain human-owned"},
+    ])
+    with st.container(border=True):
+        st.subheader("Capability status")
+        st.dataframe(capability_rows, hide_index=True, width="stretch")
+
+    approval_columns = st.columns(3)
+    with approval_columns[0]:
+        with st.container(border=True, height="stretch"):
+            st.subheader("1. Evidence gate")
+            st.write("Validate run ID, as-of date, scope and data quality before analysis.")
+    with approval_columns[1]:
+        with st.container(border=True, height="stretch"):
+            st.subheader("2. Risk-manager gate")
+            st.write("A human reviews warnings, breaches, scenario assumptions and proposed actions.")
+    with approval_columns[2]:
+        with st.container(border=True, height="stretch"):
+            st.subheader("3. Action gate")
+            st.write("MIRAI cannot approve limits, submit trades or close an escalation autonomously.")
+
+    with st.container(border=True):
+        st.subheader("Core governance principles")
+        st.markdown(
+            """- Risk-engine outputs and deterministic tools are the numerical source of truth.
+- AI-generated explanations must remain in EUR, cite available evidence and state limitations.
+- Scenario Lab is a sensitivity approximation, not official full revaluation.
+- Confidential information must not be entered into the public demo.
+- Human approval is required for limit decisions, escalations and risk actions."""
+        )
 
 elif page == "Controls":
     st.header("Controls")
@@ -1687,7 +1781,7 @@ else:
         for message in st.session_state.risk_agent_messages:
             avatar = ":material/analytics:" if message["role"] == "assistant" else None
             with st.chat_message(message["role"], avatar=avatar):
-                st.markdown(message["content"])
+                st.markdown(normalize_agent_answer(message["content"]))
         typed_question = st.chat_input("Ask about the current market-risk position", submit_mode="disable")
         question = typed_question or selected_question
         if question:
@@ -1701,12 +1795,19 @@ else:
             with st.chat_message("user"):
                 st.markdown(question)
             answer = None
-            with st.status("Running the risk investigation...", expanded=True) as status:
+            initial_stage = "Validating scenario" if scenario_context else "Validating risk request"
+            with st.status(initial_stage, expanded=True) as status:
                 try:
+                    st.write(f":material/check_circle: {initial_stage}")
+                    status.update(label="Calculating contributions")
+                    st.write(":material/functions: Calculating contributions from deterministic risk tools")
+                    status.update(label="Generating analysis")
+                    st.write(":material/auto_awesome: Generating analysis with Gemini")
                     if scenario_context:
                         answer = v29.ask_scenario_agent(agent_question, scenario_context)
                     else:
                         answer = v29.ask_risk_agent(agent_question)
+                    answer = normalize_agent_answer(answer)
                 except Exception as error:
                     status.update(label="Investigation could not be completed", state="error")
                     st.error(str(error), icon=":material/error:")

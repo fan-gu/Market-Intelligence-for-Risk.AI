@@ -96,9 +96,9 @@ def create_app(
         else:
             answer = (
                 f"The latest approved synthetic run is {summary['run_id']}. "
-                f"HVaR is {summary['hvar']['value']:,.0f} ({summary['hvar']['consumption_pct']:.1f}% of limit) and "
-                f"SVaR is {summary['svar']['value']:,.0f} ({summary['svar']['consumption_pct']:.1f}% of limit). "
-                "This V31 endpoint is deterministic and auditable; the Gemini investigation workflow remains in the V30 interface."
+                f"HVaR is EUR {summary['hvar']['value']:,.0f} ({summary['hvar']['consumption_pct']:.1f}% of limit) and "
+                f"SVaR is EUR {summary['svar']['value']:,.0f} ({summary['svar']['consumption_pct']:.1f}% of limit). "
+                "This V31 endpoint is deterministic and auditable; the Gemini investigation workflow is available in the V31 interface."
             )
             status = "allowed"
         audit.record(

@@ -219,6 +219,7 @@ def evaluate_all_limits():
     )
     for row in rows:
         if row["metric"] == "Worst supplied scenario loss":
+            row["metric"] = "Worst-case stress loss"
             row["exposure"] = worst_loss
             row["limit"] = 15_000_000.0
             row["consumption_pct"] = worst_loss / row["limit"] * 100.0
@@ -563,7 +564,10 @@ def run_interactive_scenario(
             "volatility_shift_points": effective_volatility_shift,
             "horizon_days": int(horizon_days),
         },
-        "baseline": {"estimated_pnl": 0.0, "limit_consumption_pct": 0.0, "status": "OK"},
+        "no_shock_reference": {
+            "scenario_impact": 0.0,
+            "definition": "Zero is the scenario impact before shocks; it is not current Actual P&L.",
+        },
         "scenario": {
             "estimated_pnl": estimated_pnl,
             "loss_amount": loss_amount,
@@ -597,6 +601,8 @@ V29 Scenario Lab control:
 - Always call it a sensitivity approximation, never an official risk-engine revaluation.
 - Do not claim that official VaR, Expected Shortfall or regulatory capital was recalculated.
 - Highlight the largest contributions, loss-limit impact, scope, as-of date and omitted effects.
+- The reporting currency is EUR. Format amounts as "EUR 672,050"; never use a dollar sign.
+- A zero no-shock reference means zero scenario impact, not zero Actual P&L. Use current_actual_pnl when discussing current P&L.
 """
     chat = v8.client.chats.create(
         model=v8.MODEL_NAME,
@@ -652,6 +658,12 @@ v9.SYSTEM_INSTRUCTION += """
 V29 Scenario Lab conventions:
 - Interactive scenario results are sensitivity approximations, not official risk-engine revaluations.
 - Do not state or imply that Scenario Lab recalculates official VaR, ES or regulatory capital.
+
+V31 reporting conventions:
+- The dashboard reporting currency is EUR. Format monetary amounts as "EUR 672,050" and never use dollar signs.
+- Do not use dollar-delimited mathematical formatting in prose.
+- In Scenario Lab, zero before shocks is the baseline scenario impact, not Actual P&L.
+- Clearly distinguish current Actual P&L, estimated scenario impact and scenario total P&L.
 """
 v9.tools = [types.Tool(function_declarations=[
     types.FunctionDeclaration(name=name, description=description)

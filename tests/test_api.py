@@ -35,3 +35,13 @@ def test_agent_blocks_prompt_injection(tmp_path):
     )
     assert response.status_code == 200
     assert response.json()["guardrail_status"] == "blocked"
+
+
+def test_agent_uses_eur_reporting_currency(tmp_path):
+    response = client(tmp_path).post(
+        "/agent/query", json={"question": "Summarise the latest VaR position."}
+    )
+    assert response.status_code == 200
+    answer = response.json()["answer"]
+    assert "EUR" in answer
+    assert "$" not in answer
