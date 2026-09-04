@@ -21,4 +21,14 @@ jobs:
       - name: Lint
         run: ruff check mirai tests
       - name: Test with coverage
-        run: pytest -q --cov=mirai --cov-report=term-missing
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest -q --cov=mirai --cov-report=term-missing 2>&1 | tee pytest-output.txt
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            tail -n 60 pytest-output.txt | while IFS= read -r line; do
+              echo "::error title=Pytest output::$line"
+            done
+            exit "$status"
+          fi
