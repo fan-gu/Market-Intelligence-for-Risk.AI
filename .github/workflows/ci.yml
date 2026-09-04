@@ -20,15 +20,11 @@ jobs:
         run: pip install -r requirements.txt -r requirements-dev.txt
       - name: Lint
         run: ruff check mirai tests
-      - name: Test with coverage
-        shell: bash
-        run: |
-          set -o pipefail
-          pytest -q --cov=mirai --cov-report=term-missing 2>&1 | tee pytest-output.txt
-          status=${PIPESTATUS[0]}
-          if [ "$status" -ne 0 ]; then
-            tail -n 60 pytest-output.txt | while IFS= read -r line; do
-              echo "::error title=Pytest output::$line"
-            done
-            exit "$status"
-          fi
+      - name: Test audit and risk service
+        run: pytest -q tests/test_audit.py tests/test_risk_service.py
+      - name: Test API
+        run: pytest -q tests/test_api.py
+      - name: Test granular book risk
+        run: pytest -q tests/test_book_risk.py
+      - name: Coverage report
+        run: pytest -q --cov=mirai --cov-report=term-missing
