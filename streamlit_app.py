@@ -8,6 +8,6 @@ import runpy
 # the dashboard on every rerun; a normal import would execute it only once and
 # leave subsequent reruns blank because of Python's module cache.
 runpy.run_path(
-    str(Path(__file__).with_name("market_risk_dashboard_v30.py")),
+    str(Path(__file__).with_name("market_risk_dashboard_v31.py")),
     run_name="__main__",
 )

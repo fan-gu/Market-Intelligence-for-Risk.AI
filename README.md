@@ -73,6 +73,6 @@ V31 keeps the V30 dashboard as the stable demo and adds a separate, testable ris
 
 - `GET /health`, `GET /risk/summary`, `GET /risk/breaches`, `POST /risk/scenario`, `POST /agent/query`, and `GET /runs/{run_id}/audit-trail`.
 - Independent risk-data/limit logic, Pydantic request-validation, SQLite audit events, pytest tests and GitHub Actions CI.
-- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then optionally run `python -m streamlit run market_risk_dashboard_v31.py`.
+- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then run `python -m streamlit run mirai_api_console_v31.py` for the API console. The public V31 dashboard remains `market_risk_dashboard_v31.py`.
 
 V30 remains permanently recoverable through the `v30-stable` Git tag.
