@@ -12,7 +12,7 @@ Run the app locally, or try the live demo on [Streamlit Community Cloud](https:/
 
 ## Main functions
 
-- **Risk cockpit:** portfolio, trading-desk, book, and business-line hierarchy with date and run controls.
+- **Risk cockpit:** explicit book/date risk records aggregated through book, trading-desk, business-line, and bank-wide views.
 - **VaR, P&L and sensitivities:** historical VaR/SVaR, P&L attribution, PLA indicators, and IR/FX risk-factor views.
 - **Stress and controls:** historical, hypothetical, adverse, and extreme scenarios with limits, consumption, warnings, and breaches.
 - **Scenario Lab:** change a shock and see the deterministic stressed P&L/risk response immediately.
@@ -36,8 +36,9 @@ The app opens at `http://localhost:8501`. For Streamlit Cloud, select `streamlit
 
 ```text
 streamlit_app.py                 tiny deployment entrypoint
-market_risk_dashboard_v30.py     current Streamlit dashboard
-market_risk_agent_v29.py         current agent API
+market_risk_dashboard_v32.py     current Streamlit dashboard
+market_risk_agent_v32.py         scope-aware agent API
+mirai/book_risk.py               granular book-risk generation and aggregation
 data/                             synthetic risk-run data
 archive/versions/                 earlier versions, retained for history
 docs/                             references and README screenshots
@@ -45,12 +46,14 @@ docs/                             references and README screenshots
 
 ## Data and scope
 
-The included data is synthetic and intentionally small. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation. Replace the data adapter and configure governance before using any real data.
+The included data is synthetic and compact. V32 creates 5,200 explicit records (20 books across 260 business dates); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
 
 ## Version update log
 
-- **V29:** Scenario Lab with deterministic what-if shocks and audit trail; deployment-ready entrypoint.
+- **V32:** explicit book-level daily risk records, hierarchy-aware aggregation, scoped VaR/P&L/stress/limits, and book-to-bank reconciliation controls.
+- **V31:** typed FastAPI boundary, SQLite audit trail, CI tests, and Architecture & Governance view.
 - **V30:** bank-wide Dashboard summary, project-wide SVaR governance, and MIRAI branding.
+- **V29:** Scenario Lab with deterministic what-if shocks and audit trail; deployment-ready entrypoint.
 - **V28:** compact curve sensitivity tables, IR Vega surfaces, and cleaner Stress/Ask-agent presentation.
 - **V27:** VaR movement attribution and improved P&L explain visualisation.
 - **V26:** hierarchy filters, governance controls, and risk-factor limits.
@@ -69,11 +72,11 @@ The included data is synthetic and intentionally small. This is a demonstrator, 
 
 ## V31 architecture foundation
 
-V31 keeps the V30 dashboard as the stable demo and adds a separate, testable risk-run API:
+V31 added a separate, testable risk-run API beneath the dashboard:
 
 - `GET /health`, `GET /risk/summary`, `GET /risk/breaches`, `POST /risk/scenario`, `POST /agent/query`, and `GET /runs/{run_id}/audit-trail`.
 - Independent risk-data/limit logic, Pydantic request-validation, SQLite audit events, pytest tests and GitHub Actions CI.
 - An **Architecture & Governance** page distinguishes implemented services from planned LangGraph/RAG capabilities and shows human approval gates.
-- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then run `python -m streamlit run mirai_api_console_v31.py` for the API console. The public V31 dashboard remains `market_risk_dashboard_v31.py`.
+- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then run `python -m streamlit run mirai_api_console_v31.py` for the API console. The public entrypoint now serves V32.
 
-V30 remains permanently recoverable through the `v30-stable` Git tag.
+V30 and V31 remain recoverable through the `v30-stable` and `v31-stable` Git tags.
