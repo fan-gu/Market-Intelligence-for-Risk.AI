@@ -1,5 +1,7 @@
 # M.I.R.A.I. — Market Intelligence for Risk AI
 
+[![MIRAI CI](https://github.com/fan-gu/Market-Intelligence-for-Risk.AI/actions/workflows/ci.yml/badge.svg)](https://github.com/fan-gu/Market-Intelligence-for-Risk.AI/actions/workflows/ci.yml)
+
 An open, synthetic-data prototype of a market-risk manager cockpit. MIRAI treats validated risk runs as the source of truth, then adds hierarchy drill-down, explainable charts, scenario analysis, controls, and an auditable Gemini-powered assistant.
 
 ## See it in action
@@ -64,3 +66,13 @@ The included data is synthetic and intentionally small. This is a demonstrator, 
 - **V16:** sensitivities tab (IR Delta/Gamma/Vega, FX Delta, Theta).
 - **V15:** trade → book → trading desk → business-line hierarchy.
 - **V14 and earlier:** ingestion, deterministic analytics, memory, and initial dashboard iterations (see `archive/versions/`).
+
+## V31 architecture foundation
+
+V31 keeps the V30 dashboard as the stable demo and adds a separate, testable risk-run API:
+
+- `GET /health`, `GET /risk/summary`, `GET /risk/breaches`, `POST /risk/scenario`, `POST /agent/query`, and `GET /runs/{run_id}/audit-trail`.
+- Independent risk-data/limit logic, Pydantic request-validation, SQLite audit events, pytest tests and GitHub Actions CI.
+- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then optionally run `python -m streamlit run market_risk_dashboard_v31.py`.
+
+V30 remains permanently recoverable through the `v30-stable` Git tag.
