@@ -6,7 +6,7 @@ An open, synthetic-data prototype of a market-risk manager cockpit. MIRAI treats
 
 ## See it in action
 
-Run the app locally, or try the live demo on [Streamlit Community Cloud](https://market-intelligence-risk-ai.streamlit.app/).
+[Live demo](https://market-intelligence-risk-ai.streamlit.app/) · [Architecture](docs/architecture.md) · [Verification example](#verification-example-book-to-bank-reconciliation)
 
 ![Risk cockpit overview](docs/screenshots/overview.png)
 
@@ -18,10 +18,29 @@ Run the app locally, or try the live demo on [Streamlit Community Cloud](https:/
 - **Scenario Lab:** change a shock and see the deterministic stressed P&L/risk response immediately.
 - **Ask MIRAI:** ask questions over the selected risk run; answers cite the underlying deterministic tools and can be audited.
 
+## My contribution
+
+I am developing MIRAI as an independent portfolio project, drawing on my market-risk experience to define the workflow, risk measures, scenario requirements and control boundaries. I use AI coding assistants during implementation and iteration. The repository makes the resulting design decisions, deterministic calculations and automated checks available for review.
+
+## Verification example: book-to-bank reconciliation
+
+- **Input:** the bundled synthetic bank history and a 20-book hierarchy.
+- **Expected result:** book-level additive measures reconcile to the supplied bank totals for each date.
+- **Check:** [test_book_history_is_granular_and_reconciles](tests/test_book_risk.py) builds the history and asserts a maximum absolute reconciliation error below `1e-6`.
+- **Evidence:** [automated tests and CI results](https://github.com/fan-gu/Market-Intelligence-for-Risk.AI/actions/workflows/ci.yml).
+- **Limit:** this checks internal consistency of synthetic allocations. It does not validate a pricing model or establish standalone book VaR accuracy.
+
+## Implemented stack and boundaries
+
+Python · pandas · Streamlit · FastAPI · Pydantic · SQLite · Gemini API · pytest · GitHub Actions.
+
+The Streamlit application uses the shared Python risk service directly. The FastAPI interface can be run locally and is not separately hosted by the public demo. Its `/agent/query` endpoint currently returns a deterministic response; the Gemini investigation workflow is accessed through the application. Document RAG, LangGraph orchestration and enterprise identity controls remain planned, as detailed in the [architecture](docs/architecture.md).
+
 ## Run locally
 
 ```powershell
-cd "C:\FG\Market Risk AI"
+git clone https://github.com/fan-gu/Market-Intelligence-for-Risk.AI.git
+cd Market-Intelligence-for-Risk.AI
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -36,7 +55,7 @@ The app opens at `http://localhost:8501`. For Streamlit Cloud, select `streamlit
 
 ```text
 streamlit_app.py                 tiny deployment entrypoint
-mirai/runtime.py                 single public production API
+mirai/runtime.py                 shared application runtime
 mirai/risk_service.py            shared validated risk-data service
 mirai/core.py                     deterministic analytics and data contracts
 mirai/agent.py                    lazy Gemini boundary and unified audit writes
@@ -59,9 +78,12 @@ docs/                             product, architecture and security notes
 
 The included data is synthetic and compact. The consolidated V33 service creates 5,200 explicit records (20 books across 260 business dates); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
 
+<details>
+<summary>Version history</summary>
+
 ## Version update log
 
-- **V33:** one production package, a shared risk-data service and SQLite audit trail, modular Streamlit pages, lazy Gemini startup, pinned dependencies, and automated no-archive-import/page-render tests.
+- **V33:** one active application package, a shared risk-data service and SQLite audit trail, modular Streamlit pages, lazy Gemini startup, pinned dependencies, and automated no-archive-import/page-render tests.
 - **V32:** explicit book-level daily risk records, hierarchy-aware aggregation, scoped VaR/P&L/stress/limits, and book-to-bank reconciliation controls.
 - **V31:** typed FastAPI boundary, SQLite audit trail, CI tests, and Architecture & Governance view.
 - **V30:** bank-wide Dashboard summary, project-wide SVaR governance, and MIRAI branding.
@@ -81,6 +103,8 @@ The included data is synthetic and compact. The consolidated V33 service creates
 - **V16:** sensitivities tab (IR Delta/Gamma/Vega, FX Delta, Theta).
 - **V15:** trade → book → trading desk → business-line hierarchy.
 - **V14 and earlier:** ingestion, deterministic analytics, memory, and initial dashboard iterations (see `archive/versions/`).
+
+</details>
 
 ## Consolidated platform foundation
 
