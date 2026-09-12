@@ -2,12 +2,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from archive.versions.market_risk_hierarchy_v15 import build_hierarchy
 from mirai.book_risk import (
     aggregate_scope_history,
     build_book_risk_history,
     reconciliation_report,
 )
+from mirai.hierarchy import build_hierarchy
 
 
 def bank_history():

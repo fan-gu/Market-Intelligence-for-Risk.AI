@@ -1,8 +1,8 @@
-google-genai
-pandas
-python-dotenv
-plotly
-
-streamlit
-fastapi
-uvicorn
+altair==6.2.2
+fastapi==0.141.1
+google-genai==2.20.0
+pandas==3.0.5
+plotly==7.0.0
+python-dotenv==1.2.3
+streamlit==1.62.0
+uvicorn==0.52.4

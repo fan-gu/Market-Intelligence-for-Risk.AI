@@ -36,20 +36,32 @@ The app opens at `http://localhost:8501`. For Streamlit Cloud, select `streamlit
 
 ```text
 streamlit_app.py                 tiny deployment entrypoint
-market_risk_dashboard_v32.py     current Streamlit dashboard
-market_risk_agent_v32.py         scope-aware agent API
-mirai/book_risk.py               granular book-risk generation and aggregation
+mirai/runtime.py                 single public production API
+mirai/risk_service.py            shared validated risk-data service
+mirai/core.py                     deterministic analytics and data contracts
+mirai/agent.py                    lazy Gemini boundary and unified audit writes
+mirai/ui/app.py                   Streamlit application shell
+mirai/ui/pages/                   focused page renderers
+market_risk_dashboard_v32.py     preserved rollback dashboard
 data/                             synthetic risk-run data
-archive/versions/                 earlier versions, retained for history
-docs/                             references and README screenshots
+archive/versions/                 historical versions; never imported at runtime
+docs/                             product, architecture and security notes
 ```
+
+## Product documentation
+
+- [Business problem, target users and success criteria](docs/business-problem-and-target-users.md)
+- [Functional specification and workflow](docs/functional-specification.md)
+- [Architecture](docs/architecture.md)
+- [Security, limitations and human approval](docs/security-limitations-and-human-approval.md)
 
 ## Data and scope
 
-The included data is synthetic and compact. V32 creates 5,200 explicit records (20 books across 260 business dates); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
+The included data is synthetic and compact. The consolidated V33 service creates 5,200 explicit records (20 books across 260 business dates); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
 
 ## Version update log
 
+- **V33:** one production package, a shared risk-data service and SQLite audit trail, modular Streamlit pages, lazy Gemini startup, pinned dependencies, and automated no-archive-import/page-render tests.
 - **V32:** explicit book-level daily risk records, hierarchy-aware aggregation, scoped VaR/P&L/stress/limits, and book-to-bank reconciliation controls.
 - **V31:** typed FastAPI boundary, SQLite audit trail, CI tests, and Architecture & Governance view.
 - **V30:** bank-wide Dashboard summary, project-wide SVaR governance, and MIRAI branding.
@@ -70,13 +82,13 @@ The included data is synthetic and compact. V32 creates 5,200 explicit records (
 - **V15:** trade → book → trading desk → business-line hierarchy.
 - **V14 and earlier:** ingestion, deterministic analytics, memory, and initial dashboard iterations (see `archive/versions/`).
 
-## V31 architecture foundation
+## Consolidated platform foundation
 
-V31 added a separate, testable risk-run API beneath the dashboard:
+V31 introduced the typed API; V33 consolidates the active Streamlit and agent runtime around the same risk-data and audit services:
 
 - `GET /health`, `GET /risk/summary`, `GET /risk/breaches`, `POST /risk/scenario`, `POST /agent/query`, and `GET /runs/{run_id}/audit-trail`.
-- Independent risk-data/limit logic, Pydantic request-validation, SQLite audit events, pytest tests and GitHub Actions CI.
+- A shared validated risk-data service, Pydantic request validation, one SQLite audit mechanism, pytest tests and GitHub Actions CI.
 - An **Architecture & Governance** page distinguishes implemented services from planned LangGraph/RAG capabilities and shows human approval gates.
-- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then run `python -m streamlit run mirai_api_console_v31.py` for the API console. The public entrypoint now serves V32.
+- Start locally with `python -m uvicorn mirai.api:app --reload --port 8000`, then run `python -m streamlit run mirai_api_console_v31.py` for the API console. The public entrypoint now serves the modular V33 application.
 
-V30 and V31 remain recoverable through the `v30-stable` and `v31-stable` Git tags.
+V30, V31 and the last pre-consolidation V32 build remain recoverable through the `v30-stable`, `v31-stable` and `v32-stable` Git tags.

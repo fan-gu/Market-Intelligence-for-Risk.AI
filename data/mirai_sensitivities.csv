@@ -1,0 +1,494 @@
+risk_class,measure,currency,curve_type,curve,unit,value,tenor,definition,option_expiry,underlying_tenor,surface_node
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,315.0,1M,"IR Delta (DV01) for SHIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,525.0,3M,"IR Delta (DV01) for SHIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,735.0000000000001,6M,"IR Delta (DV01) for SHIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,1050.0,1Y,"IR Delta (DV01) for SHIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,1785.0000000000002,2Y,"IR Delta (DV01) for SHIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,2940.0000000000005,5Y,"IR Delta (DV01) for SHIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,2100.0,10Y,"IR Delta (DV01) for SHIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 3M,EUR / bp,1050.0,30Y,"IR Delta (DV01) for SHIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,180.0,1M,"IR Delta (DV01) for SHIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,300.0,3M,"IR Delta (DV01) for SHIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,420.00000000000006,6M,"IR Delta (DV01) for SHIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,600.0,1Y,"IR Delta (DV01) for SHIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,1020.0000000000001,2Y,"IR Delta (DV01) for SHIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,1680.0000000000002,5Y,"IR Delta (DV01) for SHIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,1200.0,10Y,"IR Delta (DV01) for SHIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,BOR,SHIBOR 6M,EUR / bp,600.0,30Y,"IR Delta (DV01) for SHIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,600.0,1M,"IR Delta (DV01) for CNY OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,1000.0,3M,"IR Delta (DV01) for CNY OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,1400.0000000000002,6M,"IR Delta (DV01) for CNY OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,2000.0,1Y,"IR Delta (DV01) for CNY OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,3400.0000000000005,2Y,"IR Delta (DV01) for CNY OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,5600.000000000001,5Y,"IR Delta (DV01) for CNY OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,4000.0,10Y,"IR Delta (DV01) for CNY OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),CNY,OIS,CNY OIS,EUR / bp,2000.0,30Y,"IR Delta (DV01) for CNY OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-840.0,1M,"IR Delta (DV01) for Euribor 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-1400.0,3M,"IR Delta (DV01) for Euribor 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-1960.0000000000002,6M,"IR Delta (DV01) for Euribor 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-2800.0,1Y,"IR Delta (DV01) for Euribor 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-4760.0,2Y,"IR Delta (DV01) for Euribor 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-7840.000000000001,5Y,"IR Delta (DV01) for Euribor 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-5600.0,10Y,"IR Delta (DV01) for Euribor 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 3M,EUR / bp,-2800.0,30Y,"IR Delta (DV01) for Euribor 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-450.0,1M,"IR Delta (DV01) for Euribor 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-750.0,3M,"IR Delta (DV01) for Euribor 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-1050.0,6M,"IR Delta (DV01) for Euribor 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-1500.0,1Y,"IR Delta (DV01) for Euribor 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-2550.0,2Y,"IR Delta (DV01) for Euribor 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-4200.0,5Y,"IR Delta (DV01) for Euribor 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-3000.0,10Y,"IR Delta (DV01) for Euribor 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,BOR,Euribor 6M,EUR / bp,-1500.0,30Y,"IR Delta (DV01) for Euribor 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-2550.0,1M,"IR Delta (DV01) for €STR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-4250.0,3M,"IR Delta (DV01) for €STR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-5950.000000000001,6M,"IR Delta (DV01) for €STR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-8500.0,1Y,"IR Delta (DV01) for €STR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-14450.000000000002,2Y,"IR Delta (DV01) for €STR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-23800.000000000004,5Y,"IR Delta (DV01) for €STR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-17000.0,10Y,"IR Delta (DV01) for €STR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),EUR,OIS,€STR OIS,EUR / bp,-8500.0,30Y,"IR Delta (DV01) for €STR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,390.0,1M,"IR Delta (DV01) for GBP 3M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,650.0,3M,"IR Delta (DV01) for GBP 3M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,910.0000000000001,6M,"IR Delta (DV01) for GBP 3M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,1300.0,1Y,"IR Delta (DV01) for GBP 3M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,2210.0,2Y,"IR Delta (DV01) for GBP 3M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,3640.0000000000005,5Y,"IR Delta (DV01) for GBP 3M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,2600.0,10Y,"IR Delta (DV01) for GBP 3M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 3M projection,EUR / bp,1300.0,30Y,"IR Delta (DV01) for GBP 3M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,240.0,1M,"IR Delta (DV01) for GBP 6M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,400.0,3M,"IR Delta (DV01) for GBP 6M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,560.0,6M,"IR Delta (DV01) for GBP 6M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,800.0,1Y,"IR Delta (DV01) for GBP 6M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,1360.0,2Y,"IR Delta (DV01) for GBP 6M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,2240.0,5Y,"IR Delta (DV01) for GBP 6M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,1600.0,10Y,"IR Delta (DV01) for GBP 6M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,BOR,GBP 6M projection,EUR / bp,800.0,30Y,"IR Delta (DV01) for GBP 6M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,930.0,1M,"IR Delta (DV01) for SONIA OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,1550.0,3M,"IR Delta (DV01) for SONIA OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,2170.0,6M,"IR Delta (DV01) for SONIA OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,3100.0,1Y,"IR Delta (DV01) for SONIA OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,5270.0,2Y,"IR Delta (DV01) for SONIA OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,8680.0,5Y,"IR Delta (DV01) for SONIA OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,6200.0,10Y,"IR Delta (DV01) for SONIA OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),GBP,OIS,SONIA OIS,EUR / bp,3100.0,30Y,"IR Delta (DV01) for SONIA OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,270.0,1M,"IR Delta (DV01) for HIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,450.0,3M,"IR Delta (DV01) for HIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,630.0000000000001,6M,"IR Delta (DV01) for HIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,900.0,1Y,"IR Delta (DV01) for HIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,1530.0,2Y,"IR Delta (DV01) for HIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,2520.0000000000005,5Y,"IR Delta (DV01) for HIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,1800.0,10Y,"IR Delta (DV01) for HIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 3M,EUR / bp,900.0,30Y,"IR Delta (DV01) for HIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,165.0,1M,"IR Delta (DV01) for HIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,275.0,3M,"IR Delta (DV01) for HIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,385.00000000000006,6M,"IR Delta (DV01) for HIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,550.0,1Y,"IR Delta (DV01) for HIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,935.0000000000001,2Y,"IR Delta (DV01) for HIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,1540.0000000000002,5Y,"IR Delta (DV01) for HIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,1100.0,10Y,"IR Delta (DV01) for HIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,BOR,HIBOR 6M,EUR / bp,550.0,30Y,"IR Delta (DV01) for HIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,540.0,1M,"IR Delta (DV01) for HONIA OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,900.0,3M,"IR Delta (DV01) for HONIA OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,1260.0000000000002,6M,"IR Delta (DV01) for HONIA OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,1800.0,1Y,"IR Delta (DV01) for HONIA OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,3060.0,2Y,"IR Delta (DV01) for HONIA OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,5040.000000000001,5Y,"IR Delta (DV01) for HONIA OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,3600.0,10Y,"IR Delta (DV01) for HONIA OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),HKD,OIS,HONIA OIS,EUR / bp,1800.0,30Y,"IR Delta (DV01) for HONIA OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-330.0,1M,"IR Delta (DV01) for TIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-550.0,3M,"IR Delta (DV01) for TIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-770.0000000000001,6M,"IR Delta (DV01) for TIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-1100.0,1Y,"IR Delta (DV01) for TIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-1870.0000000000002,2Y,"IR Delta (DV01) for TIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-3080.0000000000005,5Y,"IR Delta (DV01) for TIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-2200.0,10Y,"IR Delta (DV01) for TIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 3M,EUR / bp,-1100.0,30Y,"IR Delta (DV01) for TIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-210.0,1M,"IR Delta (DV01) for TIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-350.0,3M,"IR Delta (DV01) for TIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-490.00000000000006,6M,"IR Delta (DV01) for TIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-700.0,1Y,"IR Delta (DV01) for TIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-1190.0,2Y,"IR Delta (DV01) for TIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-1960.0000000000002,5Y,"IR Delta (DV01) for TIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-1400.0,10Y,"IR Delta (DV01) for TIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,BOR,TIBOR 6M,EUR / bp,-700.0,30Y,"IR Delta (DV01) for TIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-720.0,1M,"IR Delta (DV01) for TONAR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-1200.0,3M,"IR Delta (DV01) for TONAR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-1680.0000000000002,6M,"IR Delta (DV01) for TONAR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-2400.0,1Y,"IR Delta (DV01) for TONAR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-4080.0000000000005,2Y,"IR Delta (DV01) for TONAR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-6720.000000000001,5Y,"IR Delta (DV01) for TONAR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-4800.0,10Y,"IR Delta (DV01) for TONAR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),JPY,OIS,TONAR OIS,EUR / bp,-2400.0,30Y,"IR Delta (DV01) for TONAR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,660.0,1M,"IR Delta (DV01) for USD 3M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,1100.0,3M,"IR Delta (DV01) for USD 3M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,1540.0000000000002,6M,"IR Delta (DV01) for USD 3M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,2200.0,1Y,"IR Delta (DV01) for USD 3M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,3740.0000000000005,2Y,"IR Delta (DV01) for USD 3M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,6160.000000000001,5Y,"IR Delta (DV01) for USD 3M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,4400.0,10Y,"IR Delta (DV01) for USD 3M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 3M projection,EUR / bp,2200.0,30Y,"IR Delta (DV01) for USD 3M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,360.0,1M,"IR Delta (DV01) for USD 6M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,600.0,3M,"IR Delta (DV01) for USD 6M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,840.0000000000001,6M,"IR Delta (DV01) for USD 6M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,1200.0,1Y,"IR Delta (DV01) for USD 6M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,2040.0000000000002,2Y,"IR Delta (DV01) for USD 6M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,3360.0000000000005,5Y,"IR Delta (DV01) for USD 6M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,2400.0,10Y,"IR Delta (DV01) for USD 6M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,BOR,USD 6M projection,EUR / bp,1200.0,30Y,"IR Delta (DV01) for USD 6M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,2160.0,1M,"IR Delta (DV01) for SOFR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,3600.0,3M,"IR Delta (DV01) for SOFR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,5040.000000000001,6M,"IR Delta (DV01) for SOFR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,7200.0,1Y,"IR Delta (DV01) for SOFR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,12240.0,2Y,"IR Delta (DV01) for SOFR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,20160.000000000004,5Y,"IR Delta (DV01) for SOFR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,14400.0,10Y,"IR Delta (DV01) for SOFR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Delta (DV01),USD,OIS,SOFR OIS,EUR / bp,7200.0,30Y,"IR Delta (DV01) for SOFR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,4.35,1M,"IR Gamma for SHIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,7.25,3M,"IR Gamma for SHIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,10.15,6M,"IR Gamma for SHIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,14.5,1Y,"IR Gamma for SHIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,24.650000000000002,2Y,"IR Gamma for SHIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,40.6,5Y,"IR Gamma for SHIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,29.0,10Y,"IR Gamma for SHIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 3M,EUR / bp²,14.5,30Y,"IR Gamma for SHIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,2.55,1M,"IR Gamma for SHIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,4.25,3M,"IR Gamma for SHIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,5.95,6M,"IR Gamma for SHIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,8.5,1Y,"IR Gamma for SHIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,14.450000000000001,2Y,"IR Gamma for SHIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,23.8,5Y,"IR Gamma for SHIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,17.0,10Y,"IR Gamma for SHIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,BOR,SHIBOR 6M,EUR / bp²,8.5,30Y,"IR Gamma for SHIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,8.4,1M,"IR Gamma for CNY OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,14.0,3M,"IR Gamma for CNY OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,19.6,6M,"IR Gamma for CNY OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,28.0,1Y,"IR Gamma for CNY OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,47.6,2Y,"IR Gamma for CNY OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,78.4,5Y,"IR Gamma for CNY OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,56.0,10Y,"IR Gamma for CNY OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,CNY,OIS,CNY OIS,EUR / bp²,28.0,30Y,"IR Gamma for CNY OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,12.6,1M,"IR Gamma for Euribor 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,21.0,3M,"IR Gamma for Euribor 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,29.400000000000002,6M,"IR Gamma for Euribor 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,42.0,1Y,"IR Gamma for Euribor 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,71.4,2Y,"IR Gamma for Euribor 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,117.60000000000001,5Y,"IR Gamma for Euribor 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,84.0,10Y,"IR Gamma for Euribor 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 3M,EUR / bp²,42.0,30Y,"IR Gamma for Euribor 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,7.8,1M,"IR Gamma for Euribor 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,13.0,3M,"IR Gamma for Euribor 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,18.200000000000003,6M,"IR Gamma for Euribor 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,26.0,1Y,"IR Gamma for Euribor 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,44.2,2Y,"IR Gamma for Euribor 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,72.80000000000001,5Y,"IR Gamma for Euribor 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,52.0,10Y,"IR Gamma for Euribor 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,BOR,Euribor 6M,EUR / bp²,26.0,30Y,"IR Gamma for Euribor 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,40.5,1M,"IR Gamma for €STR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,67.5,3M,"IR Gamma for €STR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,94.50000000000001,6M,"IR Gamma for €STR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,135.0,1Y,"IR Gamma for €STR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,229.50000000000003,2Y,"IR Gamma for €STR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,378.00000000000006,5Y,"IR Gamma for €STR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,270.0,10Y,"IR Gamma for €STR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,EUR,OIS,€STR OIS,EUR / bp²,135.0,30Y,"IR Gamma for €STR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,5.7,1M,"IR Gamma for GBP 3M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,9.5,3M,"IR Gamma for GBP 3M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,13.3,6M,"IR Gamma for GBP 3M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,19.0,1Y,"IR Gamma for GBP 3M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,32.300000000000004,2Y,"IR Gamma for GBP 3M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,53.2,5Y,"IR Gamma for GBP 3M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,38.0,10Y,"IR Gamma for GBP 3M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 3M projection,EUR / bp²,19.0,30Y,"IR Gamma for GBP 3M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,3.5999999999999996,1M,"IR Gamma for GBP 6M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,6.0,3M,"IR Gamma for GBP 6M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,8.4,6M,"IR Gamma for GBP 6M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,12.0,1Y,"IR Gamma for GBP 6M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,20.400000000000002,2Y,"IR Gamma for GBP 6M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,33.6,5Y,"IR Gamma for GBP 6M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,24.0,10Y,"IR Gamma for GBP 6M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,BOR,GBP 6M projection,EUR / bp²,12.0,30Y,"IR Gamma for GBP 6M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,13.799999999999999,1M,"IR Gamma for SONIA OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,23.0,3M,"IR Gamma for SONIA OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,32.2,6M,"IR Gamma for SONIA OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,46.0,1Y,"IR Gamma for SONIA OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,78.2,2Y,"IR Gamma for SONIA OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,128.8,5Y,"IR Gamma for SONIA OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,92.0,10Y,"IR Gamma for SONIA OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,GBP,OIS,SONIA OIS,EUR / bp²,46.0,30Y,"IR Gamma for SONIA OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,3.75,1M,"IR Gamma for HIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,6.25,3M,"IR Gamma for HIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,8.75,6M,"IR Gamma for HIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,12.5,1Y,"IR Gamma for HIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,21.25,2Y,"IR Gamma for HIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,35.0,5Y,"IR Gamma for HIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,25.0,10Y,"IR Gamma for HIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 3M,EUR / bp²,12.5,30Y,"IR Gamma for HIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,2.25,1M,"IR Gamma for HIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,3.75,3M,"IR Gamma for HIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,5.250000000000001,6M,"IR Gamma for HIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,7.5,1Y,"IR Gamma for HIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,12.750000000000002,2Y,"IR Gamma for HIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,21.000000000000004,5Y,"IR Gamma for HIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,15.0,10Y,"IR Gamma for HIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,BOR,HIBOR 6M,EUR / bp²,7.5,30Y,"IR Gamma for HIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,7.199999999999999,1M,"IR Gamma for HONIA OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,12.0,3M,"IR Gamma for HONIA OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,16.8,6M,"IR Gamma for HONIA OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,24.0,1Y,"IR Gamma for HONIA OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,40.800000000000004,2Y,"IR Gamma for HONIA OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,67.2,5Y,"IR Gamma for HONIA OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,48.0,10Y,"IR Gamma for HONIA OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,HKD,OIS,HONIA OIS,EUR / bp²,24.0,30Y,"IR Gamma for HONIA OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,5.1,1M,"IR Gamma for TIBOR 3M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,8.5,3M,"IR Gamma for TIBOR 3M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,11.9,6M,"IR Gamma for TIBOR 3M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,17.0,1Y,"IR Gamma for TIBOR 3M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,28.900000000000002,2Y,"IR Gamma for TIBOR 3M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,47.6,5Y,"IR Gamma for TIBOR 3M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,34.0,10Y,"IR Gamma for TIBOR 3M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 3M,EUR / bp²,17.0,30Y,"IR Gamma for TIBOR 3M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,3.3,1M,"IR Gamma for TIBOR 6M, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,5.5,3M,"IR Gamma for TIBOR 6M, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,7.700000000000001,6M,"IR Gamma for TIBOR 6M, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,11.0,1Y,"IR Gamma for TIBOR 6M, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,18.700000000000003,2Y,"IR Gamma for TIBOR 6M, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,30.800000000000004,5Y,"IR Gamma for TIBOR 6M, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,22.0,10Y,"IR Gamma for TIBOR 6M, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,BOR,TIBOR 6M,EUR / bp²,11.0,30Y,"IR Gamma for TIBOR 6M, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,9.299999999999999,1M,"IR Gamma for TONAR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,15.5,3M,"IR Gamma for TONAR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,21.700000000000003,6M,"IR Gamma for TONAR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,31.0,1Y,"IR Gamma for TONAR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,52.7,2Y,"IR Gamma for TONAR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,86.80000000000001,5Y,"IR Gamma for TONAR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,62.0,10Y,"IR Gamma for TONAR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,JPY,OIS,TONAR OIS,EUR / bp²,31.0,30Y,"IR Gamma for TONAR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,11.4,1M,"IR Gamma for USD 3M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,19.0,3M,"IR Gamma for USD 3M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,26.6,6M,"IR Gamma for USD 3M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,38.0,1Y,"IR Gamma for USD 3M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,64.60000000000001,2Y,"IR Gamma for USD 3M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,106.4,5Y,"IR Gamma for USD 3M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,76.0,10Y,"IR Gamma for USD 3M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 3M projection,EUR / bp²,38.0,30Y,"IR Gamma for USD 3M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,6.3,1M,"IR Gamma for USD 6M projection, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,10.5,3M,"IR Gamma for USD 6M projection, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,14.700000000000001,6M,"IR Gamma for USD 6M projection, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,21.0,1Y,"IR Gamma for USD 6M projection, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,35.7,2Y,"IR Gamma for USD 6M projection, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,58.800000000000004,5Y,"IR Gamma for USD 6M projection, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,42.0,10Y,"IR Gamma for USD 6M projection, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,BOR,USD 6M projection,EUR / bp²,21.0,30Y,"IR Gamma for USD 6M projection, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,31.5,1M,"IR Gamma for SOFR OIS, allocated to the 1M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,52.5,3M,"IR Gamma for SOFR OIS, allocated to the 3M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,73.5,6M,"IR Gamma for SOFR OIS, allocated to the 6M tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,105.0,1Y,"IR Gamma for SOFR OIS, allocated to the 1Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,178.5,2Y,"IR Gamma for SOFR OIS, allocated to the 2Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,294.0,5Y,"IR Gamma for SOFR OIS, allocated to the 5Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,210.0,10Y,"IR Gamma for SOFR OIS, allocated to the 10Y tenor bucket.",N/A,N/A,N/A
+Rates,IR Gamma,USD,OIS,SOFR OIS,EUR / bp²,105.0,30Y,"IR Gamma for SOFR OIS, allocated to the 30Y tenor bucket.",N/A,N/A,N/A
+FX,FX Delta,EUR/USD,Spot,EUR/USD,EUR / 1% spot,410000.0,N/A,P&L change for a +1% move in the quoted FX pair.,N/A,N/A,N/A
+FX,FX Delta,USD/JPY,Spot,USD/JPY,EUR / 1% spot,-180000.0,N/A,P&L change for a +1% move in the quoted FX pair.,N/A,N/A,N/A
+FX,FX Delta,GBP/USD,Spot,GBP/USD,EUR / 1% spot,215000.0,N/A,P&L change for a +1% move in the quoted FX pair.,N/A,N/A,N/A
+Time,Theta,EUR,Portfolio,EUR portfolio,EUR / day,-8000.0,N/A,"Expected one-business-day P&L from time decay, holding market inputs constant.",N/A,N/A,N/A
+Time,Theta,USD,Portfolio,USD portfolio,EUR / day,-6000.0,N/A,"Expected one-business-day P&L from time decay, holding market inputs constant.",N/A,N/A,N/A
+Time,Theta,JPY,Portfolio,JPY portfolio,EUR / day,-2000.0,N/A,"Expected one-business-day P&L from time decay, holding market inputs constant.",N/A,N/A,N/A
+Time,Theta,GBP,Portfolio,GBP portfolio,EUR / day,-3000.0,N/A,"Expected one-business-day P&L from time decay, holding market inputs constant.",N/A,N/A,N/A
+FX,FX Delta,USD/HKD,Spot,USD/HKD,EUR / 1% spot,145000.0,N/A,P&L change for a +1% move in USD/HKD.,N/A,N/A,N/A
+FX,FX Delta,USD/CNY,Spot,USD/CNY,EUR / 1% spot,165000.0,N/A,P&L change for a +1% move in USD/CNY.,N/A,N/A,N/A
+Time,Theta,HKD,Portfolio,HKD portfolio,EUR / day,-1500.0,N/A,Expected one-business-day P&L from HKD time decay.,N/A,N/A,N/A
+Time,Theta,CNY,Portfolio,CNY portfolio,EUR / day,-1700.0,N/A,Expected one-business-day P&L from CNY time decay.,N/A,N/A,N/A
+Rates,Vega,CNY,BOR,SHIBOR 3M,EUR / vol point,580.0,2Y,IR Vega for SHIBOR 3M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CNY,BOR,SHIBOR 3M,EUR / vol point,725.0,10Y,IR Vega for SHIBOR 3M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CNY,BOR,SHIBOR 3M,EUR / vol point,725.0,2Y,IR Vega for SHIBOR 3M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CNY,BOR,SHIBOR 3M,EUR / vol point,870.0,10Y,IR Vega for SHIBOR 3M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,CNY,BOR,SHIBOR 6M,EUR / vol point,340.0,2Y,IR Vega for SHIBOR 6M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CNY,BOR,SHIBOR 6M,EUR / vol point,425.0,10Y,IR Vega for SHIBOR 6M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CNY,BOR,SHIBOR 6M,EUR / vol point,425.0,2Y,IR Vega for SHIBOR 6M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CNY,BOR,SHIBOR 6M,EUR / vol point,510.0,10Y,IR Vega for SHIBOR 6M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,CNY,OIS,CNY OIS,EUR / vol point,1080.0,2Y,IR Vega for CNY OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CNY,OIS,CNY OIS,EUR / vol point,1350.0,10Y,IR Vega for CNY OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CNY,OIS,CNY OIS,EUR / vol point,1350.0,2Y,IR Vega for CNY OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CNY,OIS,CNY OIS,EUR / vol point,1620.0,10Y,IR Vega for CNY OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,EUR,BOR,Euribor 3M,EUR / vol point,-3000.0,2Y,IR Vega for Euribor 3M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,EUR,BOR,Euribor 3M,EUR / vol point,-3750.0,10Y,IR Vega for Euribor 3M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,EUR,BOR,Euribor 3M,EUR / vol point,-3750.0,2Y,IR Vega for Euribor 3M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,EUR,BOR,Euribor 3M,EUR / vol point,-4500.0,10Y,IR Vega for Euribor 3M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,EUR,BOR,Euribor 6M,EUR / vol point,-1800.0,2Y,IR Vega for Euribor 6M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,EUR,BOR,Euribor 6M,EUR / vol point,-2250.0,10Y,IR Vega for Euribor 6M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,EUR,BOR,Euribor 6M,EUR / vol point,-2250.0,2Y,IR Vega for Euribor 6M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,EUR,BOR,Euribor 6M,EUR / vol point,-2700.0,10Y,IR Vega for Euribor 6M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,EUR,OIS,€STR OIS,EUR / vol point,-5600.0,2Y,IR Vega for €STR OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,EUR,OIS,€STR OIS,EUR / vol point,-7000.0,10Y,IR Vega for €STR OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,EUR,OIS,€STR OIS,EUR / vol point,-7000.0,2Y,IR Vega for €STR OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,EUR,OIS,€STR OIS,EUR / vol point,-8400.0,10Y,IR Vega for €STR OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,GBP,BOR,GBP 3M projection,EUR / vol point,1000.0,2Y,IR Vega for GBP 3M projection at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,GBP,BOR,GBP 3M projection,EUR / vol point,1250.0,10Y,IR Vega for GBP 3M projection at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,GBP,BOR,GBP 3M projection,EUR / vol point,1250.0,2Y,IR Vega for GBP 3M projection at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,GBP,BOR,GBP 3M projection,EUR / vol point,1500.0,10Y,IR Vega for GBP 3M projection at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,GBP,BOR,GBP 6M projection,EUR / vol point,600.0,2Y,IR Vega for GBP 6M projection at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,GBP,BOR,GBP 6M projection,EUR / vol point,750.0,10Y,IR Vega for GBP 6M projection at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,GBP,BOR,GBP 6M projection,EUR / vol point,750.0,2Y,IR Vega for GBP 6M projection at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,GBP,BOR,GBP 6M projection,EUR / vol point,900.0,10Y,IR Vega for GBP 6M projection at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,GBP,OIS,SONIA OIS,EUR / vol point,1800.0,2Y,IR Vega for SONIA OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,GBP,OIS,SONIA OIS,EUR / vol point,2250.0,10Y,IR Vega for SONIA OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,GBP,OIS,SONIA OIS,EUR / vol point,2250.0,2Y,IR Vega for SONIA OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,GBP,OIS,SONIA OIS,EUR / vol point,2700.0,10Y,IR Vega for SONIA OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,HKD,BOR,HIBOR 3M,EUR / vol point,520.0,2Y,IR Vega for HIBOR 3M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,HKD,BOR,HIBOR 3M,EUR / vol point,650.0,10Y,IR Vega for HIBOR 3M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,HKD,BOR,HIBOR 3M,EUR / vol point,650.0,2Y,IR Vega for HIBOR 3M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,HKD,BOR,HIBOR 3M,EUR / vol point,780.0,10Y,IR Vega for HIBOR 3M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,HKD,BOR,HIBOR 6M,EUR / vol point,300.0,2Y,IR Vega for HIBOR 6M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,HKD,BOR,HIBOR 6M,EUR / vol point,375.0,10Y,IR Vega for HIBOR 6M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,HKD,BOR,HIBOR 6M,EUR / vol point,375.0,2Y,IR Vega for HIBOR 6M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,HKD,BOR,HIBOR 6M,EUR / vol point,450.0,10Y,IR Vega for HIBOR 6M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,HKD,OIS,HONIA OIS,EUR / vol point,960.0,2Y,IR Vega for HONIA OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,HKD,OIS,HONIA OIS,EUR / vol point,1200.0,10Y,IR Vega for HONIA OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,HKD,OIS,HONIA OIS,EUR / vol point,1200.0,2Y,IR Vega for HONIA OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,HKD,OIS,HONIA OIS,EUR / vol point,1440.0,10Y,IR Vega for HONIA OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,JPY,BOR,TIBOR 3M,EUR / vol point,-800.0,2Y,IR Vega for TIBOR 3M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,JPY,BOR,TIBOR 3M,EUR / vol point,-1000.0,10Y,IR Vega for TIBOR 3M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,JPY,BOR,TIBOR 3M,EUR / vol point,-1000.0,2Y,IR Vega for TIBOR 3M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,JPY,BOR,TIBOR 3M,EUR / vol point,-1200.0,10Y,IR Vega for TIBOR 3M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,JPY,BOR,TIBOR 6M,EUR / vol point,-400.0,2Y,IR Vega for TIBOR 6M at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,JPY,BOR,TIBOR 6M,EUR / vol point,-500.0,10Y,IR Vega for TIBOR 6M at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,JPY,BOR,TIBOR 6M,EUR / vol point,-500.0,2Y,IR Vega for TIBOR 6M at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,JPY,BOR,TIBOR 6M,EUR / vol point,-600.0,10Y,IR Vega for TIBOR 6M at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,JPY,OIS,TONAR OIS,EUR / vol point,-1200.0,2Y,IR Vega for TONAR OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,JPY,OIS,TONAR OIS,EUR / vol point,-1500.0,10Y,IR Vega for TONAR OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,JPY,OIS,TONAR OIS,EUR / vol point,-1500.0,2Y,IR Vega for TONAR OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,JPY,OIS,TONAR OIS,EUR / vol point,-1800.0,10Y,IR Vega for TONAR OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,USD,BOR,USD 3M projection,EUR / vol point,2400.0,2Y,IR Vega for USD 3M projection at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,USD,BOR,USD 3M projection,EUR / vol point,3000.0,10Y,IR Vega for USD 3M projection at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,USD,BOR,USD 3M projection,EUR / vol point,3000.0,2Y,IR Vega for USD 3M projection at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,USD,BOR,USD 3M projection,EUR / vol point,3600.0,10Y,IR Vega for USD 3M projection at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,USD,BOR,USD 6M projection,EUR / vol point,1400.0,2Y,IR Vega for USD 6M projection at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,USD,BOR,USD 6M projection,EUR / vol point,1750.0,10Y,IR Vega for USD 6M projection at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,USD,BOR,USD 6M projection,EUR / vol point,1750.0,2Y,IR Vega for USD 6M projection at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,USD,BOR,USD 6M projection,EUR / vol point,2100.0,10Y,IR Vega for USD 6M projection at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,Vega,USD,OIS,SOFR OIS,EUR / vol point,4200.0,2Y,IR Vega for SOFR OIS at 1Y option expiry and 2Y underlying swap tenor.,1Y,2Y,1Y x 2Y
+Rates,Vega,USD,OIS,SOFR OIS,EUR / vol point,5250.0,10Y,IR Vega for SOFR OIS at 1Y option expiry and 10Y underlying swap tenor.,1Y,10Y,1Y x 10Y
+Rates,Vega,USD,OIS,SOFR OIS,EUR / vol point,5250.0,2Y,IR Vega for SOFR OIS at 5Y option expiry and 2Y underlying swap tenor.,5Y,2Y,5Y x 2Y
+Rates,Vega,USD,OIS,SOFR OIS,EUR / vol point,6300.0,10Y,IR Vega for SOFR OIS at 5Y option expiry and 10Y underlying swap tenor.,5Y,10Y,5Y x 10Y
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-352.8,1M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-588.0,3M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-823.2,6M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1176.0,1Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1999.1999999999998,2Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-3292.8,5Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-2352.0,10Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1176.0,30Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-189.0,1M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-315.0,3M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-441.0,6M,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-630.0,1Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1071.0,2Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1764.0,5Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-1260.0,10Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,BOR,CHF projection,EUR / bp,-630.0,30Y,IR Delta (DV01) for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-1071.0,1M,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-1785.0,3M,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-2499.0000000000005,6M,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-3570.0,1Y,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-6069.000000000001,2Y,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-9996.000000000002,5Y,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-7140.0,10Y,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),CHF,OIS,SARON OIS,EUR / bp,-3570.0,30Y,IR Delta (DV01) for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,5.292,1M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,8.82,3M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,12.348,6M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,17.64,1Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,29.988,2Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,49.392,5Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,35.28,10Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,17.64,30Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,3.276,1M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,5.46,3M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,7.644000000000001,6M,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,10.92,1Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,18.564,2Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,30.576000000000004,5Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,21.84,10Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,BOR,CHF projection,EUR / bp²,10.92,30Y,IR Gamma for CHF projection CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,17.009999999999998,1M,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,28.349999999999998,3M,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,39.690000000000005,6M,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,56.699999999999996,1Y,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,96.39000000000001,2Y,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,158.76000000000002,5Y,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,113.39999999999999,10Y,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,CHF,OIS,SARON OIS,EUR / bp²,56.699999999999996,30Y,IR Gamma for SARON OIS CHF risk factor.,N/A,N/A,N/A
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-1260.0,2Y,Vega for CHF projection CHF risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-1575.0,10Y,Vega for CHF projection CHF risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-1575.0,2Y,Vega for CHF projection CHF risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-1890.0,10Y,Vega for CHF projection CHF risk factor.,5Y,10Y,5Y x 10Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-756.0,2Y,Vega for CHF projection CHF risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-945.0,10Y,Vega for CHF projection CHF risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-945.0,2Y,Vega for CHF projection CHF risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CHF,BOR,CHF projection,EUR / vol point,-1134.0,10Y,Vega for CHF projection CHF risk factor.,5Y,10Y,5Y x 10Y
+Rates,Vega,CHF,OIS,SARON OIS,EUR / vol point,-2352.0,2Y,Vega for SARON OIS CHF risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,CHF,OIS,SARON OIS,EUR / vol point,-2940.0,10Y,Vega for SARON OIS CHF risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,CHF,OIS,SARON OIS,EUR / vol point,-2940.0,2Y,Vega for SARON OIS CHF risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,CHF,OIS,SARON OIS,EUR / vol point,-3528.0,10Y,Vega for SARON OIS CHF risk factor.,5Y,10Y,5Y x 10Y
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,214.50000000000003,1M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,357.50000000000006,3M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,500.5000000000001,6M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,715.0000000000001,1Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,1215.5,2Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,2002.0000000000005,5Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,1430.0000000000002,10Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,715.0000000000001,30Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,132.0,1M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,220.00000000000003,3M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,308.0,6M,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,440.00000000000006,1Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,748.0000000000001,2Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,1232.0,5Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,880.0000000000001,10Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,BOR,AUD projection,EUR / bp,440.00000000000006,30Y,IR Delta (DV01) for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,511.50000000000006,1M,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,852.5000000000001,3M,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,1193.5,6M,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,1705.0000000000002,1Y,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,2898.5000000000005,2Y,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,4774.0,5Y,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,3410.0000000000005,10Y,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Delta (DV01),AUD,OIS,AONIA OIS,EUR / bp,1705.0000000000002,30Y,IR Delta (DV01) for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,3.1350000000000002,1M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,5.2250000000000005,3M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,7.315000000000001,6M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,10.450000000000001,1Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,17.765000000000004,2Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,29.260000000000005,5Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,20.900000000000002,10Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,10.450000000000001,30Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,1.98,1M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,3.3000000000000003,3M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,4.620000000000001,6M,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,6.6000000000000005,1Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,11.220000000000002,2Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,18.480000000000004,5Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,13.200000000000001,10Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,BOR,AUD projection,EUR / bp²,6.6000000000000005,30Y,IR Gamma for AUD projection AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,7.59,1M,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,12.65,3M,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,17.710000000000004,6M,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,25.3,1Y,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,43.010000000000005,2Y,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,70.84000000000002,5Y,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,50.6,10Y,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,IR Gamma,AUD,OIS,AONIA OIS,EUR / bp²,25.3,30Y,IR Gamma for AONIA OIS AUD risk factor.,N/A,N/A,N/A
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,550.0,2Y,Vega for AUD projection AUD risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,687.5,10Y,Vega for AUD projection AUD risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,687.5,2Y,Vega for AUD projection AUD risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,825.0000000000001,10Y,Vega for AUD projection AUD risk factor.,5Y,10Y,5Y x 10Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,330.0,2Y,Vega for AUD projection AUD risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,412.50000000000006,10Y,Vega for AUD projection AUD risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,412.50000000000006,2Y,Vega for AUD projection AUD risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,AUD,BOR,AUD projection,EUR / vol point,495.00000000000006,10Y,Vega for AUD projection AUD risk factor.,5Y,10Y,5Y x 10Y
+Rates,Vega,AUD,OIS,AONIA OIS,EUR / vol point,990.0000000000001,2Y,Vega for AONIA OIS AUD risk factor.,1Y,2Y,1Y x 2Y
+Rates,Vega,AUD,OIS,AONIA OIS,EUR / vol point,1237.5,10Y,Vega for AONIA OIS AUD risk factor.,1Y,10Y,1Y x 10Y
+Rates,Vega,AUD,OIS,AONIA OIS,EUR / vol point,1237.5,2Y,Vega for AONIA OIS AUD risk factor.,5Y,2Y,5Y x 2Y
+Rates,Vega,AUD,OIS,AONIA OIS,EUR / vol point,1485.0000000000002,10Y,Vega for AONIA OIS AUD risk factor.,5Y,10Y,5Y x 10Y
+FX,FX Delta,CHF/USD,Spot,CHF/USD,EUR / 1% spot,-95000.0,,P&L change for a +1% move in CHF/USD.,,,
+FX,FX Delta,AUD/USD,Spot,AUD/USD,EUR / 1% spot,120000.0,,P&L change for a +1% move in AUD/USD.,,,

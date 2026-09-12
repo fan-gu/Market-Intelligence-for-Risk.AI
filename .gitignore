@@ -18,3 +18,7 @@ market_risk_investigation_audit.jsonl
 data/mirai_audit.db
 .coverage
 htmlcov/
+
+# Synthetic demo fixtures required by the consolidated public app
+!data/mirai_sensitivities.csv
+!data/mirai_pla_history.csv
