@@ -60,3 +60,20 @@ def test_book_limits_are_fixed_until_an_approved_bank_limit_change():
 
     aggregate = aggregate_scope_history(history)
     assert aggregate["var_limit_amount"].equals(source["var_limit_amount"])
+
+
+def test_limits_are_fixed_for_every_hierarchy_perimeter():
+    source = bank_history()
+    books, _ = build_hierarchy()
+    history = build_book_risk_history(source, books)
+    perimeters = [books["book_id"].tolist()]
+    perimeters.extend(group["book_id"].tolist() for _, group in books.groupby("business_line"))
+    perimeters.extend(
+        group["book_id"].tolist()
+        for _, group in books.groupby(["business_line", "trading_desk"])
+    )
+    perimeters.extend([[book_id] for book_id in books["book_id"]])
+
+    for book_ids in perimeters:
+        scope = aggregate_scope_history(history.loc[history["book_id"].isin(book_ids)])
+        assert scope["var_limit_amount"].nunique() == 1

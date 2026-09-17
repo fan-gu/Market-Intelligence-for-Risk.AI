@@ -17,13 +17,15 @@ st.set_page_config(page_title="MIRAI | Market Intelligence for Risk AI | V33", p
 from mirai import runtime as risk
 
 SVAR_LIMIT_MULTIPLIER = 1.5
+BOOK_RISK_CACHE_VERSION = "limits-fixed-v1"
 st.session_state.setdefault("risk_agent_messages", [])
 st.session_state.setdefault("v29_active_page", "Dashboard")
 
 
 @st.cache_data(show_spinner="Loading granular book-level risk records...")
-def load_book_risk_history(bank_history, hierarchy):
+def load_book_risk_history(bank_history, hierarchy, cache_version):
     """Cache the 5,200-row deterministic risk fact set across Streamlit reruns."""
+    del cache_version  # Deliberately part of the cache key for controlled refreshes.
     return build_book_risk_history(bank_history, hierarchy)
 
 
@@ -196,7 +198,7 @@ portfolio_ids = [row["portfolio_id"] for row in portfolio_scope["portfolios"]]
 
 available_as_of_dates = sorted(df["cob_date"].dt.date.unique(), reverse=True)
 books, _ = risk.build_hierarchy()
-book_risk_history = load_book_risk_history(df, books)
+book_risk_history = load_book_risk_history(df, books, BOOK_RISK_CACHE_VERSION)
 
 header_background = "#0F172A"
 header_border = "#334155"
