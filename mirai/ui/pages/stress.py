@@ -56,6 +56,10 @@ def render(context):
     movement_scores["magnitude_score"] = movement_scores["latest_impact"].abs() / max(movement_scores["latest_impact"].abs().max(), 1.0)
     movement_scores["move_score"] = movement_scores["daily_move"].abs() / max(movement_scores["daily_move"].abs().max(), 1.0)
     material_defaults = movement_scores.assign(attention_score=movement_scores["magnitude_score"] + movement_scores["move_score"]).nlargest(10, "attention_score")["scenario"].tolist()
+    category_domain = ["Historical", "Hypothetical", "Adverse", "Extreme"]
+    # Historical scenarios are reference events; adverse scenarios are the
+    # forward-looking risk set.  Keep the colours consistent across the page.
+    category_range = ["#FBBF24", "#A78BFA", "#60A5FA", "#F87171"]
 
     with st.container(border=True):
         st.subheader("Top 10 stress evolutions")
@@ -65,34 +69,49 @@ def render(context):
             default=material_defaults,
             key="v30_stress_scenarios",
         )
+        history_window = st.select_slider(
+            "History window",
+            options=[20, 60, 120, 260],
+            value=120,
+            format_func=lambda days: {
+                20: "1 month",
+                60: "3 months",
+                120: "6 months",
+                260: "1 year",
+            }[days],
+            key="v34_stress_history_window",
+        )
         if selected_scenarios:
-            chart_wide = stress_frame[["cob_date"] + selected_scenarios].copy()
+            chart_wide = stress_frame.tail(history_window)[["cob_date"] + selected_scenarios].copy()
             chart_long = chart_wide.melt("cob_date", var_name="scenario", value_name="impact")
             chart_long["category"] = chart_long["scenario"].map(lambda name: stress_metadata[name]["type"])
             lines = (
                 alt.Chart(chart_long)
                 .mark_line(strokeWidth=2)
                 .encode(
-                    x=alt.X("cob_date:T", title="Business date", axis=alt.Axis(format="%b", tickCount=12)),
+                    x=alt.X("cob_date:T", title=None, axis=alt.Axis(format="%b", tickCount=6)),
                     y=alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(zero=False)),
                     color=alt.Color(
                         "category:N",
                         title="Category",
                         scale=alt.Scale(
-                            domain=["Historical", "Hypothetical", "Adverse", "Extreme"],
-                            range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"],
+                            domain=category_domain,
+                            range=category_range,
                         ),
-                        legend=alt.Legend(orient="bottom"),
+                        legend=alt.Legend(orient="top"),
                     ),
-                    strokeDash=alt.StrokeDash("scenario:N", title=None, legend=None),
+                    strokeDash=alt.StrokeDash(
+                        "scenario:N",
+                        title="Scenario",
+                        legend=alt.Legend(orient="bottom", columns=2, labelLimit=180),
+                    ),
                     tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("scenario:N", title="Scenario"), alt.Tooltip("category:N", title="Category"), alt.Tooltip("impact:Q", title="P&L impact", format=",.0f")],
                 )
             )
             last_date = chart_long["cob_date"].max()
             endpoints = chart_long.loc[chart_long["cob_date"] == last_date]
-            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("category:N", scale=alt.Scale(domain=["Historical", "Hypothetical", "Adverse", "Extreme"], range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"]), legend=None))
-            endpoint_labels = alt.Chart(endpoints).mark_text(align="left", dx=7, fontSize=11).encode(x="cob_date:T", y="impact:Q", text=alt.Text("scenario:N"), color=alt.Color("category:N", scale=alt.Scale(domain=["Historical", "Hypothetical", "Adverse", "Extreme"], range=["#60A5FA", "#A78BFA", "#F59E0B", "#F87171"]), legend=None))
-            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=430), key="stress_evolution")
+            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("category:N", scale=alt.Scale(domain=category_domain, range=category_range), legend=None))
+            st.altair_chart((lines + endpoint_points).properties(height=460), key="stress_evolution")
         else:
             st.info("Select at least one priced scenario.", icon=":material/info:")
 
