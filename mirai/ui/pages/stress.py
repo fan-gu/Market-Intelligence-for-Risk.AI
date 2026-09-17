@@ -85,12 +85,40 @@ def render(context):
             chart_wide = stress_frame.tail(history_window)[["cob_date"] + selected_scenarios].copy()
             chart_long = chart_wide.melt("cob_date", var_name="scenario", value_name="impact")
             chart_long["category"] = chart_long["scenario"].map(lambda name: stress_metadata[name]["type"])
+            last_date = chart_long["cob_date"].max()
+            endpoints = chart_long.loc[chart_long["cob_date"] == last_date].copy().sort_values("impact").reset_index(drop=True)
+
+            # Preserve right-hand scenario labels, but give each one a distinct
+            # vertical slot.  Labels remain close to their endpoint without
+            # obscuring a neighbouring scenario.
+            impact_range = max(float(chart_long["impact"].max() - chart_long["impact"].min()), 1.0)
+            label_gap = impact_range * 0.035
+            label_positions = []
+            for impact in endpoints["impact"]:
+                label_positions.append(max(float(impact), (label_positions[-1] + label_gap) if label_positions else float(impact)))
+            label_ceiling = float(chart_long["impact"].max()) + label_gap
+            overflow = label_positions[-1] - label_ceiling
+            if overflow > 0:
+                label_positions = [value - overflow for value in label_positions]
+            label_floor = float(chart_long["impact"].min()) - label_gap
+            underflow = label_floor - label_positions[0]
+            if underflow > 0:
+                label_positions = [value + underflow for value in label_positions]
+            endpoints["label_impact"] = label_positions
+            endpoints["label_date"] = last_date + pd.Timedelta(days=10)
+            x_domain = [chart_long["cob_date"].min(), last_date + pd.Timedelta(days=24)]
+            y_domain = [
+                min(float(chart_long["impact"].min()), min(label_positions)) - label_gap,
+                max(float(chart_long["impact"].max()), max(label_positions)) + label_gap,
+            ]
+            chart_x = alt.X("cob_date:T", title=None, axis=alt.Axis(format="%b", tickCount=6), scale=alt.Scale(domain=x_domain))
+            chart_y = alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(domain=y_domain))
             lines = (
                 alt.Chart(chart_long)
                 .mark_line(strokeWidth=2)
                 .encode(
-                    x=alt.X("cob_date:T", title=None, axis=alt.Axis(format="%b", tickCount=6)),
-                    y=alt.Y("impact:Q", title="P&L impact (EUR)", scale=alt.Scale(zero=False)),
+                    x=chart_x,
+                    y=chart_y,
                     color=alt.Color(
                         "category:N",
                         title="Category",
@@ -103,15 +131,14 @@ def render(context):
                     strokeDash=alt.StrokeDash(
                         "scenario:N",
                         title="Scenario",
-                        legend=alt.Legend(orient="bottom", columns=2, labelLimit=180),
+                        legend=None,
                     ),
                     tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("scenario:N", title="Scenario"), alt.Tooltip("category:N", title="Category"), alt.Tooltip("impact:Q", title="P&L impact", format=",.0f")],
                 )
             )
-            last_date = chart_long["cob_date"].max()
-            endpoints = chart_long.loc[chart_long["cob_date"] == last_date]
-            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x="cob_date:T", y="impact:Q", color=alt.Color("category:N", scale=alt.Scale(domain=category_domain, range=category_range), legend=None))
-            st.altair_chart((lines + endpoint_points).properties(height=460), key="stress_evolution")
+            endpoint_points = alt.Chart(endpoints).mark_point(filled=True, size=65).encode(x=chart_x, y=chart_y, color=alt.Color("category:N", scale=alt.Scale(domain=category_domain, range=category_range), legend=None))
+            endpoint_labels = alt.Chart(endpoints).mark_text(align="left", baseline="middle", fontSize=11, color="#E2E8F0").encode(x=alt.X("label_date:T", title=None, axis=None, scale=alt.Scale(domain=x_domain)), y=alt.Y("label_impact:Q", title="P&L impact (EUR)", scale=alt.Scale(domain=y_domain)), text=alt.Text("scenario:N"), color=alt.Color("category:N", scale=alt.Scale(domain=category_domain, range=category_range), legend=None))
+            st.altair_chart((lines + endpoint_points + endpoint_labels).properties(height=460), key="stress_evolution")
         else:
             st.info("Select at least one priced scenario.", icon=":material/info:")
 
