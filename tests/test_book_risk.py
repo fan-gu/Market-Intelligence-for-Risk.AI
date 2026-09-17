@@ -45,3 +45,18 @@ def test_book_scope_has_distinct_time_varying_risk():
     ratio = first["var_1d_99_hist"] / source["var_1d_99_hist"].reset_index(drop=True)
     assert ratio.nunique() > 20
     assert pd.api.types.is_datetime64_any_dtype(first["cob_date"])
+
+
+def test_book_limits_are_fixed_until_an_approved_bank_limit_change():
+    source = bank_history()
+    source.loc[source.index >= 100, "var_limit_amount"] = 7_000_000.0
+    books, _ = build_hierarchy()
+    history = build_book_risk_history(source, books)
+    approval_change_date = source.loc[100, "cob_date"]
+
+    for _, book_history in history.groupby("book_id"):
+        assert book_history.loc[book_history["cob_date"] < approval_change_date, "var_limit_amount"].nunique() == 1
+        assert book_history.loc[book_history["cob_date"] >= approval_change_date, "var_limit_amount"].nunique() == 1
+
+    aggregate = aggregate_scope_history(history)
+    assert aggregate["var_limit_amount"].equals(source["var_limit_amount"])

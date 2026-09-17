@@ -391,7 +391,6 @@ if header_breaches:
     st.error("Current limit breaches: " + " · ".join(dict.fromkeys(header_breaches)), icon=":material/error:")
 if not header_breaches and not header_warnings:
     st.success("All current governed risk measures are below warning thresholds.", icon=":material/check_circle:")
-st.caption(f"Selected perimeter: {scope_label} · {scoped_books['book_id'].nunique()} book(s) · explicit book-level risk records")
 stress_frame = portfolio_df[["cob_date"]].copy()
 for scenario, definition in risk.STRESS_SCENARIO_DEFINITIONS.items():
     stress_frame[scenario] = portfolio_df[definition["column"]].astype(float)

@@ -56,8 +56,18 @@ def render(context):
     with st.container(border=True):
         st.subheader("HVaR evolution")
         hvar_history = history[["cob_date", "var_1d_99_hist", "var_limit_amount"]].copy()
+        # A limit is an approved threshold, not a daily measure.  Plot only its
+        # effective dates plus the last date, so it remains a thin, flat line
+        # until a recorded approval changes it.
+        hvar_limit_history = pd.concat([
+            hvar_history.loc[
+                hvar_history["var_limit_amount"].ne(hvar_history["var_limit_amount"].shift()),
+                ["cob_date", "var_limit_amount"],
+            ],
+            hvar_history[["cob_date", "var_limit_amount"]].tail(1),
+        ]).drop_duplicates(subset="cob_date")
         hvar_line = alt.Chart(hvar_history).mark_line(color="#60A5FA", strokeWidth=2.4).encode(x=alt.X("cob_date:T", title="Month", axis=alt.Axis(format="%b", tickCount=12)), y=alt.Y("var_1d_99_hist:Q", title="HVaR (EUR)", scale=alt.Scale(zero=False)), tooltip=[alt.Tooltip("cob_date:T", title="Date", format="%d/%m/%Y"), alt.Tooltip("var_1d_99_hist:Q", title="HVaR", format=",.0f")])
-        hvar_limit = alt.Chart(hvar_history).mark_rule(color="#F59E0B", strokeDash=[6,4], strokeWidth=2).encode(y=alt.Y("var_limit_amount:Q"), tooltip=[alt.Tooltip("var_limit_amount:Q", title="HVaR limit", format=",.0f")])
+        hvar_limit = alt.Chart(hvar_limit_history).mark_line(color="#F59E0B", strokeDash=[6, 4], strokeWidth=2, interpolate="step-after").encode(x=alt.X("cob_date:T", title="Month", axis=alt.Axis(format="%b", tickCount=12)), y=alt.Y("var_limit_amount:Q", title="HVaR (EUR)", scale=alt.Scale(zero=False)), tooltip=[alt.Tooltip("cob_date:T", title="Effective date", format="%d/%m/%Y"), alt.Tooltip("var_limit_amount:Q", title="HVaR limit", format=",.0f")])
         st.altair_chart((hvar_line + hvar_limit).properties(height=340), key="hvar_evolution")
 
     with st.container(border=True):
@@ -109,5 +119,9 @@ def render(context):
             {label: float(history.iloc[-1][column]) for label, column in attribution_columns.items()},
             name="VaR contribution",
         ).sort_values(ascending=False).rename_axis("Risk factor").reset_index()
-        st.altair_chart(alt.Chart(attribution).mark_bar().encode(x=alt.X("VaR contribution:Q", title="VaR contribution (EUR)", axis=alt.Axis(format=",.0f")), y=alt.Y("Risk factor:N", sort="-x", title=None), color=alt.Color("Risk factor:N", legend=None), tooltip=[alt.Tooltip("Risk factor:N"), alt.Tooltip("VaR contribution:Q", format=",.0f")]).properties(height=360), key="historical_var_attribution")
+        contribution_x = alt.X("VaR contribution:Q", title="VaR contribution (EUR)", axis=alt.Axis(format=",.0f"), scale=alt.Scale(nice=True))
+        factor_y = alt.Y("Risk factor:N", sort="-x", title=None, axis=alt.Axis(labelOverlap=False, labelLimit=180))
+        contribution_bars = alt.Chart(attribution).mark_bar().encode(x=contribution_x, y=factor_y, color=alt.Color("Risk factor:N", legend=None), tooltip=[alt.Tooltip("Risk factor:N"), alt.Tooltip("VaR contribution:Q", format=",.0f")])
+        contribution_labels = alt.Chart(attribution).mark_text(align="left", baseline="middle", dx=4, color="#E2E8F0").encode(x=contribution_x, y=factor_y, text=alt.Text("VaR contribution:Q", format=",.0f"))
+        st.altair_chart((contribution_bars + contribution_labels).properties(height=440), key="historical_var_attribution")
 

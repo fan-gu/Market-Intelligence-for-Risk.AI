@@ -23,6 +23,10 @@ NON_ADDITIVE_COLUMNS = {
     "backtest_exception_count_250d",
 }
 
+# Limits are approved risk-budget allocations, not daily risk contributions.
+# They remain fixed for each book until the supplied bank-level limit changes.
+STATIC_LIMIT_COLUMNS = {"var_limit_amount"}
+
 
 def _stable_loading(book_id: str, column: str) -> float:
     digest = hashlib.sha256(f"{book_id}|{column}".encode()).digest()
@@ -66,6 +70,12 @@ def build_book_risk_history(bank_history: pd.DataFrame, books: pd.DataFrame) -> 
 
     for column in numeric_columns:
         values = source[column].to_numpy(dtype=float)
+        if column in STATIC_LIMIT_COLUMNS:
+            # Keep each book's approved share constant through time.  A genuine
+            # bank-level limit revision still flows through on its effective date.
+            matrix = np.outer(values, weights)
+            result[column] = matrix.reshape(-1)
+            continue
         contribution_blocks = []
         loadings = np.array([
             _stable_loading(str(book_id), column) for book_id in hierarchy["book_id"]
