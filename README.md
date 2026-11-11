@@ -76,7 +76,7 @@ docs/                             product, architecture and security notes
 
 ## Data and scope
 
-The included data is synthetic and compact. The consolidated V33 service creates 5,200 explicit records (20 books across 260 business dates); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
+The included data is synthetic and compact. The consolidated V33 service creates 6,320 explicit records (20 books across 316 business dates, through 10 November 2026); additive measures reconcile daily to the supplied bank-wide source. VaR and SVaR book fields are Euler-style contributions to the parent portfolio, not standalone revaluations. This is a demonstrator, not a production risk engine, official bank architecture, investment advice, or a substitute for independent model validation.
 
 <details>
 <summary>Version history</summary>

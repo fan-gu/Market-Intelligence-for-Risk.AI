@@ -141,7 +141,7 @@ def render(context):
         st.altair_chart(combined_pnl_chart)
         st.caption(
             "APL, HPL and RTPL are lines on the left axis. APL − HPL and HPL − RTPL are translucent bars "
-            "on the right axis. The full 260-business-day history is shown with monthly labels."
+            "on the right axis. The full 316-business-day history is shown with monthly labels."
         )
     with st.container(border=True):
         st.subheader("Risk-model P&L explain")

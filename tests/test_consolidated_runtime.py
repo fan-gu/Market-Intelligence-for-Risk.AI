@@ -9,7 +9,8 @@ def test_runtime_does_not_import_archived_versions():
 
 def test_consolidated_data_contracts():
     assert runtime.VERSION == "V33"
-    assert len(runtime.df) == 260
+    assert len(runtime.df) == 316
+    assert str(runtime.df["cob_date"].max().date()) == "2026-11-10"
     assert len(runtime.get_market_sensitivities()["sensitivities"]) == 493
     assert runtime.validate_data()["business_date_sequence_ok"] is True
 

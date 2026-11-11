@@ -40,7 +40,7 @@ def test_book_scope_has_distinct_time_varying_risk():
         history.loc[history["book_id"] == books.iloc[1]["book_id"]]
     )
 
-    assert len(first) == 260
+    assert len(first) == len(source)
     assert not first["var_1d_99_hist"].equals(second["var_1d_99_hist"])
     ratio = first["var_1d_99_hist"] / source["var_1d_99_hist"].reset_index(drop=True)
     assert ratio.nunique() > 20

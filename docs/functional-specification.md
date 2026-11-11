@@ -2,7 +2,7 @@
 
 ## Product boundary
 
-MIRAI consumes approved market-risk results; it does not price trades. The current consolidated V33 demo uses synthetic data covering 260 business dates and 20 books. The reporting hierarchy is book → trading desk → business line → whole bank.
+MIRAI consumes approved market-risk results; it does not price trades. The current consolidated V33 demo uses synthetic data covering 316 business dates through 10 November 2026 and 20 books. The reporting hierarchy is book → trading desk → business line → whole bank.
 
 ## Core functions
 
